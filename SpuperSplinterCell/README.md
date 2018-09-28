@@ -1,9 +1,9 @@
 # TeamSpaghetto
 # Alberto Reymond || Guillermo Sánchez de Lamadrid
-/Eng:
+Eng:
 Super Splinter Cell:
 
-Super Splinter Cell is a reinvention of the well known stealth saga <<Splinter Cell>>, adapting the main mechanics from 3D to 2D (simulating a 16 bit's style), making a 3rd person shooter game become a zenithal view type game, changing the gameplay. In order to stay loyal to the original saga, the player will enbody Sam Fisher and will be able to use some of his most well known tools and weapons .
+Super Splinter Cell is a reinvention of the well known stealth saga *Splinter Cell*, adapting the main mechanics from 3D to 2D (simulating a 16 bit's style), making a 3rd person shooter game become a zenithal view type game, changing the gameplay. In order to stay loyal to the original saga, the player will enbody Sam Fisher and will be able to use some of his most well known tools and weapons .
 
 Main features:
 The player will face the game from a new perspective thanks to its zenithal view, which gives a new dimension to the gameplay from the original games.
@@ -25,7 +25,7 @@ Reference works: Splinter Cell, Hotline Miami, Door kickers and tons of stealth 
 
 
 
-/Esp:
+Esp:
 Super Splinter Cell:
 
 Super Splinter Cell es un reinvención de la mítica saga de sigilo <<Splinter Cell>>, adaptando las mecánicas principales de la misma del 3D al 2D (al estilo de 16 bits), implicando que el juego pasará de ser un 3rd person shooter, a ser uno con vista cenital, modificando así en gran medida la manera de jugar. Con el objetivo de ser fiel a la saga original, el jugador encarnará a Sam Fisher y tendrá a su disposición algunas de sus armas y herramientas más características.
