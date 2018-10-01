@@ -12,9 +12,10 @@
 # Index:   
   
 ### 1. Main features  
-### 2. Game Mechanics  
-### 3. Levels  
-### 4. Reference works  
+### 2. Game Mechanics 
+### 3. Tools 
+### 4. Levels  
+### 5. Reference works  
   
 
 # Main features:
@@ -35,6 +36,8 @@
 ###	-Optical cable: Can be used to see through closed doors.
 ###	-Picklock: Can be used to force regular locks.
 ###	-Nightvision goggles: Can be used to see in the darkness.  
+
+# Levels:  
 
 # Reference works:  
 ### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games.  
