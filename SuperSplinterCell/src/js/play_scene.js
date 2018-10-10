@@ -9,14 +9,43 @@
 };
 
 module.exports = PlayScene;
+function Point (x,y){
+  this.x =x;
+  this.y =y;
+};
+function Shot (position, velocity){
+  this._position = position;
+  this._velocity = velocity;
+};
+function Player(position, graphic){
+  this.position = position;
+  this.hidden = true;
+  this.magneticKey = false;
+  this.documents = false; 
+  this.graphic = graphic;
+} 
+function Enemy(position, graphic){
+  this.position = position;
+  this.reducedVision = false;
+  this.awake = true;
+  this.detected=false;
+}
+function Level(position, graphic){
+  this.lightsOn = true;
+  this.win = false;
+  this.objects ={documents: {pos = position, taken: false},
+    magneticKey:{pos=position, taken:false}
+};
 
+}
+/*
 var Snake = {
   hidden: true, 
   kills: 0, 
   position:{x:0,y:0}, 
   magneticKey: false, 
   documents: false,
-  items:{lockPick:null,taser:null,cable:null,takeObject:null,shoot:null},
+  items:{lockPick:null,taser:null,cable:null,takeObject:null},
   movement : null
 };
 var Enemy = {
@@ -37,3 +66,4 @@ var level = {
 
 var rooms = {};
 var doors = {};
+*/ 
