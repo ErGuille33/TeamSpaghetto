@@ -22,7 +22,8 @@ var PreloaderScene = {
     this.load.setPreloadSprite(this.loadingBar);
 
     // TODO: load here the assets for the game
-    this.game.load.image('logo', 'images/phaser.png');
+    this.game.stage.backgroundColor = '#ffffff';
+    this.game.load.image('logo', 'GameArt/Gafas.jpg');
   },
 
   create: function () {
@@ -40,7 +41,7 @@ window.onload = function () {
 
   game.state.start('boot');
 };
-var Snake = {
+/*var Snake = {
   hidden: true, 
   kills: 0, 
   position:{x:0,y:0}, 
@@ -55,4 +56,4 @@ var Enemy = {
   awake: false,
   detected: false,
   movement: null                                                                                                          
-}
+}*/

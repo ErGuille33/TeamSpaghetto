@@ -5,8 +5,8 @@
   "license": "CC-BY-NC-SA-4.0",
   "repository": "gituser/awesome-game",
   "dependencies": {
+    "browser-sync": "^2.26.3",
     "browserify": "*",
-    "browser-sync": "*",
     "del": "*",
     "gulp": "*",
     "gulp-connect": "*",
