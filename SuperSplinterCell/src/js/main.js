@@ -24,6 +24,10 @@ var PreloaderScene = {
     // TODO: load here the assets for the game
     this.game.stage.backgroundColor = '#ffffff';
     this.game.load.image('logo', 'GameArt/Gafas.jpg');
+    this.game.load.tilemap('test', 'images/Test.csv');
+    this.load.image('deco1','images/decoraciones1.png');
+    
+    //
   },
 
   create: function () {
@@ -41,19 +45,3 @@ window.onload = function () {
 
   game.state.start('boot');
 };
-/*var Snake = {
-  hidden: true, 
-  kills: 0, 
-  position:{x:0,y:0}, 
-  magneticKey: false, 
-  documents: false,
-  items:{lockPick:null,taser:null,cable:null,takeObject:null,shoot:null},
-  movement : null
-}
-var Enemy = {
-  position: {x:0,y:0},
-  reducedVision: false,
-  awake: false,
-  detected: false,
-  movement: null                                                                                                          
-}*/

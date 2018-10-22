@@ -1,35 +1,23 @@
 'use strict';
-
-  var PlayScene = {
+var map;
+var layer;
+  var PlayScene = { 
   create: function () {
-    var logo = this.game.add.sprite(
-      this.game.world.centerX, this.game.world.centerY, 'logo');
-    logo.anchor.setTo(0.5,0.5);
-    logo.scale.setTo(1.5, 1.5);
+    map = this.game.add.tilemap('test', 19,18 );
+    map.addTilesetImage('deco1');
+    layer = map.createLayer(0);
+    layer.resizeWorld();
   },
+  update: function(){
 
-    update: function() {
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-    {
-        logo.x -= 4;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-    {
-        logo.x += 4;
-    }
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
-    {
-        logo.y -= 4;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
-    {
-        logo.y += 4;
-    }
   }
 };
 
+module.exports = PlayScene;
+
 
 module.exports = PlayScene;
+/*
 function Point (x,y){
   this.x =x;
   this.y =y;
@@ -65,7 +53,7 @@ function Level(position, graphic){
 };
 
 }
-/*
+
 var Snake = {
   hidden: true, 
   kills: 0, 
