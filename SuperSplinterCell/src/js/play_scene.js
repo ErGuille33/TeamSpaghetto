@@ -22,25 +22,33 @@ var player;
 
     this.camera.follow(player);
     this.game.physics.enable(player, Phaser.Physics.ARCADE);
+    
   
     
   },
   update: function(){
-    if (this.game.input.mousePointer.isDown)
+ 
+    if (this.game.input.mousePointer.leftButton.duration > 40)
     {
         //  400 is the speed it will move towards the mouse
+        player.rotation = this.game.physics.arcade.moveToXY(player, this.game.input.x, this.game.input.y, 600, 600);
         this.game.physics.arcade.moveToPointer(player, 200);
+        var duration = (this.game.physics.arcade.distanceToPointer(player, this.game.input) / 200) * 1000;
+        
+        // pointer.x and pointer.y are the input x and y values coming from the mouse click or tap.
+        this.game.add.tween(player).to({ x: this.game.input.x, y: this.game.input.y }, duration, Phaser.Easing.Linear.None, true);
 
         //  if it's overlapping the mouse, don't move any more
         if (Phaser.Rectangle.contains(player.body, this.game.input.x, this.game.input.y))
         {
             player.body.velocity.setTo(0, 0);
         }
+        
     }
-    else
-    {
-        player.body.velocity.setTo(0, 0);
+    else {
+      player.body.velocity.setTo(0, 0);
     }
+    
 
   }
 };
@@ -48,7 +56,7 @@ var player;
 module.exports = PlayScene;
 
 
-module.exports = PlayScene;
+
 /*
 function Point (x,y){
   this.x =x;
