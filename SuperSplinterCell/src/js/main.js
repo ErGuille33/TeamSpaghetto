@@ -26,6 +26,7 @@ var PreloaderScene = {
     this.game.load.image('logo', 'GameArt/Gafas.jpg');
     this.game.load.tilemap('test', 'images/Test.csv');
     this.load.image('deco1','images/decoraciones1.png');
+    this.load.spritesheet('player','images/Player.png',24,26);
     
     //
   },

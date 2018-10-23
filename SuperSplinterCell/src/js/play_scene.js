@@ -1,14 +1,46 @@
 'use strict';
 var map;
 var layer;
+
+var player;
+
+
   var PlayScene = { 
   create: function () {
     map = this.game.add.tilemap('test', 19,18 );
     map.addTilesetImage('deco1');
     layer = map.createLayer(0);
     layer.resizeWorld();
+    map.setCollisionBetween(0,4,0);
+    map.setCollisionBetween(44,44,0);
+
+    player = this.add.sprite(100,500,'player');
+    player.anchor.setTo(0.5,0.5);
+
+    player.animations.add('idle',[0,1],1,true);
+    player.animations.add('run',[3,4,5,6,7,8],7,true);
+
+    this.camera.follow(player);
+    this.game.physics.enable(player, Phaser.Physics.ARCADE);
+  
+    
   },
   update: function(){
+    if (this.game.input.mousePointer.isDown)
+    {
+        //  400 is the speed it will move towards the mouse
+        this.game.physics.arcade.moveToPointer(player, 200);
+
+        //  if it's overlapping the mouse, don't move any more
+        if (Phaser.Rectangle.contains(player.body, this.game.input.x, this.game.input.y))
+        {
+            player.body.velocity.setTo(0, 0);
+        }
+    }
+    else
+    {
+        player.body.velocity.setTo(0, 0);
+    }
 
   }
 };
