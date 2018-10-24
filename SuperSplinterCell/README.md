@@ -31,7 +31,7 @@
 ### The player will be able to turn the building's lights off if he finds the light box. This will reduce the enemy's vision range.  
 
 # Tools:  
-##	-Suppressed tranquilizer handgun: 
+##	-Suppressed tranquilizer handgun: ![supressed handgun](https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/silenced%20pistol.png?raw=true "prueba")
 ### Can be used to put an enemy in his sleep.
 ##	-Taser: 
 ### Can be used to knock down enemys at short distances.
