@@ -45,14 +45,18 @@
 
 # Levels:  
 
-The game will have 4 playeable levels where there will be:
+##The game will have 4 playeable levels where there will be:
 
-	-Magnetic doors: This door can´t be open with the picklock.
-	-Electric box: If you find this box you can turn off the electricity of the building and use th nightvision googles.
-	-Magnetic key: Use this key to open the magnetic door.
-	-Top secret documents: This documents are required to finish the mission.
+### -Magnetic doors: This door can´t be open with the picklock.
+###-Electric box: If you find this box you can turn off the electricity of the building and use th nightvision googles.
+###-Magnetic key: Use this key to open the magnetic door.
+###-Top secret documents: This documents are required to finish the mission.
 
-	<img style="float: left;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/SplinterCell%201-2.png?raw=true"> <img style="float: right;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/Splintercell%202-1.png?raw=true">
+<img style="float: left;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/SplinterCell%201-2.png?raw=true"> <img style="float: right;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/Splintercell%202-1.png?raw=true">
 
 # Reference works:  
-### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games. <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Sam%20FisherG.png?raw=true"  height="168" width="229" ></a>
+### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games. <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Sam%20FisherG.png?raw=true"  height="148" width="209" ></a>
+
+<p align= "center">
+<img src=	"https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Logo.jpg?raw=true">
+</p> 
