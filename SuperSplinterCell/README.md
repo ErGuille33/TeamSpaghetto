@@ -33,13 +33,13 @@
 # Tools:  
 ##	-Suppressed tranquilizer handgun: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/silenced%20pistol.png?raw=true"  height="28" width="39" ></a>
 ### Can be used to put an enemy in his sleep.
-##	-Taser: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/taser.png?raw=true"  height="28" width="39" ></a>
+##	-Taser: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/taser.png?raw=true"  height="28" width="34" ></a>
 ### Can be used to knock down enemys at short distances.
 ##	-Optical cable: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/optical%20cable.png?raw=true"  height="57" width="60" ></a>
 ### Can be used to see through closed doors.
 ##	-Picklock: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/picklock.png?raw=true"  height="42" width="38" ></a>
 ### Can be used to force regular locks.
-##	-Nightvision goggles: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/nightvision%20googles.png?raw=true"  height="31" width="33" ></a>
+##	-Nightvision goggles: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/nightvision%20googles.png?raw=true"  height="41" width="43" ></a>
 ### Can be used to see in the darkness.  
 
 # Levels:  
