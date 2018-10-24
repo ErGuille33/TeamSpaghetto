@@ -1,8 +1,8 @@
 'use strict';
-
+//Añadimos el script de escena 
 var PlayScene = require('./play_scene.js');
 
-
+//Se ejecuta primero
 var BootScene = {
   preload: function () {
     // load here assets required for the loading screen
@@ -13,9 +13,9 @@ var BootScene = {
     this.game.state.start('preloader');
   }
 };
-
-
+//Aquí se cargaran todas las imagenes y tiles que usaremos. 
 var PreloaderScene = {
+  //Se ejecuta al principio
   preload: function () {
     this.loadingBar = this.game.add.sprite(0, 240, 'preloader_bar');
     this.loadingBar.anchor.setTo(0, 0.5);
@@ -30,13 +30,13 @@ var PreloaderScene = {
     
     //
   },
-
+//Llamamos a playscene
   create: function () {
     this.game.state.start('play');
   }
 };
 
-
+//Se ejecuta al principio, creando el juego, añadiendo los estados y comenzando en el boot
 window.onload = function () {
   var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
 
