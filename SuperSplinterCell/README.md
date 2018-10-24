@@ -18,7 +18,7 @@
 ### 5. Reference works  
   
 
-# Main features:<a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Sam%20FisherG.png?raw=true"  height="168" width="229" ></a>
+# Main features:
 
 ### The player will face the game from a new perspective thanks to its top down view, which gives a new dimension to the from the original games.  
 ### Two brand new and spectacular levels composed by a few floors, tons of corridors and rooms full of enemys.
@@ -31,6 +31,7 @@
 ### The player will be able to turn the building's lights off if he finds the light box. This will reduce the enemy's vision range.  
 
 # Tools:  
+
 ##	-Suppressed tranquilizer handgun: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/silenced%20pistol.png?raw=true"  height="28" width="39" ></a>
 ### Can be used to put an enemy in his sleep.
 ##	-Taser: <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/taser.png?raw=true"  height="28" width="34" ></a>
@@ -44,5 +45,14 @@
 
 # Levels:  
 
+The game will have 4 playeable levels where there will be:
+
+	-Magnetic doors: This door can´t be open with the picklock.
+	-Electric box: If you find this box you can turn off the electricity of the building and use th nightvision googles.
+	-Magnetic key: Use this key to open the magnetic door.
+	-Top secret documents: This documents are required to finish the mission.
+
+	<img style="float: left;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/SplinterCell%201-2.png?raw=true"> <img style="float: right;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/Splintercell%202-1.png?raw=true">
+
 # Reference works:  
-### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games.  
+### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games. <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Sam%20FisherG.png?raw=true"  height="168" width="229" ></a>
