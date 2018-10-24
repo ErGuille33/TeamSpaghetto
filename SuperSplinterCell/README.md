@@ -54,8 +54,10 @@
 
 <img style="float: left;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/SplinterCell%201-2.png?raw=true"> <img style="float: right;" src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/GameArt/Splintercell%202-1.png?raw=true">
 
+<p align= "center">
 # Reference works:  
 ### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games.
+</p>
 
 <p align= "center">
 <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Logo.jpg?raw=true"  height="500" width="399" ></a>
