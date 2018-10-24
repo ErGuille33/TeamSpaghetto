@@ -58,5 +58,5 @@
 ### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games.
 
 <p align= "center">
-<a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/silenced%20pistol.png?raw=true"  height="500" width="399" ></a>
+<a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Logo.jpg?raw=true"  height="500" width="399" ></a>
 </p> 
