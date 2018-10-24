@@ -32,15 +32,15 @@
 
 # Tools:  
 ##	-Suppressed tranquilizer handgun: 
-###Can be used to put an enemy in his sleep.
+### Can be used to put an enemy in his sleep.
 ##	-Taser: 
-###Can be used to knock down enemys at short distances.
+### Can be used to knock down enemys at short distances.
 ##	-Optical cable: 
-###Can be used to see through closed doors.
+### Can be used to see through closed doors.
 ##	-Picklock: 
-###Can be used to force regular locks.
+### Can be used to force regular locks.
 ##	-Nightvision goggles: 
-###Can be used to see in the darkness.  
+### Can be used to see in the darkness.  
 
 # Levels:  
 
