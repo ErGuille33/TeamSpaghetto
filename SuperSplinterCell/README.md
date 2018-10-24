@@ -18,7 +18,7 @@
 ### 5. Reference works  
   
 
-# Main features:<a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Sam%20FisherG.png?raw=true"  height="28" width="39" ></a>
+# Main features:<a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Sam%20FisherG.png?raw=true"  height="168" width="229" ></a>
 
 ### The player will face the game from a new perspective thanks to its top down view, which gives a new dimension to the from the original games.  
 ### Two brand new and spectacular levels composed by a few floors, tons of corridors and rooms full of enemys.
