@@ -1,7 +1,7 @@
 'use strict';
 //Añadimos el script de escena 
 var PlayScene = require('./play_scene.js');
-
+var player = require('./player.js');
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -27,8 +27,6 @@ var PreloaderScene = {
     this.game.load.tilemap('test', 'images/Test.csv');
     this.load.image('deco1','images/decoraciones1.png');
     this.load.spritesheet('player','images/Player.png',24,26);
-    
-    //
   },
 //Llamamos a playscene
   create: function () {

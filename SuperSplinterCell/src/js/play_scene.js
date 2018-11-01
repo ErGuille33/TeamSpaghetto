@@ -1,10 +1,12 @@
 'use strict';
 //El mapa de juego
 var map;
+var Sam;
 //Capas
 var layer;
 //El jugador
-var player;
+var player = require('./player.js');
+
 var Tween;
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
   var PlayScene = { 
@@ -22,71 +24,14 @@ var Tween;
     map.setCollision(42);
     map.setCollisionBetween(42,44);
     //Ahora añadimos el sprite a la escena
-    player = this.add.sprite(100,500,'player');
-    player.anchor.setTo(0.5,0.5);
-    player.isMoving = false;
-    //Esto tiene que ver con las animaciones y tal, no lo termino de entender
-    player.animations.add('idle',[0,1],1,true);
-    player.animations.add('run',[3,4,5,6,7,8],7,true);
-
+    //player =  player.player(0,0,false,false,true,false,false,false);
+    Sam = new player(0,0,false,false,false,false,false,false,"player",this.game);
     //Cámara
-    this.camera.follow(player);
-    //Añadimos fisicas al juego
-    this.game.physics.enable(player, Phaser.Physics.ARCADE);
-    
-    //Función que mueve al personaje
-    player.moveCharacter= function (){
-      
-    if (this.game.input.mousePointer.leftButton.isDown  && player.isMoving==false)
-    {
-    
-        player.isMoving=true;
-        if(player.isMoving==true){
-        //  400 is the speed it will move towards the mouse
-        player.rotation = this.game.physics.arcade.moveToXY(player, this.game.input.x, this.game.input.y, 600, 600);
-        this.game.physics.arcade.moveToPointer(player, 200);
-        var duration = (this.game.physics.arcade.distanceToPointer(player, this.game.input) / 200) * 1000;
-        
-        // pointer.x and pointer.y are the input x and y values coming from the mouse click or tap.
-         Tween =this.game.add.tween(player).to({ x: this.game.input.x, y: this.game.input.y }, duration, Phaser.Easing.Linear.None, true);
-         
-        //  if it's overlapping the mouse, don't move any more
-        if (Phaser.Rectangle.contains(player.body, this.game.input.x, this.game.input.y))
-        {
-            player.body.velocity.setTo(0, 0);
-            player.isMoving =false;
-        }
-        if (this.game.physics.arcade.collide(player,layer))
-        {
-          player.body.velocity.setTo(0, 0);
-          Tween.stop();
-            player.isMoving =false;
-        }
-      }
-    }
-    else if(player.isMoving==true) {
-      player.body.velocity.setTo(0, 0);
-      if (this.game.physics.arcade.collide(player,layer))
-        {
-          player.body.velocity.setTo(0, 0);
-          Tween.stop();
-            player.isMoving =false;
-        }
-      player.isMoving =false;}
-      else {
-        player.body.velocity.setTo(0, 0);
-        
-        player.isMoving =false;
-      }
-    
-    
-
-  };
-    
-  },
+    this.camera.follow(Sam);
+  }, 
   //El update de toda la vida
   update: function(){
-    player.moveCharacter();
+    
 }};
 
 module.exports = PlayScene;
