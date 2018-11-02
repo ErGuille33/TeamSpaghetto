@@ -1,0 +1,2 @@
+https://es.wikipedia.org/wiki/Algoritmo_de_búsqueda_A*
+http://phaser.io/docs/2.6.2/Phaser.Time.html

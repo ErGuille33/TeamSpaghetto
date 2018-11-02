@@ -5,7 +5,7 @@ var Sam;
 //Capas
 var layer;
 //El jugador
-var player = require('./player.js');
+var Player = require('./player.js');
 
 var Tween;
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
@@ -23,10 +23,9 @@ var Tween;
     map.setCollision(17);
     map.setCollision(42);
     map.setCollisionBetween(42,44);
-    //Ahora añadimos el sprite a la escena
-    //player =  player.player(0,0,false,false,true,false,false,false);
-    Sam = new player(100,100,false,false,false,false,false,false,"player",this.game);
+    Sam = new Player(100,100,false,false,false,false,false,false,"player",this.game);
     this.game.add.existing(Sam);
+    Sam.ini();
     //Cámara
     this.camera.follow(Sam);
   }, 

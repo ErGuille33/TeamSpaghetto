@@ -1,7 +1,7 @@
 'use strict';
 //Añadimos el script de escena 
 var PlayScene = require('./play_scene.js');
-var player = require('./player.js');
+var Player = require('./player.js');
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
