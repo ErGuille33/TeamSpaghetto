@@ -25,7 +25,8 @@ var Tween;
     map.setCollisionBetween(42,44);
     //Ahora añadimos el sprite a la escena
     //player =  player.player(0,0,false,false,true,false,false,false);
-    Sam = new player(0,0,false,false,false,false,false,false,"player",this.game);
+    Sam = new player(100,100,false,false,false,false,false,false,"player",this.game);
+    this.game.add.existing(Sam);
     //Cámara
     this.camera.follow(Sam);
   }, 

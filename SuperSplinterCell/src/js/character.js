@@ -4,12 +4,14 @@ function Character(game, x, y, sprite)
 {
     Phaser.Sprite.call(this, game, x, y, sprite);
     this.anchor.setTo(0.5,0.5);
-    this.x =x;
-    this.y =y;    
+    // this.x =x;
+    // this.y =y;    
 }
     Character.prototype = Object.create(Phaser.Sprite.prototype);
     Character.prototype.constructor = Character;
 
+
+    // esto no hace falta, te lo da sprite
     Character.getPosx = function() {
         return this.position.x;
     }
