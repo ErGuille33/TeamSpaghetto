@@ -1,4 +1,6 @@
 'use strict';
+//import MoveAndStopPlugin from "phaser-move-and-stop-plugin";
+ 
 //El mapa de juego
 var map;
 var Sam;
@@ -6,14 +8,13 @@ var Sam;
 var layer;
 //El jugador
 var Player = require('./player.js');
-
-var Tween;
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
-  var PlayScene = { 
-    //Se ejecuta al principio
+var PlayScene = {
+  //Se ejecuta al principio
   create: function () {
+   // this.game.moveAndStop = this.game.plugins.add(MoveAndStopPlugin);
     //Añadimos al mapa nuestro mapa ya cargado, y lo cargamos en la escena
-    map = this.game.add.tilemap('test', 19,18 );
+    map = this.game.add.tilemap('test', 19, 18);
     //Añadimos el tileset ya cargado
     map.addTilesetImage('deco1');
     //Metemos el mapa en la capa 0
@@ -22,17 +23,18 @@ var Tween;
     //Esto es para poner las colisiones en funcion de los numeros que aparecen en el mapa de tiles
     map.setCollision(17);
     map.setCollision(42);
-    map.setCollisionBetween(42,44);
-    Sam = new Player(100,100,false,false,false,false,false,false,"player",this.game);
+    map.setCollisionBetween(42, 44);
+    Sam = new Player(100, 100, false, false, false, false, false, false, "player", this.game);
     this.game.add.existing(Sam);
     Sam.ini();
     //Cámara
     this.camera.follow(Sam);
-  }, 
+  },
   //El update de toda la vida
-  update: function(){
+  update: function () {
     Sam.update();
-}};
+  }
+};
 
 module.exports = PlayScene;
 
@@ -102,4 +104,4 @@ var level = {
 
 var rooms = {};
 var doors = {};
-*/ 
+*/

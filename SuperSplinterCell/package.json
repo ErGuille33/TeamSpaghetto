@@ -14,6 +14,7 @@
     "gulp-util": "*",
     "merge-stream": "*",
     "phaser": "2.6.0",
+    "phaser-move-and-stop-plugin": "^1.1.1",
     "vinyl-source-stream": "*",
     "watchify": "*"
   }

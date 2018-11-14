@@ -1,4 +1,6 @@
+
 'use strict';
+//import MoveAndStopPlugin from "phaser-move-and-stop-plugin";
 //Añadimos el script de escena 
 var PlayScene = require('./play_scene.js');
 var Player = require('./player.js');
@@ -17,6 +19,7 @@ var BootScene = {
 var PreloaderScene = {
   //Se ejecuta al principio
   preload: function () {
+    
     this.loadingBar = this.game.add.sprite(0, 240, 'preloader_bar');
     this.loadingBar.anchor.setTo(0, 0.5);
     this.load.setPreloadSprite(this.loadingBar);
@@ -27,6 +30,7 @@ var PreloaderScene = {
     this.game.load.tilemap('test', 'images/Test.csv');
     this.load.image('deco1','images/decoraciones1.png');
     this.load.spritesheet('player','images/Player.png',24,26);
+   // this.game.moveAndStop = this.game.plugins.add(MoveAndStopPlugin);
   },
 //Llamamos a playscene
   create: function () {
