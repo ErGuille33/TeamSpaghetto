@@ -1,7 +1,7 @@
 'use strict';
 //Añadimos el script de escena 
 var PlayScene = require('./play_scene.js');
-var Player = require('./player.js');
+
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -25,10 +25,11 @@ var PreloaderScene = {
     this.game.stage.backgroundColor = '#ffffff';
     this.game.load.image('logo', 'GameArt/Gafas.jpg');
     this.game.load.tilemap('test', 'images/Test.csv');
-    this.load.image('deco1','images/decoraciones1.png');
-    this.load.spritesheet('player','images/Player.png',24,26);
+    this.load.image('deco1', 'images/decoraciones1.png');
+    this.load.spritesheet('player', 'images/Player.png', 24, 26);
+    this.load.image('bullet', 'images/bullet.png');
   },
-//Llamamos a playscene
+  //Llamamos a playscene
   create: function () {
     this.game.state.start('play');
   }
