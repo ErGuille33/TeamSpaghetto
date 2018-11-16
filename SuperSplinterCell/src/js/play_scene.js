@@ -31,7 +31,7 @@ var Tween;
   }, 
   //El update de toda la vida
   update: function(){
-    Sam.update();
+    Sam.update(layer);
 }};
 
 module.exports = PlayScene;
