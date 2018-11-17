@@ -20,7 +20,7 @@ Player.prototype.ini = function () {
 
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
-    this.animations.add('idle', [30], 1, true);
+    this.animations.add('idle', [0], 1, true);
     this.animations.add('walk', [11, 12, 13, 14], 10, true);
     this.animations.add('taser', [0,1,2], 10, false)
     this.animations.add('gun', [22,23,24,25], 10, false)
