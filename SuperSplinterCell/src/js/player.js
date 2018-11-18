@@ -41,7 +41,6 @@ Player.prototype.moveCharacter = function (layer) {
         this.xDestine = this.game.input.x;
         this.yDestine = this.game.input.y;
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
-        // this.game.physics.arcade.moveToPointer(this, 100);
         this.rotation = this.game.physics.arcade.moveToXY(this, this.game.input.x, this.game.input.y, this.speed);
     }
     this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
@@ -62,7 +61,6 @@ Player.prototype.recogeInput = function () {
 }
 Player.prototype.shoot = function () {
     this.weapon.fire();
-
 }
 Player.prototype.update = function (layer) {
     this.moveCharacter(layer);
