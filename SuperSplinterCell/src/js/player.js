@@ -20,8 +20,13 @@ Player.prototype.ini = function () {
 
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
-    this.animations.add('idle', [0, 1], 1, true);
-    this.animations.add('run', [3, 4, 5, 6, 7, 8], 7, true);
+    this.animations.add('idle', [0], 1, true);
+    this.animations.add('walk', [11, 12, 13, 14], 10, true);
+    this.animations.add('taser', [0,1,2], 10, false)
+    this.animations.add('gun', [22,23,24,25], 10, false)
+    this.animations.add('hand', [3,4,5], 4, false)
+    this.animations.add('dead', [31,32], 1, false)
+    
     this.xDestine = this.x;
     this.yDestine = this.y;
     this.distance = 0;
@@ -46,16 +51,20 @@ Player.prototype.moveCharacter = function (layer) {
     this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
     if (this.distance <= this.speed / this.game.time.physicsElapsedMS) { // una constante o variable (algo qe sea el incremento de movimiento)
         this.body.velocity.setTo(0, 0);
+        this.animations.play('idle');
     }
     if (Phaser.Rectangle.contains(this.body, this.game.input.x, this.game.input.y)) {
         this.body.velocity.setTo(0, 0);
+        this.animations.play('idle');
     }
     if (this.game.physics.arcade.collide(this, layer)) {
         this.body.velocity.setTo(0, 0);
+        this.animations.play('idle');
     }
 }
 Player.prototype.recogeInput = function () {
     if (this.actionButton.justDown) {
+        this.animations.play('gun');
        this.shoot(); 
     }
 }

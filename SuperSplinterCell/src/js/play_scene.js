@@ -2,6 +2,7 @@
 //El jugador
 var Player = require('./player.js');
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
+
 var PlayScene = {
   //Se ejecuta al principio
   create: function () {
@@ -21,7 +22,7 @@ var PlayScene = {
     map.setCollision(17);
     map.setCollision(42);
     map.setCollisionBetween(42, 44);
-    this.Sam = new Player(100, 100, false, false, false, false, false, false,false, "player", this.game);
+    this.Sam = new Player(100, 100, false, false, false, false, false, false, false, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
     //Cámara
@@ -30,7 +31,7 @@ var PlayScene = {
   //El update de toda la vida
   update: function () {
     this.Sam.update(this.layer);
-  }
+  },
 };
 
 module.exports = PlayScene;
