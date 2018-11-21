@@ -8,20 +8,48 @@ var PlayScene = {
   create: function () {
     //Añadimos al mapa nuestro mapa ya cargado, y lo cargamos en la escena
     //El mapa de juego
-    var map;
+    var map1;
+    var map2;
+    var map3;
+    var map4;
+    var map5;
     this.Sam;
     //Capas
     PlayScene.layer;
-    map = this.game.add.tilemap('test', 19, 18);
+    PlayScene.layer2;
+    PlayScene.layer3;
+    PlayScene.layer4;
+    map1 = this.game.add.tilemap('Lvl2_1_1', 48, 48);
+    map2 = this.game.add.tilemap('Lvl2_1_2', 48, 48);
+    map3 = this.game.add.tilemap('Lvl2_1_3', 48, 48);
+    map4 = this.game.add.tilemap('Lvl2_1_4', 48, 48);
+    map5 = this.game.add.tilemap('Lvl2_1_5', 48, 48);
     //Añadimos el tileset ya cargado
-    map.addTilesetImage('deco1');
+    map1.addTilesetImage('suelo');
+    map2.addTilesetImage('paredes');
+    map3.addTilesetImage('paredes');
+    map4.addTilesetImage('objetos');
+    map5.addTilesetImage('objetos');
+    //
     //Metemos el mapa en la capa 0
-    this.layer = map.createLayer(0);
+    this.layer = map1.createLayer(0);
     this.layer.resizeWorld();
+
+    this.layer2 = map2.createLayer(0);
+    this.layer2.resizeWorld();
+
+    this.layer3 = map3.createLayer(0);
+    this.layer3.resizeWorld();
+
+    this.layer4 = map4.createLayer(0);
+    this.layer4.resizeWorld();
+
+    this.layer5 = map5.createLayer(0);
+    this.layer5.resizeWorld();
     //Esto es para poner las colisiones en funcion de los numeros que aparecen en el mapa de tiles
-    map.setCollision(17);
-    map.setCollision(42);
-    map.setCollisionBetween(42, 44);
+   // map.setCollision(17);
+    //map.setCollision(42);
+    //map.setCollisionBetween(42, 44);
     this.Sam = new Player(100, 100, false, false, false, false, false, false, false, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();

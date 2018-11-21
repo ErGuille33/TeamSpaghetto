@@ -20,6 +20,7 @@ Player.prototype.ini = function () {
 
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
+    this.body.setSize(25, 30, 15, 15);
     this.animations.add('idle', [0], 1, true);
     this.animations.add('walk', [11, 12, 13, 14], 10, true);
     this.animations.add('taser', [0, 1, 2], 10, false);
@@ -68,8 +69,8 @@ Player.prototype.recogeInput = function () {
     if (this.actionButton.justDown) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop();
-        this.animations.play('gun');
         this.shoot();
+        this.animations.play('gun');
     }
 
 }
