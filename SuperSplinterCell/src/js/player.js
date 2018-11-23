@@ -53,29 +53,29 @@ Player.prototype.moveCharacter = function (layer) {
     this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
     if (this.distance <= this.speed / this.game.time.physicsElapsedMS) { // una constante o variable (algo qe sea el incremento de movimiento)
         this.body.velocity.setTo(0, 0);
-        this.animations.play('idle');
+        this.animations.stop ('walk');
     }
     if (Phaser.Rectangle.contains(this.body, this.game.input.x, this.game.input.y)) {
         this.body.velocity.setTo(0, 0);
-        this.animations.play('idle');
+        this.animations.stop ('walk');
     }
     if (this.game.physics.arcade.collide(this, layer)) {
         this.body.velocity.setTo(0, 0);
-        this.animations.play('idle');
+        this.animations.stop ('walk');
     }
 }
 Player.prototype.recogeInput = function () {
 
     if (this.actionButton.justDown) {
         this.body.velocity.setTo(0, 0);
-        this.animations.stop();
         this.shoot();
-        this.animations.play('gun');
+        
     }
 
 }
 Player.prototype.shoot = function () {
     this.weapon.fire();
+    this.animations.play('gun');
 }
 Player.prototype.update = function (layer) {
     this.moveCharacter(layer);
