@@ -34,16 +34,20 @@ Player.prototype.ini = function () {
     this.speed = 200;
     //weapon
 
-    this.weapon = this.game.add.weapon(5, 'bullet');
+    this.weapon = this.game.add.weapon(10, 'bullet');
     this.weapon.setBulletFrames(0, 60, true);
     this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-    this.weapon.bulletSpeed = 300;
+    this.weapon.bulletSpeed = 900;
     this.weapon.fireRate = 1000;
-    this.weapon.trackSprite(this, 0, 0, true);
+    this.weapon.trackSprite(  this, ( this.x/2) , (this.y/2) , true);
     this.actionButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+    this.weapon.bullets.enableBody = true;
+    this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.fireTime = this.game.time.physicsElapsed;
 }
-Player.prototype.moveCharacter = function (layer) {
-    if (this.game.input.mousePointer.isDown) {
+Player.prototype.moveCharacter = function (layer4,layer3) {
+   //COmprueba si se esta pulsando el boton del ratón, y si ha pasado suficiente tiempo desde que se ha disparado
+    if (this.game.input.mousePointer.isDown && this.fireTime-500 <= this.game.time.now) {
         this.xDestine = this.game.input.x;
         this.yDestine = this.game.input.y;
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
@@ -59,29 +63,39 @@ Player.prototype.moveCharacter = function (layer) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop ('walk');
     }
-    if (this.game.physics.arcade.collide(this, layer)) {
+    if (this.game.physics.arcade.collide(this, layer4)) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop ('walk');
     }
+    if (this.game.physics.arcade.collide(this, layer3)) {
+        this.body.velocity.setTo(0, 0);
+        this.animations.stop ('walk');
+    }
+    
+ 
 }
 Player.prototype.recogeInput = function () {
 
-    if (this.actionButton.justDown) {
+    if (this.actionButton.justDown && this.fireTime <= this.game.time.now  ) {
         this.body.velocity.setTo(0, 0);
         this.shoot();
+        //Creamos esta variable para que solo haga la animación de disparar de acuerdo al time rate  
+        this.fireTime =  this.game.time.now + this.weapon.fireRate;
         
     }
 
 }
 Player.prototype.shoot = function () {
-    this.weapon.fire();
+    this.weapon.fire(this.body.center);
     this.animations.play('gun');
-}
-Player.prototype.update = function (layer) {
-    this.moveCharacter(layer);
+} 
+Player.prototype.update = function (layer4,layer3) {
+    this.moveCharacter(layer4,layer3);
     this.recogeInput();
-}
-Player.prototype.stopAnimation = function () {
+   // this.game.physics.arcade.collide(this.weapon.bullets , layer4  , this.bulletHitWall);
 
+}
+Player.prototype.bulletHitWall = function(bullet,layer){
+    bullet.kill(); 
 }
 module.exports = Player;

@@ -67,7 +67,7 @@ var PreloaderScene = {
 //Se ejecuta al principio, creando el juego, añadiendo los estados y comenzando en el boot
 window.onload = function () {
   var game = new Phaser.Game(2400, 2450, Phaser.AUTO, 'game');
-
+  ///2400, 2450
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
