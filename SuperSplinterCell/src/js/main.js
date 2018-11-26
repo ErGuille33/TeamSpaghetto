@@ -57,6 +57,11 @@ var PreloaderScene = {
     //Personajes
     this.load.spritesheet('player', 'images/Sprites Sam Fisher.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
+    //Puertas
+    this.load.image('openDoor','images/OpenDoor.png')
+    this.load.image('closeDoor','images/ClosedDoor.png')
+    this.load.image('openKeyDoor','images/OpenKeyDoor.png')
+    this.load.image('closeKeyDoor','images/ClosedKeyDoor.png')
   },
   //Llamamos a playscene
   create: function () {

@@ -5,8 +5,6 @@ var Character = require('./character.js')
 function Player(x, y, key, doc, lp, t, c, g, h, sprite, game) {
     Character.call(this, game, x, y, sprite);
     this.isMoving = false;
-    this.position.x = x;
-    this.position.y = y;
     this.magneticKey = key;
     this.documents = doc;
     this.items = {
@@ -31,7 +29,7 @@ Player.prototype.ini = function () {
     this.xDestine = this.x;
     this.yDestine = this.y;
     this.distance = 0;
-    this.speed = 200;
+    this.speed = 325;
     //weapon
 
     this.weapon = this.game.add.weapon(10, 'bullet');
