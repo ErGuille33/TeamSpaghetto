@@ -3,6 +3,7 @@
 var Player = require('./player.js');
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
 var Door = require('./door.js');
+
 var PlayScene = {
   //Se ejecuta al principio
   create: function () {
@@ -53,6 +54,8 @@ var PlayScene = {
 
     //Inicializamos el personaje
     this.Sam = new Player(100, 100, false, false, false, false, false, false, false, 'player', this.game);
+    this.doors = [];
+    this.doors[0]= new Door(200,200,false,false,0,'openDoor',this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
     //Cámara
