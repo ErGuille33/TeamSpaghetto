@@ -2,60 +2,46 @@
 //El jugador
 var Player = require('./player.js');
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
-var Door = require('./door.js');
+var Map = require('./map.js');
 
 var PlayScene = {
   //Se ejecuta al principio
   create: function () {
     //Añadimos al mapa nuestro mapa ya cargado, y lo cargamos en la escena
     //El mapa de juego
-    var map1;
-    var map2;
-    var map3;
-    var map4;
-    var map5;
+    this.map1;
+    this.map2;
+    this.map3;
+    this.map4;
+    this.map5;
+    this.map6;
     this.Sam;
     //Capas
-    PlayScene.layer;
-    PlayScene.layer2;
-    PlayScene.layer3;
-    PlayScene.layer4;
-    map1 = this.game.add.tilemap('Lvl1_1_1', 48, 48);
-    map2 = this.game.add.tilemap('Lvl1_1_2', 48, 48);
-    map3 = this.game.add.tilemap('Lvl1_1_3', 48, 48);
-    map4 = this.game.add.tilemap('Lvl1_1_4', 48, 48);
-    map5 = this.game.add.tilemap('Lvl1_1_5', 48, 48);
-    //Añadimos el tileset ya cargado
-    map1.addTilesetImage('suelo');
-    map2.addTilesetImage('paredes');
-    map3.addTilesetImage('paredes');
-    map4.addTilesetImage('objetos');
-    map5.addTilesetImage('objetos');
-    //
-    //Metemos el mapa en la capa 0
-    this.layer = map1.createLayer(0);
-    this.layer.resizeWorld();
+   
+    this.map1 = new Map('Lvl1_1_1',48,48,'suelo',this);
+    this.map1.ini();
+   
+    this.map2 = new Map('Lvl1_1_2',48,48,'paredes',this);
+    this.map2.ini();
 
-    this.layer2 = map2.createLayer(0);
-    this.layer2.resizeWorld();
+    this.map3 = new Map('Lvl1_1_3',48,48,'paredes',this);
+    this.map3.ini();
+    this.map3.collisions(0,1000);
 
-    this.layer3 = map3.createLayer(0);
-    this.layer3.resizeWorld();
+    this.map4 = new Map('Lvl1_1_4',48,48,'objetos',this);
+    this.map4.ini();
+    this.map4.collisions(0,1000);
+    
 
-    this.layer4 = map4.createLayer(0);
-    this.layer4.resizeWorld();
+    this.map5 = new Map('Lvl1_1_5',48,48,'objetos',this);
+    this.map5.ini();
 
-    this.layer5 = map5.createLayer(0);
-    this.layer5.resizeWorld();
-    //Esto es para poner las colisiones en funcion de los numeros que aparecen en el mapa de tiles
-    map4.setCollisionBetween(0,1000);
-    map3.setCollisionBetween(0,1000);
-    //Inicializamos las puertas
+    this.map6 = new Map('Lvl1_1_6',48,48,'paredes',this);
+    this.map6.ini();
+    this.map6.collisions(0,148);
 
     //Inicializamos el personaje
-    this.Sam = new Player(100, 100, false, false, false, false, false, false, false, 'player', this.game);
-    this.doors = [];
-    this.doors[0]= new Door(200,200,false,false,0,'openDoor',this.game);
+    this.Sam = new Player(100, 100, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
     //Cámara
@@ -63,7 +49,7 @@ var PlayScene = {
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.layer4,this.layer3);
+    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer());
   },
 };
 
