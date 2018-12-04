@@ -49,7 +49,7 @@ var PlayScene = {
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer());
+    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6);
   },
 };
 
@@ -57,34 +57,8 @@ module.exports = PlayScene;
 
 
 
+
 /*
-function Point (x,y){
-  this.x =x;
-  this.y =y;
-};
-function Door (position){
-  this.position = position;
-  this.open = false;
-}
-function Shot (position, velocity){
-  this._position = position;
-  this._velocity = velocity;
-};
-function Player(position, graphic){
-  this.position = position;
-  this.hidden = true;
-  this.magneticKey = false;
-  this.documents = false; 
-  this.graphic = graphic;
-  this.items = {lockPick:null,taser:null,cable:null, takeObject:null}
-  
-} 
-function Enemy(position, graphic){
-  this.position = position;
-  this.reducedVision = false;
-  this.awake = true;
-  this.detected=false;
-}
 function Level(position, graphic){
   this.lightsOn = true;
   this.win = false;

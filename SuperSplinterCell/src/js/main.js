@@ -59,9 +59,12 @@ var PreloaderScene = {
     this.load.image('suelo', 'images/suelo_pixel_art.png');
     this.load.image('paredes', 'images/mas_tile_set.png');
     this.load.image('objetos', 'images/decoraciones2.png');
+    
+    
     //Personajes
     this.load.spritesheet('player', 'images/Sprites Sam Fisher.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
+    this.load.image('aux', 'images/bloque1.jpg');
     //Puertas
     this.load.image('openDoor','images/OpenDoor.png')
     this.load.image('closeDoor','images/ClosedDoor.png')
@@ -76,7 +79,7 @@ var PreloaderScene = {
 
 //Se ejecuta al principio, creando el juego, añadiendo los estados y comenzando en el boot
 window.onload = function () {
-  var game = new Phaser.Game(2400, 2450, Phaser.AUTO, 'game');
+  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
   ///2400, 2450
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);

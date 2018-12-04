@@ -23,7 +23,24 @@ Map.prototype.returnLayer = function(){
 Map.prototype.collisions = function(col1,col2){
     this.tileMap.setCollisionBetween(col1,col2);
 }
-Map.prototype.open = function () {
-    
+Map.prototype.open = function (x,y) {
+    //145,148 tiles de puerta
+    this.tileMap.removeTile(x,y,this.layer)
+    if(this.tileMap.getTileAbove(this.layer, x, y) != -1){
+
+        this.tileMap.removeTile(x,y-46,this.layer)
+    }
+    else if(this.tileMap.getTileBelow(this.layer, x, y) != -1){
+
+        this.tileMap.removeTile(x,y+46,this.layer)
+    }
+    else if(this.tileMap.getTileLeft(this.layer, x, y) != -1){
+        
+        this.tileMap.removeTile(x-46,y,this.layer)
+    }
+    else if(this.tileMap.getTileRight(this.layer, x, y) != -1){
+        
+        this.tileMap.removeTile(x+46,y,this.layer)
+    }
 }
 module.exports = Map;
