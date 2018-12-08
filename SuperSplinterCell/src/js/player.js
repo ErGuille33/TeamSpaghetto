@@ -49,10 +49,12 @@ Player.prototype.ini = function () {
     this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.fireTime = this.game.time.physicsElapsed;
 
-    this.hand = new Hand(this.game,20,0,'aux');
+    this.hand = new Hand(this.game, 20, 0, 'aux');
     this.hand.ini();
-    this.game.add.existing(this.hand);
+
     this.addChild(this.hand);
+
+
 }
 Player.prototype.moveCharacter = function (layer4, layer3, layer6) {
     //COmprueba si se esta pulsando el boton del ratón, y si ha pasado suficiente tiempo desde que se ha disparado
@@ -61,10 +63,11 @@ Player.prototype.moveCharacter = function (layer4, layer3, layer6) {
         this.yDestine = this.game.input.mousePointer.worldY;
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
         this.rotation = this.game.physics.arcade.moveToPointer(this, this.speed, this.game.input);
+        //console.log(this.xDestine );
         this.animations.play('walk');
     }
     this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
-   // this.distance = this.world.width - this.world.width + this.x;
+    // this.distance = this.world.width - this.world.width + this.x;
     if (this.distance <= this.speed / this.game.time.physicsElapsedMS) { // una constante o variable (algo qe sea el incremento de movimiento)
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
@@ -87,8 +90,10 @@ Player.prototype.moveCharacter = function (layer4, layer3, layer6) {
     }
 
 
+
 }
-Player.prototype.recogeInput = function (map6,layer6) {
+Player.prototype.recogeInput = function (map6, layer6) {
+
     if (this.eKey.justDown) {
         this.items = 4
         console.log("jand");
@@ -106,7 +111,8 @@ Player.prototype.recogeInput = function (map6,layer6) {
                 this.fireTime = this.game.time.now + this.weapon.fireRate;
                 break;
             case 4:
-                this.open(map6,layer6);
+                this.open(map6, layer6);
+                this.fireTime = this.game.time.now + 1500;
                 break;
 
         }
@@ -116,18 +122,31 @@ Player.prototype.shoot = function () {
     this.weapon.fire(this.body.center);
     this.animations.play('gun');
 }
-Player.prototype.open = function (map6,layer6) {
-    if (this.game.physics.arcade.overlap(this.hand, layer6)) {
-        console.log("colisone");
-        map6.open(this.hand.x,this.hand.y);
-        
-    }
+Player.prototype.open = function (map6, layer6) {
     this.animations.play('hand');
-   
+    
+    console.log(this.hand.body.x + 24);
+    console.log(map6.doors[3].x);
+    console.log(map6.doors[3].x + 48);
+    console.log(this.hand.body.y + 24);
+    console.log(map6.doors[3].y);
+    console.log(map6.doors[3].y + 48);
+    
+    for (var i = 0; i < map6.doors.length;i++){
+
+        if ((this.hand.body.x + this.hand.width/2 ) > map6.doors[i].x && (this.hand.body.x + this.hand.width/2 ) < (map6.doors[i].x + 48)
+        && (this.hand.body.y + this.hand.width/2) > (map6.doors[i].y) && (this.hand.body.y + this.hand.width/2 ) < (map6.doors[i].y + 48)) {
+            //console.log(map6.tileMap.getTile(this.x, this.y, true).worldX);
+            console.log("lodetectaloco");
+            this.game.time.events.add(Phaser.Timer.SECOND/2 , map6.open, map6 ,map6.doors[i].x /48, map6.doors[i].y /48 );
+            //map6.open(map6.doors[i].x /48, map6.doors[i].y /48);
+
+        }
+    }
 }
 Player.prototype.update = function (layer4, layer3, layer6, map6) {
     this.moveCharacter(layer4, layer3, layer6);
-    this.recogeInput(map6,layer6);
+    this.recogeInput(map6, layer6);
     // this.game.physics.arcade.collide(this.weapon.bullets , layer4  , this.bulletHitWall);
 
 }
