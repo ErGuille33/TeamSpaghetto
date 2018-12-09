@@ -56,7 +56,7 @@ Player.prototype.ini = function () {
 
 
 }
-Player.prototype.moveCharacter = function (layer4, layer3, layer6) {
+Player.prototype.moveCharacter = function () {
     //COmprueba si se esta pulsando el boton del ratón, y si ha pasado suficiente tiempo desde que se ha disparado
     if (this.game.input.mousePointer.isDown && this.fireTime - 500 <= this.game.time.now) {
         this.xDestine = this.game.input.mousePointer.worldX;
@@ -68,6 +68,12 @@ Player.prototype.moveCharacter = function (layer4, layer3, layer6) {
     }
     this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
     // this.distance = this.world.width - this.world.width + this.x;
+
+
+
+
+}
+Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     if (this.distance <= this.speed / this.game.time.physicsElapsedMS) { // una constante o variable (algo qe sea el incremento de movimiento)
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
@@ -88,9 +94,7 @@ Player.prototype.moveCharacter = function (layer4, layer3, layer6) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
     }
-
-
-
+    
 }
 Player.prototype.recogeInput = function (map6, layer6) {
 
@@ -111,7 +115,7 @@ Player.prototype.recogeInput = function (map6, layer6) {
                 this.fireTime = this.game.time.now + this.weapon.fireRate;
                 break;
             case 4:
-                this.open(map6, layer6);
+                this.open(map6);
                 this.fireTime = this.game.time.now + 1500;
                 break;
 
@@ -122,31 +126,31 @@ Player.prototype.shoot = function () {
     this.weapon.fire(this.body.center);
     this.animations.play('gun');
 }
-Player.prototype.open = function (map6, layer6) {
+Player.prototype.open = function (map6) {
     this.animations.play('hand');
-    
+
     console.log(this.hand.body.x + 24);
     console.log(map6.doors[3].x);
     console.log(map6.doors[3].x + 48);
     console.log(this.hand.body.y + 24);
     console.log(map6.doors[3].y);
     console.log(map6.doors[3].y + 48);
-    
-    for (var i = 0; i < map6.doors.length;i++){
 
-        if ((this.hand.body.x + this.hand.width/2 ) > map6.doors[i].x && (this.hand.body.x + this.hand.width/2 ) < (map6.doors[i].x + 48)
-        && (this.hand.body.y + this.hand.width/2) > (map6.doors[i].y) && (this.hand.body.y + this.hand.width/2 ) < (map6.doors[i].y + 48)) {
-            //console.log(map6.tileMap.getTile(this.x, this.y, true).worldX);
-            console.log("lodetectaloco");
-            this.game.time.events.add(Phaser.Timer.SECOND/2 , map6.open, map6 ,map6.doors[i].x /48, map6.doors[i].y /48 );
-            //map6.open(map6.doors[i].x /48, map6.doors[i].y /48);
+    for (var i = 0; i < map6.doors.length; i++) {
+
+        if ((this.hand.body.x + this.hand.width / 2) > map6.doors[i].x && (this.hand.body.x + this.hand.width / 2) < (map6.doors[i].x + 48)
+            && (this.hand.body.y + this.hand.width / 2) > (map6.doors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.doors[i].y + 48)) {
+
+            this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.doors[i].x / 48, map6.doors[i].y / 48);
+
 
         }
     }
 }
 Player.prototype.update = function (layer4, layer3, layer6, map6) {
-    this.moveCharacter(layer4, layer3, layer6);
+    this.moveCharacter();
     this.recogeInput(map6, layer6);
+    this.checkCollision(layer4, layer3, layer6);
     // this.game.physics.arcade.collide(this.weapon.bullets , layer4  , this.bulletHitWall);
 
 }

@@ -15,7 +15,5 @@ Hand.prototype.ini = function () {
     this.scale.setTo(.2,.2);
     this.alpha = .2;
 }
-Hand.prototype.open = function(map6,layer6){
-   
-}
+
 module.exports = Hand;

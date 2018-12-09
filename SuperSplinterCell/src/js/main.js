@@ -1,6 +1,9 @@
 'use strict';
 //Añadimos el script de escena 
-var PlayScene = require('./play_scene.js');
+var PlayScene = require('./Lvl1_1.js');
+var lvl01_02 = require('./Lvl1_2.js');
+var lvl02_01 = require('./Lvl2_1.js');
+var lvl02_02 = require('./Lvl2_2.js');
 
 //Se ejecuta primero
 var BootScene = {
@@ -34,21 +37,21 @@ var PreloaderScene = {
     this.game.load.tilemap('Lvl1_1_1', 'images/CSV/Lvl1_1_Suelo.csv');
    
     //Lvl1-2
-    this.game.load.tilemap('Lvl1_1_6', 'images/CSV/Lvl1_2_Door.csv');
+    this.game.load.tilemap('Lvl1_2_6', 'images/CSV/Lvl1_2_Door.csv');
     this.game.load.tilemap('Lvl1_2_5', 'images/CSV/Lvl1_2_Cositis2.csv');
     this.game.load.tilemap('Lvl1_2_4', 'images/CSV/Lvl1_2_Cositis.csv');
     this.game.load.tilemap('Lvl1_2_3', 'images/CSV/Lvl1_2_Muebles.csv');
     this.game.load.tilemap('Lvl1_2_2', 'images/CSV/Lvl1_2_Sobresuelo.csv');
     this.game.load.tilemap('Lvl1_2_1', 'images/CSV/Lvl1_2_Suelo.csv');
     //Lvl2-1
-    this.game.load.tilemap('Lvl1_1_6', 'images/CSV/Lvl2_1_Door.csv');
+    this.game.load.tilemap('Lvl2_1_6', 'images/CSV/Lvl2_1_Door.csv');
     this.game.load.tilemap('Lvl2_1_5', 'images/CSV/Lvl2_1_Cositis2.csv');
     this.game.load.tilemap('Lvl2_1_4', 'images/CSV/Lvl2_1_Cositis.csv');
     this.game.load.tilemap('Lvl2_1_3', 'images/CSV/Lvl2_1_Muebles.csv');
     this.game.load.tilemap('Lvl2_1_2', 'images/CSV/Lvl2_1_Sobresuelo.csv');
     this.game.load.tilemap('Lvl2_1_1', 'images/CSV/Lvl2_1_Suelo.csv');
     //Lvl2-2
-    this.game.load.tilemap('Lvl1_1_6', 'images/CSV/Lvl2_2_Door.csv');
+    this.game.load.tilemap('Lvl2_2_6', 'images/CSV/Lvl2_2_Door.csv');
     this.game.load.tilemap('Lvl2_2_5', 'images/CSV/Lvl2_2_Cositis2.csv');
     this.game.load.tilemap('Lvl2_2_4', 'images/CSV/Lvl2_2_Cositis.csv');
     this.game.load.tilemap('Lvl2_2_3', 'images/CSV/Lvl2_2_Muebles.csv');
@@ -73,7 +76,7 @@ var PreloaderScene = {
   },
   //Llamamos a playscene
   create: function () {
-    this.game.state.start('play');
+    this.game.state.start('lvl2_1');
   }
 };
 
@@ -84,6 +87,9 @@ window.onload = function () {
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
+  game.state.add('lvl1_2', lvl01_02);
+  game.state.add('lvl2_1',lvl02_01);
+  game.state.add('lvl2_2',lvl02_02);
 
   game.state.start('boot');
 };
