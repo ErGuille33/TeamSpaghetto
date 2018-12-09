@@ -38,9 +38,10 @@ var Lvl1_2 = {
 
     this.map6 = new Map('Lvl1_2_6',48,48,'paredes',this,true,50,50);
     this.map6.ini();
-    this.map6.collisions(0,148);
+    this.map6.collisions(0,1000);
 
     //Inicializamos el personaje
+    //2040, 325
     this.Sam = new Player(2040, 325, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();

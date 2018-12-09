@@ -94,7 +94,7 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
     }
-    
+
 }
 Player.prototype.recogeInput = function (map6, layer6) {
 
@@ -144,6 +144,17 @@ Player.prototype.open = function (map6) {
             this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.doors[i].x / 48, map6.doors[i].y / 48);
 
 
+        }
+    }
+    if (this.magneticKey == true) {
+        for (var i = 0; i < map6.magneticDoors.length; i++) {
+            if ((this.hand.body.x + this.hand.width / 2) > map6.magneticDoors[i].x && (this.hand.body.x + this.hand.width / 2) < (map6.magneticDoors[i].x + 48)
+                && (this.hand.body.y + this.hand.width / 2) > (map6.magneticDoors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.magneticDoors[i].y + 48)) {
+
+                this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.magneticDoors[i].x / 48, map6.magneticDoors[i].y / 48);
+
+
+            }
         }
     }
 }

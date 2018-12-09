@@ -4,7 +4,8 @@ var PlayScene = require('./Lvl1_1.js');
 var lvl01_02 = require('./Lvl1_2.js');
 var lvl02_01 = require('./Lvl2_1.js');
 var lvl02_02 = require('./Lvl2_2.js');
-
+var menu = require ('./mainMenu.js');
+var lvlmenu = require('./lvlSelector.js');
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -35,7 +36,7 @@ var PreloaderScene = {
     this.game.load.tilemap('Lvl1_1_3', 'images/CSV/Lvl1_1_Muebles.csv');
     this.game.load.tilemap('Lvl1_1_2', 'images/CSV/Lvl1_1_Sobresuelo.csv');
     this.game.load.tilemap('Lvl1_1_1', 'images/CSV/Lvl1_1_Suelo.csv');
-   
+
     //Lvl1-2
     this.game.load.tilemap('Lvl1_2_6', 'images/CSV/Lvl1_2_Door.csv');
     this.game.load.tilemap('Lvl1_2_5', 'images/CSV/Lvl1_2_Cositis2.csv');
@@ -62,21 +63,25 @@ var PreloaderScene = {
     this.load.image('suelo', 'images/suelo_pixel_art.png');
     this.load.image('paredes', 'images/mas_tile_set.png');
     this.load.image('objetos', 'images/decoraciones2.png');
-    
-    
+
+
     //Personajes
     this.load.spritesheet('player', 'images/Sprites Sam Fisher.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
     this.load.image('aux', 'images/bloque1.jpg');
     //Puertas
-    this.load.image('openDoor','images/OpenDoor.png')
-    this.load.image('closeDoor','images/ClosedDoor.png')
-    this.load.image('openKeyDoor','images/OpenKeyDoor.png')
-    this.load.image('closeKeyDoor','images/ClosedKeyDoor.png')
+    // this.load.image('openDoor','images/OpenDoor.png')
+    // this.load.image('closeDoor','images/ClosedDoor.png')
+    // this.load.image('openKeyDoor','images/OpenKeyDoor.png')
+    // this.load.image('closeKeyDoor','images/ClosedKeyDoor.png')
+
+    //Menu
+    this.load.image('mainMenu', 'images/MainMenu.png');
+    this.load.image('lvlSelector', 'images/SelectorLevels.png');
   },
   //Llamamos a playscene
   create: function () {
-    this.game.state.start('lvl2_1');
+    this.game.state.start('menu');
   }
 };
 
@@ -88,8 +93,10 @@ window.onload = function () {
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
   game.state.add('lvl1_2', lvl01_02);
-  game.state.add('lvl2_1',lvl02_01);
-  game.state.add('lvl2_2',lvl02_02);
+  game.state.add('lvl2_1', lvl02_01);
+  game.state.add('lvl2_2', lvl02_02);
+  game.state.add('menu', menu);
+  game.state.add('lvlSel', lvlmenu);
 
   game.state.start('boot');
 };

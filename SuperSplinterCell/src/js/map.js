@@ -26,9 +26,21 @@ Map.prototype.ini = function () {
         this.doors = [];
         for (var i = 0; i < this.row; i++) {
             for (var j = 0; j < this.col; j++) {
-                if (this.tileMap.getTile(i, j, this.layer, true).index != -1) {
-                    console.log(this.tileMap.getTile(i, j, this.layer, true).worldX)
+                if (this.tileMap.getTile(i, j, this.layer, true).index == 148 || this.tileMap.getTile(i, j, this.layer, true).index == 145) {
+                    
                     this.doors.push({ x: this.tileMap.getTile(i, j, this.layer, true).worldX, y: this.tileMap.getTile(i, j, this.layer, true).worldY });
+                    aux++;
+
+                }
+            }
+        }
+        aux = 0;
+        this.magneticDoors = [];
+        for (var i = 0; i < this.row; i++) {
+            for (var j = 0; j < this.col; j++) {
+                if (this.tileMap.getTile(i, j, this.layer, true).index == 556 || this.tileMap.getTile(i, j, this.layer, true).index == 568) {
+                    
+                    this.magneticDoors.push({ x: this.tileMap.getTile(i, j, this.layer, true).worldX, y: this.tileMap.getTile(i, j, this.layer, true).worldY });
                     aux++;
 
                 }
@@ -46,11 +58,11 @@ Map.prototype.collisions = function (col1, col2) {
 Map.prototype.open = function (x, y) {
 
     if (this.tileMap.getTileAbove(this.tileMap.getLayer(), x, y).index != -1) {
-        console.log("bor");
+        
         this.tileMap.removeTile(x, y - 1, this.tileMap.getLayer());
     }
     else if (this.tileMap.getTileBelow(this.tileMap.getLayer(), x, y).index != -1) {
-        console.log("bor");
+        
         this.tileMap.removeTile(x, y + 1, this.tileMap.getLayer());
     }
     else if (this.tileMap.getTileLeft(this.tileMap.getLayer(), x, y).index != -1) {
@@ -62,6 +74,6 @@ Map.prototype.open = function (x, y) {
         this.tileMap.removeTile(x + 1, y, this.tileMap.getLayer());
     }
     this.tileMap.removeTile(x, y, this.tileMap.getLayer());
-    console.log("borra");
+    
 }
 module.exports = Map;
