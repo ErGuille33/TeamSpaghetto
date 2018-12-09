@@ -4,6 +4,7 @@ var Player = require('./player.js');
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
+var documents = require('./documentos.js');
 
 var Lvl2_1 = {
   //Se ejecuta al principio
@@ -41,6 +42,10 @@ var Lvl2_1 = {
     this.map6.ini();
     this.map6.collisions(0,1000);
 
+    //Items
+    this.docums = new documents (this.game,1025, 455, 'documents',.15,.15);
+    this.docums.ini();
+
     //Inicializamos el personaje
     //154, 636
     this.Sam = new Player(154, 636, true, false, 5, 'player', this.game);
@@ -52,15 +57,22 @@ var Lvl2_1 = {
     this.nextLvl = new tspr(this.game, 2292, 1243, 'aux', .3,.4);
     this.nextLvl.ini();
 
+    this.endLvl = new tspr(this.game, 1444, 1437, 'aux', .8,.4);
+    this.endLvl.ini();
+
     this.checkIntersects = function(){
       if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
-        this.game.state.start('lvl2_2')
+        this.game.state.start('lvl2_2');
+      }
+      else if(Phaser.Rectangle.intersects(this.Sam,this.endLvl) && this.Sam.documents){
+        this.game.state.start('menu');
       }
     }
+    
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6);
+    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
   },
 };

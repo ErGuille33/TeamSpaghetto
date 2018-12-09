@@ -4,6 +4,8 @@ var Player = require('./player.js');
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
+var documents = require('./documentos.js');
+
 var Lvl1_2 = {
   //Se ejecuta al principio
   create: function () {
@@ -40,9 +42,13 @@ var Lvl1_2 = {
     this.map6.ini();
     this.map6.collisions(0,1000);
 
+    //Objetos
+    this.docums = new documents (this.game,1940, 1435, 'documents',.15,.15);
+    this.docums.ini();
+
     //Inicializamos el personaje
     //2040, 325
-    this.Sam = new Player(2040, 325, false, false, 5, 'player', this.game);
+    this.Sam = new Player(2040, 325, true, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
 
@@ -59,7 +65,7 @@ var Lvl1_2 = {
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6);
+    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
   },
 };

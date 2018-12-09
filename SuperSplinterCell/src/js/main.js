@@ -69,11 +69,10 @@ var PreloaderScene = {
     this.load.spritesheet('player', 'images/Sprites Sam Fisher.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
     this.load.image('aux', 'images/bloque1.jpg');
-    //Puertas
-    // this.load.image('openDoor','images/OpenDoor.png')
-    // this.load.image('closeDoor','images/ClosedDoor.png')
-    // this.load.image('openKeyDoor','images/OpenKeyDoor.png')
-    // this.load.image('closeKeyDoor','images/ClosedKeyDoor.png')
+    //Items
+    this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
+    this.load.spritesheet('documents','images/documents.png',250,311);
+    
 
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');

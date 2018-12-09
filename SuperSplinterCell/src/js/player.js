@@ -3,6 +3,7 @@
 var Character = require('./character.js')
 var Map = require('./map.js');
 var Hand = require('./hand.js');
+var mg = require('./tarjetaLlave.js');
 
 //Items : 1 = lockpick | 2 = taser | 3 = cable | 4 = gun  | 5 = hand 
 function Player(x, y, key, doc, it, sprite, game) {
@@ -12,12 +13,15 @@ function Player(x, y, key, doc, it, sprite, game) {
     this.documents = doc;
     this.items = it;
     this.game = game;
+   // this.eT = tarj;
+
+   // this.papeles = papeles;
 }
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.ini = function () {
-
+    
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
     this.body.setSize(25, 30, 15, 15);
@@ -96,7 +100,7 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     }
 
 }
-Player.prototype.recogeInput = function (map6, layer6) {
+Player.prototype.recogeInput = function (map6, layer6, tarjeta,documents) {
 
     if (this.eKey.justDown) {
         this.items = 4
@@ -116,10 +120,34 @@ Player.prototype.recogeInput = function (map6, layer6) {
                 break;
             case 4:
                 this.open(map6);
+                if(tarjeta != undefined && !this.magneticKey) {
+                this.recogeLlave(tarjeta);
+            }
+            else if(documents!= undefined && !this.documents){
+                this.recogeDocumento(documents);
+            }
                 this.fireTime = this.game.time.now + 1500;
                 break;
 
         }
+    }
+}
+Player.prototype.recogeLlave = function(tarjeta){
+    
+    if(Phaser.Rectangle.intersects(this.hand.getBounds(), tarjeta.getBounds())){
+        this.magneticKey = true;
+        console.log(this.magneticKey);
+        
+        tarjeta.kill();
+    }
+}
+Player.prototype.recogeDocumento = function(documents){
+    
+    if(Phaser.Rectangle.intersects(this.hand.getBounds(), documents.getBounds())){
+        this.documents = true;
+        console.log(this.papeles);
+        
+        documents.kill();
     }
 }
 Player.prototype.shoot = function () {
@@ -158,9 +186,9 @@ Player.prototype.open = function (map6) {
         }
     }
 }
-Player.prototype.update = function (layer4, layer3, layer6, map6) {
+Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents) {
     this.moveCharacter();
-    this.recogeInput(map6, layer6);
+    this.recogeInput(map6, layer6, tarjeta, documents);
     this.checkCollision(layer4, layer3, layer6);
     // this.game.physics.arcade.collide(this.weapon.bullets , layer4  , this.bulletHitWall);
 

@@ -38,7 +38,7 @@ Map.prototype.ini = function () {
         this.magneticDoors = [];
         for (var i = 0; i < this.row; i++) {
             for (var j = 0; j < this.col; j++) {
-                if (this.tileMap.getTile(i, j, this.layer, true).index == 556 || this.tileMap.getTile(i, j, this.layer, true).index == 568) {
+                if (this.tileMap.getTile(i, j, this.layer, true).index == 568 || this.tileMap.getTile(i, j, this.layer, true).index == 565) {
                     
                     this.magneticDoors.push({ x: this.tileMap.getTile(i, j, this.layer, true).worldX, y: this.tileMap.getTile(i, j, this.layer, true).worldY });
                     aux++;
