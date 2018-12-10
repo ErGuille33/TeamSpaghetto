@@ -107,7 +107,7 @@ Player.prototype.bulletHitWall = function (layer3,layer4,layer6) {
     // console.log(this.weapon.bullets);
     var player = this;
     this.weapon.bullets.forEach(function (bullet) { 
-        bullet.body.setSize(50,50,0,0);
+        bullet.body.setSize(0,0,-0,15);
         if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4) 
         || player.game.physics.arcade.collide(bullet, layer6)) 
         { bullet.kill() } 
