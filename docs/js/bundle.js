@@ -1,11 +1,77 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
+var Character = require('./character.js')
+var Player = require('./player.js')
+
+
+function Interface(x, y, sprite, game) {
+    Character.call(this, game, x, y, sprite);
+}
+
+Interface.prototype = Object.create(Character.prototype);
+Interface.prototype.constructor = Interface;
+
+Interface.prototype.ini = function (doc, key) {
+    this.animations.add('idle', [0], 1, false);
+    this.animations.add('lockpick', [1], 1, false);
+    this.animations.add('taser', [2], 1, false);
+    this.animations.add('cable', [3], 1, false);
+    this.animations.add('gun', [4], 1, false);
+    this.animations.add('hand', [5], 1, false);
+
+    this.eKey = this.game.input.keyboard.addKey(Phaser.KeyCode.E);
+    this.rKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
+
+    this.document = this.game.add.sprite(650,552,'documents');
+    this.document.scale.setTo(.15,.15);
+    this.document.fixedToCamera = true;
+    this.document.alpha = 0;
+    this.game.add.existing(this.document);
+
+    this.tarjet = this.game.add.sprite(730, 560, 'tarjet');
+    this.tarjet.scale.setTo(.075,.075);
+    this.tarjet.fixedToCamera = true;
+    this.tarjet.alpha = 0;
+    this.game.add.existing(this.tarjet);
+
+    this.hasDoc = doc;
+    this.hasMag = key;
+}
+
+Interface.prototype.update = function () {
+
+    if (this.eKey.justDown) {
+        this.animations.stop();
+        this.animations.play('hand');
+        Console.log('estoy dentro1')
+    }
+    else if (this.rKey.justDown) {
+        this.animations.stop();
+        this.animations.play('gun');
+        Console.log('estoy dentro2')
+    }
+
+    if (this.hasDoc){
+        this.document.alpha = 1;
+    }else this.document.alpha = 0;
+
+    if (this.hasMag){
+        this.tarjet.alpha = 1;
+    }else this.tarjet.alpha = 0;
+
+}
+module.exports = Interface;
+
+},{"./character.js":6,"./player.js":13}],2:[function(require,module,exports){
+'use strict';
 //El jugador
 var Player = require('./player.js');
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
+//UI
+var Interface = require('./Interface.js');
 
 var PlayScene = {
   //Se ejecuta al principio
@@ -20,6 +86,8 @@ var PlayScene = {
     this.map5;
     this.map6;
     this.Sam;
+    this.interfaz;
+    this.button;
     //Capas
    
     this.map1 = new Map('Lvl1_1_1',48,48,'suelo',this,false,50,50);
@@ -59,6 +127,12 @@ var PlayScene = {
     this.endLvl = new tspr(this.game, 1392, 2387, 'aux', .8,.4);
     this.endLvl.ini();
 
+    //UI
+    this.interfaz = new Interface(400,575,'UI',this.game);
+    this.game.add.existing(this.interfaz);
+    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.fixedToCamera = true;
+
     //Cámara
     this.camera.follow(this.Sam);
     this.checkIntersects = function(){
@@ -75,6 +149,7 @@ var PlayScene = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6, this.magKey,undefined);
     this.checkIntersects();
+    this.interfaz.update();
   },
 
 };
@@ -93,7 +168,7 @@ function Level(position, graphic){
 };
 
 */
-},{"./map.js":11,"./player.js":12,"./tarjetaLlave.js":13,"./triggerSprite.js":14}],2:[function(require,module,exports){
+},{"./Interface.js":1,"./map.js":12,"./player.js":13,"./tarjetaLlave.js":14,"./triggerSprite.js":15}],3:[function(require,module,exports){
 'use strict';
 //El jugador
 var Player = require('./player.js');
@@ -101,6 +176,8 @@ var Player = require('./player.js');
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var documents = require('./documentos.js');
+//UI
+var Interface = require('./Interface.js');
 
 var Lvl1_2 = {
   //Se ejecuta al principio
@@ -150,6 +227,12 @@ var Lvl1_2 = {
 
     this.nextLvl = new tspr(this.game, 2050, 211, 'aux', 1.9,.2);
     this.nextLvl.ini();
+
+     //UI
+     this.interfaz = new Interface(400,575,'UI',this.game);
+     this.game.add.existing(this.interfaz);
+     this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+     this.interfaz.fixedToCamera = true;
     //Cámara
     this.camera.follow(this.Sam);
     //inters
@@ -163,13 +246,14 @@ var Lvl1_2 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
+    this.interfaz.update();
   },
 };
 
 module.exports = Lvl1_2;
 
 
-},{"./documentos.js":6,"./map.js":11,"./player.js":12,"./triggerSprite.js":14}],3:[function(require,module,exports){
+},{"./Interface.js":1,"./documentos.js":7,"./map.js":12,"./player.js":13,"./triggerSprite.js":15}],4:[function(require,module,exports){
 'use strict';
 //El jugador
 var Player = require('./player.js');
@@ -177,6 +261,8 @@ var Player = require('./player.js');
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var documents = require('./documentos.js');
+//UI
+var Interface = require('./Interface.js');
 
 var Lvl2_1 = {
   //Se ejecuta al principio
@@ -223,6 +309,13 @@ var Lvl2_1 = {
     this.Sam = new Player(154, 636, true, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
+
+    //UI
+    this.interfaz = new Interface(400,575,'UI',this.game);
+    this.game.add.existing(this.interfaz);
+    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.fixedToCamera = true;
+
     //Cámara
     this.camera.follow(this.Sam);
 
@@ -246,13 +339,14 @@ var Lvl2_1 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
+    this.interfaz.update();
   },
 };
 
 module.exports = Lvl2_1;
 
 
-},{"./documentos.js":6,"./map.js":11,"./player.js":12,"./triggerSprite.js":14}],4:[function(require,module,exports){
+},{"./Interface.js":1,"./documentos.js":7,"./map.js":12,"./player.js":13,"./triggerSprite.js":15}],5:[function(require,module,exports){
 'use strict';
 //El jugador
 var Player = require('./player.js');
@@ -260,6 +354,9 @@ var Player = require('./player.js');
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
+//UI
+var Interface = require('./Interface.js');
+
 var Lvl2_2 = {
   //Se ejecuta al principio
   create: function () {
@@ -305,6 +402,13 @@ var Lvl2_2 = {
     this.Sam = new Player(2305, 1743, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
+
+    //UI
+    this.interfaz = new Interface(400,575,'UI',this.game);
+    this.game.add.existing(this.interfaz);
+    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.fixedToCamera = true;
+
     //Cámara
     this.camera.follow(this.Sam);
 
@@ -321,13 +425,14 @@ var Lvl2_2 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,this.magKey,undefined);
     this.checkIntersects();
+    this.interfaz.update();
   },
 };
 
 module.exports = Lvl2_2;
 
 
-},{"./map.js":11,"./player.js":12,"./tarjetaLlave.js":13,"./triggerSprite.js":14}],5:[function(require,module,exports){
+},{"./Interface.js":1,"./map.js":12,"./player.js":13,"./tarjetaLlave.js":14,"./triggerSprite.js":15}],6:[function(require,module,exports){
 'use strict';
 
 function Character(game, x, y, sprite) {
@@ -339,7 +444,7 @@ Character.prototype = Object.create(Phaser.Sprite.prototype);
 Character.prototype.constructor = Character;
 module.exports = Character;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -362,7 +467,7 @@ documentos.prototype.ini = function () {
 }
 
 module.exports = documentos;
-},{"./character.js":5}],7:[function(require,module,exports){
+},{"./character.js":6}],8:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -382,7 +487,7 @@ Hand.prototype.ini = function () {
 }
 
 module.exports = Hand;
-},{"./character.js":5}],8:[function(require,module,exports){
+},{"./character.js":6}],9:[function(require,module,exports){
 'use strict';
 var mainMenu = {
     create : function(){
@@ -409,7 +514,7 @@ var mainMenu = {
     }
 }
 module.exports = mainMenu;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 //Añadimos el script de escena 
 var PlayScene = require('./Lvl1_1.js');
@@ -485,6 +590,8 @@ var PreloaderScene = {
     this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
     this.load.spritesheet('documents','images/documents.png',250,311);
     
+    //UI
+    this.load.spritesheet('UI', 'images/UI SpriteSheet.png', 800, 50);
 
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');
@@ -511,7 +618,7 @@ window.onload = function () {
 
   game.state.start('boot');
 };
-},{"./Lvl1_1.js":1,"./Lvl1_2.js":2,"./Lvl2_1.js":3,"./Lvl2_2.js":4,"./lvlSelector.js":8,"./mainMenu.js":10}],10:[function(require,module,exports){
+},{"./Lvl1_1.js":2,"./Lvl1_2.js":3,"./Lvl2_1.js":4,"./Lvl2_2.js":5,"./lvlSelector.js":9,"./mainMenu.js":11}],11:[function(require,module,exports){
 'use strict';
 var mainMenu = {
     create : function(){
@@ -532,7 +639,7 @@ var mainMenu = {
     }
 }
 module.exports = mainMenu;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var Character = require('./character.js');
@@ -617,7 +724,7 @@ Map.prototype.open = function (x, y) {
 
 module.exports = Map;
 
-},{"./character.js":5}],12:[function(require,module,exports){
+},{"./character.js":6}],13:[function(require,module,exports){
 'use strict';
 
 var Character = require('./character.js')
@@ -727,7 +834,7 @@ Player.prototype.bulletHitWall = function (layer3,layer4,layer6) {
     // console.log(this.weapon.bullets);
     var player = this;
     this.weapon.bullets.forEach(function (bullet) { 
-        bullet.body.setSize(50,50,0,0);
+        bullet.body.setSize(0,0,-0,15);
         if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4) 
         || player.game.physics.arcade.collide(bullet, layer6)) 
         { bullet.kill() } 
@@ -821,6 +928,17 @@ Player.prototype.open = function (map6) {
     }
 }
 
+Player.prototype.retDoc = function(){
+
+    return this.documents;
+}
+
+Player.prototype.retKey = function(){
+
+    return this.magneticKey;
+}
+
+
 Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents) {
     this.moveCharacter();
     this.recogeInput(map6, layer6, tarjeta, documents);
@@ -830,8 +948,9 @@ Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, docum
 }
 
 
+
 module.exports = Player;
-},{"./character.js":5,"./hand.js":7,"./map.js":11,"./tarjetaLlave.js":13}],13:[function(require,module,exports){
+},{"./character.js":6,"./hand.js":8,"./map.js":12,"./tarjetaLlave.js":14}],14:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -854,7 +973,7 @@ tarjetaLlave.prototype.ini = function () {
 }
 
 module.exports = tarjetaLlave;
-},{"./character.js":5}],14:[function(require,module,exports){
+},{"./character.js":6}],15:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -885,4 +1004,4 @@ triggerSprite.prototype.ini = function () {
 }
 
 module.exports = triggerSprite;
-},{"./character.js":5}]},{},[9]);
+},{"./character.js":6}]},{},[10]);
