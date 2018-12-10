@@ -11,7 +11,7 @@ function Interface(x, y, sprite, game) {
 Interface.prototype = Object.create(Character.prototype);
 Interface.prototype.constructor = Interface;
 
-Interface.prototype.ini = function (doc, key) {
+Interface.prototype.ini = function () {
     this.animations.add('idle', [0], 1, false);
     this.animations.add('lockpick', [1], 1, false);
     this.animations.add('taser', [2], 1, false);
@@ -34,30 +34,33 @@ Interface.prototype.ini = function (doc, key) {
     this.tarjet.alpha = 0;
     this.game.add.existing(this.tarjet);
 
-    this.hasDoc = doc;
-    this.hasMag = key;
 }
 
-Interface.prototype.update = function () {
+Interface.prototype.update = function (doc, key) {
+    
+    
+
+    this.hasDoc = doc;
+    this.hasMag = key;
 
     if (this.eKey.justDown) {
         this.animations.stop();
         this.animations.play('hand');
-        Console.log('estoy dentro1')
+        
     }
     else if (this.rKey.justDown) {
         this.animations.stop();
         this.animations.play('gun');
-        Console.log('estoy dentro2')
+        
     }
 
     if (this.hasDoc){
         this.document.alpha = 1;
-    }else this.document.alpha = 0;
+    }else if (this.hasDoc != undefined)this.document.alpha = 0;
 
     if (this.hasMag){
         this.tarjet.alpha = 1;
-    }else this.tarjet.alpha = 0;
+    }else if (this.hasMag != undefined)this.tarjet.alpha = 0;
 
 }
 module.exports = Interface;
@@ -130,7 +133,7 @@ var PlayScene = {
     //UI
     this.interfaz = new Interface(400,575,'UI',this.game);
     this.game.add.existing(this.interfaz);
-    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
 
     //Cámara
@@ -149,7 +152,7 @@ var PlayScene = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6, this.magKey,undefined);
     this.checkIntersects();
-    this.interfaz.update();
+    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
   },
 
 };
@@ -231,7 +234,7 @@ var Lvl1_2 = {
      //UI
      this.interfaz = new Interface(400,575,'UI',this.game);
      this.game.add.existing(this.interfaz);
-     this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+     this.interfaz.ini();
      this.interfaz.fixedToCamera = true;
     //Cámara
     this.camera.follow(this.Sam);
@@ -246,7 +249,7 @@ var Lvl1_2 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
-    this.interfaz.update();
+    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
   },
 };
 
@@ -313,7 +316,7 @@ var Lvl2_1 = {
     //UI
     this.interfaz = new Interface(400,575,'UI',this.game);
     this.game.add.existing(this.interfaz);
-    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
 
     //Cámara
@@ -339,7 +342,7 @@ var Lvl2_1 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
-    this.interfaz.update();
+    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
   },
 };
 
@@ -406,7 +409,7 @@ var Lvl2_2 = {
     //UI
     this.interfaz = new Interface(400,575,'UI',this.game);
     this.game.add.existing(this.interfaz);
-    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
 
     //Cámara
@@ -425,7 +428,7 @@ var Lvl2_2 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,this.magKey,undefined);
     this.checkIntersects();
-    this.interfaz.update();
+    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
   },
 };
 
