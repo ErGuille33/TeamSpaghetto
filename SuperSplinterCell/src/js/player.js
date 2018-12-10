@@ -103,13 +103,13 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     }
 
 }
-Player.prototype.bulletHitWall = function (layer3) {
+Player.prototype.bulletHitWall = function (layer3,layer4,layer6) {
     // console.log(this.weapon.bullets);
     var player = this;
     this.weapon.bullets.forEach(function (bullet) { 
         bullet.body.setSize(50,50,0,0);
-
-        if (player.game.physics.arcade.collide(bullet, layer3)) 
+        if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4) 
+        || player.game.physics.arcade.collide(bullet, layer6)) 
         { bullet.kill() } 
     }
     );
@@ -205,7 +205,7 @@ Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, docum
     this.moveCharacter();
     this.recogeInput(map6, layer6, tarjeta, documents);
     this.checkCollision(layer4, layer3, layer6);
-    this.bulletHitWall(layer3);
+    this.bulletHitWall(layer3, layer4, layer6);
 
 }
 
