@@ -8,6 +8,7 @@ function Enemy(x, y, ko, look, posiciones, speed, sprite, game) {
     Character.call(this, game, x, y, sprite);
     this.ko = false;
     this.look = false;
+    this.positions = posiciones
     this.game = game;
 }
 Enemy.prototype = Object.create(Character.prototype);
@@ -34,14 +35,14 @@ Enemy.prototype.ini = function () {
 Enemy.prototype.moveEnemy = function () {
 
     if (!this.ko && !this.look) {
-        if (this.x != posiciones[auxi].x && this.y != posiciones[auxi].x) {
-            this.xDestine = posiciones[i].x;
-            this.yDestine = posiciones[i].y;
+        if (this.x != positions[auxi].x && this.y != positions[auxi].x) {
+            this.xDestine = positions[i].x;
+            this.yDestine = positions[i].y;
             this.moveToXY(this.Enemy, this.xDestine, this.yDestine, this.speed)
             if (look == false) this.rotation = this.game.physics.arcade.moveToXY(this, this.positions[1].x, this.positions[1].y, this.speed);
             else this.rotation = this.game.physics.arcade.moveToXY(this, Player.x, Player.y, this.speed);
             //this.animations.play('walk');}
-        } else if (auxi < posiciones.length) {
+        } else if (auxi < positions.length) {
             auxi++;
         } else auxi = 0;
     } else {

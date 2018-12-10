@@ -5,6 +5,8 @@ var Player = require('./player.js');
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var documents = require('./documentos.js');
+//UI
+var Interface = require('./Interface.js');
 
 var Lvl2_1 = {
   //Se ejecuta al principio
@@ -51,6 +53,13 @@ var Lvl2_1 = {
     this.Sam = new Player(154, 636, true, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
+
+    //UI
+    this.interfaz = new Interface(400,575,'UI',this.game);
+    this.game.add.existing(this.interfaz);
+    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.fixedToCamera = true;
+
     //Cámara
     this.camera.follow(this.Sam);
 
@@ -74,6 +83,7 @@ var Lvl2_1 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
+    this.interfaz.update();
   },
 };
 

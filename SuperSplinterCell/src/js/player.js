@@ -201,6 +201,17 @@ Player.prototype.open = function (map6) {
     }
 }
 
+Player.prototype.retDoc = function(){
+
+    return this.documents;
+}
+
+Player.prototype.retKey = function(){
+
+    return this.magneticKey;
+}
+
+
 Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents) {
     this.moveCharacter();
     this.recogeInput(map6, layer6, tarjeta, documents);
@@ -208,6 +219,7 @@ Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, docum
     this.bulletHitWall(layer3, layer4, layer6);
 
 }
+
 
 
 module.exports = Player;
