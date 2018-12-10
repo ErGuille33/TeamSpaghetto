@@ -10,7 +10,7 @@ function Interface(x, y, sprite, game) {
 Interface.prototype = Object.create(Character.prototype);
 Interface.prototype.constructor = Interface;
 
-Interface.prototype.ini = function (doc, key) {
+Interface.prototype.ini = function () {
     this.animations.add('idle', [0], 1, false);
     this.animations.add('lockpick', [1], 1, false);
     this.animations.add('taser', [2], 1, false);
@@ -33,30 +33,33 @@ Interface.prototype.ini = function (doc, key) {
     this.tarjet.alpha = 0;
     this.game.add.existing(this.tarjet);
 
-    this.hasDoc = doc;
-    this.hasMag = key;
 }
 
-Interface.prototype.update = function () {
+Interface.prototype.update = function (doc, key) {
+    
+    
+
+    this.hasDoc = doc;
+    this.hasMag = key;
 
     if (this.eKey.justDown) {
         this.animations.stop();
         this.animations.play('hand');
-        Console.log('estoy dentro1')
+        
     }
     else if (this.rKey.justDown) {
         this.animations.stop();
         this.animations.play('gun');
-        Console.log('estoy dentro2')
+        
     }
 
     if (this.hasDoc){
         this.document.alpha = 1;
-    }else this.document.alpha = 0;
+    }else if (this.hasDoc != undefined)this.document.alpha = 0;
 
     if (this.hasMag){
         this.tarjet.alpha = 1;
-    }else this.tarjet.alpha = 0;
+    }else if (this.hasMag != undefined)this.tarjet.alpha = 0;
 
 }
 module.exports = Interface;

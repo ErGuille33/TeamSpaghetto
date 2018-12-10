@@ -57,7 +57,7 @@ var Lvl2_1 = {
     //UI
     this.interfaz = new Interface(400,575,'UI',this.game);
     this.game.add.existing(this.interfaz);
-    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
 
     //Cámara
@@ -83,7 +83,7 @@ var Lvl2_1 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
-    this.interfaz.update();
+    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
   },
 };
 
