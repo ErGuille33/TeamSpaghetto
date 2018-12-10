@@ -13,15 +13,15 @@ function Player(x, y, key, doc, it, sprite, game) {
     this.documents = doc;
     this.items = it;
     this.game = game;
-   // this.eT = tarj;
+    // this.eT = tarj;
 
-   // this.papeles = papeles;
+    // this.papeles = papeles;
 }
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.ini = function () {
-    
+
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
     this.body.setSize(25, 30, 15, 15);
@@ -45,12 +45,15 @@ Player.prototype.ini = function () {
     this.weapon = this.game.add.weapon(10, 'bullet');
     this.weapon.setBulletFrames(0, 60, true);
     this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-    this.weapon.bulletSpeed = 900;
+    this.weapon.bulletSpeed = 600;
     this.weapon.fireRate = 1000;
+    
     this.weapon.trackSprite(this, (this.x / 2), (this.y / 2), true);
+    this.weapon.bulletCollideWorldBounds = true;
+    
 
-    this.weapon.bullets.enableBody = true;
-    this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    //this.weapon.bullets.enableBody = true;
+    //this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.fireTime = this.game.time.physicsElapsed;
 
     this.hand = new Hand(this.game, 20, 0, 'aux');
@@ -100,7 +103,18 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     }
 
 }
-Player.prototype.recogeInput = function (map6, layer6, tarjeta,documents) {
+Player.prototype.bulletHitWall = function (layer3) {
+    // console.log(this.weapon.bullets);
+    var player = this;
+    this.weapon.bullets.forEach(function (bullet) { 
+        bullet.body.setSize(50,50,0,0);
+
+        if (player.game.physics.arcade.collide(bullet, layer3)) 
+        { bullet.kill() } 
+    }
+    );
+}
+Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents) {
 
     if (this.eKey.justDown) {
         this.items = 4
@@ -120,33 +134,33 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta,documents) {
                 break;
             case 4:
                 this.open(map6);
-                if(tarjeta != undefined && !this.magneticKey) {
-                this.recogeLlave(tarjeta);
-            }
-            else if(documents!= undefined && !this.documents){
-                this.recogeDocumento(documents);
-            }
+                if (tarjeta != undefined && !this.magneticKey) {
+                    this.recogeLlave(tarjeta);
+                }
+                else if (documents != undefined && !this.documents) {
+                    this.recogeDocumento(documents);
+                }
                 this.fireTime = this.game.time.now + 1500;
                 break;
 
         }
     }
 }
-Player.prototype.recogeLlave = function(tarjeta){
-    
-    if(Phaser.Rectangle.intersects(this.hand.getBounds(), tarjeta.getBounds())){
+Player.prototype.recogeLlave = function (tarjeta) {
+
+    if (Phaser.Rectangle.intersects(this.hand.getBounds(), tarjeta.getBounds())) {
         this.magneticKey = true;
         console.log(this.magneticKey);
-        
+
         tarjeta.kill();
     }
 }
-Player.prototype.recogeDocumento = function(documents){
-    
-    if(Phaser.Rectangle.intersects(this.hand.getBounds(), documents.getBounds())){
+Player.prototype.recogeDocumento = function (documents) {
+
+    if (Phaser.Rectangle.intersects(this.hand.getBounds(), documents.getBounds())) {
         this.documents = true;
         console.log(this.papeles);
-        
+
         documents.kill();
     }
 }
@@ -186,14 +200,14 @@ Player.prototype.open = function (map6) {
         }
     }
 }
+
 Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents) {
     this.moveCharacter();
     this.recogeInput(map6, layer6, tarjeta, documents);
     this.checkCollision(layer4, layer3, layer6);
-    // this.game.physics.arcade.collide(this.weapon.bullets , layer4  , this.bulletHitWall);
+    this.bulletHitWall(layer3);
 
 }
-Player.prototype.bulletHitWall = function (bullet, layer) {
-    bullet.kill();
-}
+
+
 module.exports = Player;
