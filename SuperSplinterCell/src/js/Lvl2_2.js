@@ -5,6 +5,9 @@ var Player = require('./player.js');
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
+//UI
+var Interface = require('./Interface.js');
+
 var Lvl2_2 = {
   //Se ejecuta al principio
   create: function () {
@@ -50,6 +53,13 @@ var Lvl2_2 = {
     this.Sam = new Player(2305, 1743, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
+
+    //UI
+    this.interfaz = new Interface(400,575,'UI',this.game);
+    this.game.add.existing(this.interfaz);
+    this.interfaz.ini(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.fixedToCamera = true;
+
     //Cámara
     this.camera.follow(this.Sam);
 
@@ -66,6 +76,7 @@ var Lvl2_2 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,this.magKey,undefined);
     this.checkIntersects();
+    this.interfaz.update();
   },
 };
 

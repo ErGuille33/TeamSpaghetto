@@ -73,6 +73,8 @@ var PreloaderScene = {
     this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
     this.load.spritesheet('documents','images/documents.png',250,311);
     
+    //UI
+    this.load.spritesheet('UI', 'images/UI SpriteSheet.png', 800, 50);
 
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');
