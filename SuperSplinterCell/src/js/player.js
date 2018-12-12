@@ -137,7 +137,8 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents) {
                 if (tarjeta != undefined && !this.magneticKey) {
                     this.recogeLlave(tarjeta);
                 }
-                else if (documents != undefined && !this.documents) {
+                if (documents != undefined && !this.documents) {
+                    console.log("yas")
                     this.recogeDocumento(documents);
                 }
                 this.fireTime = this.game.time.now + 1500;
