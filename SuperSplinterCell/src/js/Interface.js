@@ -35,19 +35,19 @@ Interface.prototype.ini = function () {
 
 }
 
-Interface.prototype.update = function (doc, key) {
+Interface.prototype.update = function (doc, key, item) {
     
     
 
     this.hasDoc = doc;
     this.hasMag = key;
 
-    if (this.eKey.justDown) {
+    if (item == 4) {
         this.animations.stop();
         this.animations.play('hand');
         
     }
-    else if (this.rKey.justDown) {
+    else if (item == 5) {
         this.animations.stop();
         this.animations.play('gun');
         

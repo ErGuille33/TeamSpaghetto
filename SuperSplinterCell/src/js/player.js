@@ -168,6 +168,10 @@ Player.prototype.shoot = function () {
     this.weapon.fire(this.body.center);
     this.animations.play('gun');
 }
+Player.prototype.returnItem = function(){
+
+   return this.items;
+}
 Player.prototype.open = function (map6) {
     this.animations.play('hand');
 

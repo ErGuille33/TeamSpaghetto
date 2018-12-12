@@ -84,7 +84,7 @@ var PlayScene = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6, this.magKey,undefined);
     this.checkIntersects();
-    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey(),this.Sam.returnItem());
   },
 
 };
