@@ -26,7 +26,7 @@ Player.prototype.ini = function () {
     this.game.physics.arcade.enable(this);
     this.body.setSize(25, 30, 15, 15);
     this.animations.add('idle', [0], 1, true);
-    this.animations.add('walk', [11, 12, 13, 14], 10, true);
+    this.animations.add('walk', [11, 12, 13, 14,15,16], 10, true);
     this.animations.add('taser', [0, 1, 2], 10, false);
     this.animations.add('gun', [22, 23, 24, 25], 10, false);
     this.animations.add('hand', [3, 4, 5], 4, false);
@@ -84,22 +84,27 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     if (this.distance <= this.speed / this.game.time.physicsElapsedMS) { // una constante o variable (algo qe sea el incremento de movimiento)
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
+        this.animations.play('idle');
     }
     if (Phaser.Rectangle.contains(this.body, this.game.input.x, this.game.input.y)) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
+        this.animations.play('idle');
     }
     if (this.game.physics.arcade.collide(this, layer4)) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
+        this.animations.play('idle');
     }
     if (this.game.physics.arcade.collide(this, layer3)) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
+        this.animations.play('idle');
     }
     if (this.game.physics.arcade.collide(this, layer6)) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
+        this.animations.play('idle');
     }
 
 }

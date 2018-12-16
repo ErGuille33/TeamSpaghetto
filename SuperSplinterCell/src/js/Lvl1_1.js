@@ -60,6 +60,8 @@ var PlayScene = {
     this.Sam = new Player(143, 1155, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
+    //Enemys
+    
     //TriggerSpots
     this.nextFloor = new tspr(this.game, 2131, 121, 'aux', .9, .2);
     this.nextFloor.ini();
