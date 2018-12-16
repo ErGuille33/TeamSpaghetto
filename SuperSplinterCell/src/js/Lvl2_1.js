@@ -50,7 +50,7 @@ var Lvl2_1 = {
 
     //Inicializamos el personaje
     //154, 636
-    this.Sam = new Player(154, 636, true, false, 5, 'player', this.game);
+    this.Sam = new Player(154, 636, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
 
@@ -83,7 +83,7 @@ var Lvl2_1 = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
     this.checkIntersects();
-    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey());
   },
 };
 

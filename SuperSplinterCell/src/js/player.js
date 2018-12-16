@@ -107,7 +107,7 @@ Player.prototype.bulletHitWall = function (layer3,layer4,layer6) {
     // console.log(this.weapon.bullets);
     var player = this;
     this.weapon.bullets.forEach(function (bullet) { 
-        bullet.body.setSize(0,0,-0,15);
+        bullet.body.setSize(0,0,  50,50);
         if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4) 
         || player.game.physics.arcade.collide(bullet, layer6)) 
         { bullet.kill() } 
@@ -206,12 +206,12 @@ Player.prototype.open = function (map6) {
     }
 }
 
-Player.prototype.retDoc = function(){
+Player.prototype.returnDocument = function(){
 
     return this.documents;
 }
 
-Player.prototype.retKey = function(){
+Player.prototype.returnKey = function(){
 
     return this.magneticKey;
 }

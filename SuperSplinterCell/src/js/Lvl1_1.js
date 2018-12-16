@@ -54,7 +54,7 @@ var PlayScene = {
     this.magKey = new tarjetaLlave(this.game, 660, 1924, 'tarjet', .075, .075);
     this.magKey.ini();
 
-    this.docums = new documents (this.game, 6735, 1420, 'documents',.15,.15);
+    this.docums = new documents(this.game, 6735, 1420, 'documents', .15, .15);
     this.docums.ini();
     //143, 1155
     this.Sam = new Player(143, 1155, false, false, 5, 'player', this.game);
@@ -87,11 +87,11 @@ var PlayScene = {
         this.Sam.y = 300;
         this.Sam.angle = 90;
       }
-      else if(Phaser.Rectangle.intersects(this.Sam, this.lastFloor)){
+      else if (Phaser.Rectangle.intersects(this.Sam, this.lastFloor)) {
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.animations.stop('walk');
-        this.Sam.x =  2131;
+        this.Sam.x = 2131;
         this.Sam.y = 190;
         this.Sam.angle = 90;
       }
@@ -105,10 +105,18 @@ var PlayScene = {
   update: function () {
     this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums);
     this.checkIntersects();
-    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey(), this.Sam.returnItem());
+    this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
   },
+  render: function () {
+    var showDebug = true;
+    var lvl = this;
+    if (showDebug) {
+      
+    }
+  }
 
 };
+
 
 module.exports = PlayScene;
 
