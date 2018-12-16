@@ -52,8 +52,8 @@ var Lvl2_1 = {
     this.magKey = new tarjetaLlave(this.game, 7075, 386, 'tarjet', .075, .075);
     this.magKey.ini();
     //Inicializamos el personaje
-    //154, 636
-    this.Sam = new Player(6838, 1943, false, false, 5, 'player', this.game);
+    //148, 1101
+    this.Sam = new Player(148, 1101, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
 
@@ -72,6 +72,9 @@ var Lvl2_1 = {
     this.endLvl = new tspr(this.game, 1485, 1910, 'aux', .8,.3);
     this.endLvl.ini();
 
+    this.lastFloor = new tspr(this.game, 7000, 1937, 'aux', .2, 1.4);
+    this.lastFloor.ini();
+
     this.checkIntersects = function(){
       if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
         this.Sam.body.velocity.setTo(0, 0);
@@ -79,6 +82,14 @@ var Lvl2_1 = {
         this.Sam.animations.stop('walk');
         this.Sam.x = 6848;
         this.Sam.y = 1938;
+        this.Sam.angle = 180;
+      }
+      else if(Phaser.Rectangle.intersects(this.Sam,this.lastFloor)){
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.animations.stop('walk');
+        this.Sam.x = 2130;
+        this.Sam.y = 1725;
         this.Sam.angle = 180;
       }
       else if(Phaser.Rectangle.intersects(this.Sam,this.endLvl) && this.Sam.documents){
