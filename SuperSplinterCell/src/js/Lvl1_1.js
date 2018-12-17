@@ -66,7 +66,7 @@ var PlayScene = {
     this.nextFloor = new tspr(this.game, 2131, 121, 'aux', .9, .2);
     this.nextFloor.ini();
 
-    this.endLvl = new tspr(this.game, 1392, 2360, 'aux', .8, .4);
+    this.endLvl = new tspr(this.game, 1345, 2333, 'aux', 1, .28);
     this.endLvl.ini();
 
     this.lastFloor = new tspr(this.game, 6839, 200, 'aux', 1.9, .2);
