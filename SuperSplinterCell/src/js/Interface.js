@@ -18,9 +18,6 @@ Interface.prototype.ini = function () {
     this.animations.add('gun', [4], 1, false);
     this.animations.add('hand', [5], 1, false);
 
-    this.eKey = this.game.input.keyboard.addKey(Phaser.KeyCode.E);
-    this.rKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
-
     this.document = this.game.add.sprite(650,552,'documents');
     this.document.scale.setTo(.15,.15);
     this.document.fixedToCamera = true;

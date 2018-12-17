@@ -5,6 +5,7 @@ var lvl02_01 = require('./Lvl2_1.js');
 var lvl02_02 = require('./Lvl2_2.js');
 var menu = require ('./mainMenu.js');
 var lvlmenu = require('./lvlSelector.js');
+var tutorial = require('./tuto.js')
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -52,16 +53,22 @@ var PreloaderScene = {
 
 
     //Personajes
-    this.load.spritesheet('player', 'images/Sprites Sam Fisher.png', 54, 62);
+    this.load.spritesheet('player', 'images/Sprites Sam Fisher prueba2.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
     this.load.image('aux', 'images/bloque1.jpg');
     //Items
     this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
     this.load.spritesheet('documents','images/documents.png',250,311);
+
+    //Enemigos
+    this.load.spritesheet('enemy', 'images/Enemigo sprite.png', 58, 65)
     
     //UI
     this.load.spritesheet('UI', 'images/UI SpriteSheet.png', 800, 50);
 
+    //Pantalla inicial
+    this.load.image ('inicial', 'images/pantalla inicial.png');
+    this.load.image ('press', 'images/PressHere.png');
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');
     this.load.image('lvlSelector', 'images/SelectorLevels.png');
@@ -83,6 +90,7 @@ window.onload = function () {
   game.state.add('lvl2_2', lvl02_02);
   game.state.add('menu', menu);
   game.state.add('lvlSel', lvlmenu);
+  game.state.add('tuto', tutorial)
 
   game.state.start('boot');
 };

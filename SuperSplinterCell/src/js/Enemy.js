@@ -4,15 +4,16 @@ var Character = require('./character.js')
 var Player = require('./player.js')
 var Hand = require('./VisionCone.js');
 
-function Enemy(x, y, ko, look, posiciones, speed, sprite, game) {
+function Enemy(x, y, KO, Look, posiciones, speed, sprite, game) {
     Character.call(this, game, x, y, sprite);
-    this.ko = false;
-    this.look = false;
+    this.ko = KO;
+    this.look = Look;
+    this.sPeed = speed;
     this.positions = posiciones
     this.game = game;
 }
 Enemy.prototype = Object.create(Character.prototype);
-enemy.prototype.constructor = Enemy;
+Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.ini = function () {
 
@@ -22,8 +23,11 @@ Enemy.prototype.ini = function () {
 
     this.xDestine = this.x;
     this.yDestine = this.y;
-    this.sPeed = speed;
     this.auxi = 0;
+
+    this.animations.add('walk', [0, 1, 2, 3], 7, true);
+    this.animations.add('shoot', [5, 6, 7, 8], 7, false);
+    this.animations.add('dead', [9], 1, false);
 
     this.coneOfVision = new coneOfVision(this.game, 20, 0, 'aux');
     this.coneOfVision.ini();
@@ -40,14 +44,16 @@ Enemy.prototype.moveEnemy = function () {
             this.yDestine = positions[i].y;
             this.moveToXY(this.Enemy, this.xDestine, this.yDestine, this.speed)
             if (look == false) this.rotation = this.game.physics.arcade.moveToXY(this, this.positions[1].x, this.positions[1].y, this.speed);
-            else this.rotation = this.game.physics.arcade.moveToXY(this, Player.x, Player.y, this.speed);
-            //this.animations.play('walk');}
+            else {
+            this.rotation = this.game.physics.arcade.moveToXY(this, Player.x, Player.y, this.speed);
+                this.animations.play('walk');
+            }
         } else if (auxi < positions.length) {
             auxi++;
         } else auxi = 0;
     } else {
         this.body.velocity.setTo(0, 0);
-        //this.animations.play('KO');
+        this.animations.play('dead');
     }
 }
 

@@ -1,6 +1,8 @@
 'use strict';
 //El jugador
 var Player = require('./player.js');
+//Enemigos
+var Enemy = require ('./Enemy.js')
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
@@ -23,6 +25,7 @@ var PlayScene = {
     this.map5;
     this.map6;
     this.Sam;
+    this.Enemy1
     this.interfaz;
     this.button;
     //Capas
@@ -61,7 +64,8 @@ var PlayScene = {
     this.game.add.existing(this.Sam);
     this.Sam.ini();
     //Enemys
-    
+    this.pos1 = [{x: 150, y: 1155}, {x: 150, y: 1159}];
+    this.Enemy1 = new Enemy(150, 1155, false, false, this.pos1, 300, 'enemy', this.game);
     //TriggerSpots
     this.nextFloor = new tspr(this.game, 2131, 121, 'aux', .9, .2);
     this.nextFloor.ini();
