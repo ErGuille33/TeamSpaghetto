@@ -58,7 +58,7 @@ Enemy.prototype.moveEnemy = function () {
 }
 
 Enemy.prototype.gotHit = function () {
-    if (this.checkOverlap(this.sprite, 'bullet')) this.ko = true;
+    //if (this.checkOverlap(this.sprite, 'bullet')) this.ko = true;
 }
 
 Enemy.prototype.playerDetected = function () {

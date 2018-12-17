@@ -1,5 +1,88 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
+
+var Character = require('./character.js')
+var Player = require('./player.js')
+var Hand = require('./VisionCone.js');
+
+function Enemy(x, y, KO, Look, posiciones, speed, sprite, game) {
+    Character.call(this, game, x, y, sprite);
+    this.ko = KO;
+    this.look = Look;
+    this.sPeed = speed;
+    this.positions = posiciones
+    this.game = game;
+}
+Enemy.prototype = Object.create(Character.prototype);
+Enemy.prototype.constructor = Enemy;
+
+Enemy.prototype.ini = function () {
+
+    this.game.add.existing(this);
+    this.game.physics.arcade.enable(this);
+    this.body.setSize(25, 30, 15, 15);
+
+    this.xDestine = this.x;
+    this.yDestine = this.y;
+    this.auxi = 0;
+
+    this.animations.add('walk', [0, 1, 2, 3], 7, true);
+    this.animations.add('shoot', [5, 6, 7, 8], 7, false);
+    this.animations.add('dead', [9], 1, false);
+
+    this.coneOfVision = new coneOfVision(this.game, 20, 0, 'aux');
+    this.coneOfVision.ini();
+
+    this.addChild(this.coneOfVision);
+
+}
+
+Enemy.prototype.moveEnemy = function () {
+
+    if (!this.ko && !this.look) {
+        if (this.x != positions[auxi].x && this.y != positions[auxi].x) {
+            this.xDestine = positions[i].x;
+            this.yDestine = positions[i].y;
+            this.moveToXY(this.Enemy, this.xDestine, this.yDestine, this.speed)
+            if (look == false) this.rotation = this.game.physics.arcade.moveToXY(this, this.positions[1].x, this.positions[1].y, this.speed);
+            else {
+            this.rotation = this.game.physics.arcade.moveToXY(this, Player.x, Player.y, this.speed);
+                this.animations.play('walk');
+            }
+        } else if (auxi < positions.length) {
+            auxi++;
+        } else auxi = 0;
+    } else {
+        this.body.velocity.setTo(0, 0);
+        this.animations.play('dead');
+    }
+}
+
+Enemy.prototype.gotHit = function () {
+    //if (this.checkOverlap(this.sprite, 'bullet')) this.ko = true;
+}
+
+Enemy.prototype.playerDetected = function () {
+    if (this.checkOverlap('aux', 'player')) look = true;
+}
+
+Enemy.prototype.checkOverlap = function (spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+}
+
+Enemy.prototype.update = function () {
+    this.playerDetected();
+    this.gotHit();
+    this.moveEnemy();
+}
+
+module.exports = Enemy;
+},{"./VisionCone.js":6,"./character.js":7,"./player.js":14}],2:[function(require,module,exports){
+'use strict';
 var Character = require('./character.js')
 var Player = require('./player.js')
 
@@ -19,9 +102,6 @@ Interface.prototype.ini = function () {
     this.animations.add('gun', [4], 1, false);
     this.animations.add('hand', [5], 1, false);
 
-    this.eKey = this.game.input.keyboard.addKey(Phaser.KeyCode.E);
-    this.rKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
-
     this.document = this.game.add.sprite(650,552,'documents');
     this.document.scale.setTo(.15,.15);
     this.document.fixedToCamera = true;
@@ -36,19 +116,19 @@ Interface.prototype.ini = function () {
 
 }
 
-Interface.prototype.update = function (doc, key) {
+Interface.prototype.update = function (doc, key, item) {
     
     
 
     this.hasDoc = doc;
     this.hasMag = key;
 
-    if (this.eKey.justDown) {
+    if (item == 4) {
         this.animations.stop();
         this.animations.play('hand');
         
     }
-    else if (this.rKey.justDown) {
+    else if (item == 5) {
         this.animations.stop();
         this.animations.play('gun');
         
@@ -65,21 +145,25 @@ Interface.prototype.update = function (doc, key) {
 }
 module.exports = Interface;
 
-},{"./character.js":6,"./player.js":13}],2:[function(require,module,exports){
+},{"./character.js":7,"./player.js":14}],3:[function(require,module,exports){
 'use strict';
 //El jugador
 var Player = require('./player.js');
+//Enemigos
+var Enemy = require ('./Enemy.js')
 //Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
+var documents = require('./documentos.js');
+
 //UI
 var Interface = require('./Interface.js');
 
 var PlayScene = {
   //Se ejecuta al principio
   create: function () {
-    
+
     //Añadimos al mapa nuestro mapa ya cargado, y lo cargamos en la escena
     //El mapa de juego
     this.map1;
@@ -89,73 +173,104 @@ var PlayScene = {
     this.map5;
     this.map6;
     this.Sam;
+    this.Enemy1
     this.interfaz;
     this.button;
     //Capas
-   
-    this.map1 = new Map('Lvl1_1_1',48,48,'suelo',this,false,50,50);
+
+    this.map1 = new Map('Lvl1_1_1', 48, 48, 'suelo', this, false, 150, 50);
     this.map1.ini();
-   
-    this.map2 = new Map('Lvl1_1_2',48,48,'paredes',this,false,50,50);
+
+    this.map2 = new Map('Lvl1_1_2', 48, 48, 'paredes', this, false, 150, 50);
     this.map2.ini();
 
-    this.map3 = new Map('Lvl1_1_3',48,48,'paredes',this,false,50,50);
+    this.map3 = new Map('Lvl1_1_3', 48, 48, 'paredes', this, false, 150, 50);
     this.map3.ini();
-    this.map3.collisions(0,1000);
+    this.map3.collisions(0, 1000);
 
-    this.map4 = new Map('Lvl1_1_4',48,48,'objetos',this,false,50,50);
+    this.map4 = new Map('Lvl1_1_4', 48, 48, 'objetos', this, false, 150, 50);
     this.map4.ini();
-    this.map4.collisions(0,1000);
-    
+    this.map4.collisions(0, 1000);
 
-    this.map5 = new Map('Lvl1_1_5',48,48,'objetos',this,false,50,50);
+
+    this.map5 = new Map('Lvl1_1_5', 48, 48, 'objetos', this, false, 150, 50);
     this.map5.ini();
 
-    this.map6 = new Map('Lvl1_1_6',48,48,'paredes',this,true,50,50);
+    this.map6 = new Map('Lvl1_1_6', 48, 48, 'paredes', this, true, 150, 50);
     this.map6.ini();
-    this.map6.collisions(0,1000);
+    this.map6.collisions(0, 1000);
 
     //Inicializamos el personaje
     //Tarjeta llave
-    this.magKey = new tarjetaLlave(this.game,660,1924,'tarjet',.075,.075);
+    this.magKey = new tarjetaLlave(this.game, 660, 1924, 'tarjet', .075, .075);
     this.magKey.ini();
+
+    this.docums = new documents(this.game, 6735, 1420, 'documents', .15, .15);
+    this.docums.ini();
     //143, 1155
-    this.Sam = new Player(143, 1155, false, true, 5, 'player', this.game);
+    this.Sam = new Player(143, 1155, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
+    //Enemys
+    this.pos1 = [{x: 150, y: 1155}, {x: 150, y: 1159}];
+    this.Enemy1 = new Enemy(150, 1155, false, false, this.pos1, 300, 'enemy', this.game);
     //TriggerSpots
-    this.nextLvl = new tspr(this.game, 2131, 121, 'aux', .9,.2);
-    this.nextLvl.ini();
+    this.nextFloor = new tspr(this.game, 2131, 121, 'aux', .9, .2);
+    this.nextFloor.ini();
 
-    this.endLvl = new tspr(this.game, 1392, 2387, 'aux', .8,.4);
+    this.endLvl = new tspr(this.game, 1345, 2333, 'aux', 1, .28);
     this.endLvl.ini();
 
+    this.lastFloor = new tspr(this.game, 6839, 200, 'aux', 1.9, .2);
+    this.lastFloor.ini();
+
     //UI
-    this.interfaz = new Interface(400,575,'UI',this.game);
+    this.interfaz = new Interface(400, 575, 'UI', this.game);
     this.game.add.existing(this.interfaz);
     this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
 
     //Cámara
     this.camera.follow(this.Sam);
-    this.checkIntersects = function(){
-      if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
-        this.game.state.start('lvl1_2')
+    this.checkIntersects = function () {
+      if (Phaser.Rectangle.intersects(this.Sam, this.nextFloor)) {
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.animations.stop('walk');
+        this.Sam.x = 6839;
+        this.Sam.y = 300;
+        this.Sam.angle = 90;
       }
-      else if(Phaser.Rectangle.intersects(this.Sam,this.endLvl) && this.Sam.documents){
+      else if (Phaser.Rectangle.intersects(this.Sam, this.lastFloor)) {
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.animations.stop('walk');
+        this.Sam.x = 2131;
+        this.Sam.y = 190;
+        this.Sam.angle = 90;
+      }
+      else if (Phaser.Rectangle.intersects(this.Sam, this.endLvl) && this.Sam.documents) {
         this.game.state.start('lvl2_1');
       }
     }
   },
-  
+
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6, this.magKey,undefined);
+    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums);
     this.checkIntersects();
-    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
   },
+  render: function () {
+    var showDebug = true;
+    var lvl = this;
+    if (showDebug) {
+      
+    }
+  }
 
 };
+
 
 module.exports = PlayScene;
 
@@ -171,7 +286,7 @@ function Level(position, graphic){
 };
 
 */
-},{"./Interface.js":1,"./map.js":12,"./player.js":13,"./tarjetaLlave.js":14,"./triggerSprite.js":15}],3:[function(require,module,exports){
+},{"./Enemy.js":1,"./Interface.js":2,"./documentos.js":8,"./map.js":13,"./player.js":14,"./tarjetaLlave.js":15,"./triggerSprite.js":16}],4:[function(require,module,exports){
 'use strict';
 //El jugador
 var Player = require('./player.js');
@@ -179,91 +294,7 @@ var Player = require('./player.js');
 var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var documents = require('./documentos.js');
-//UI
-var Interface = require('./Interface.js');
-
-var Lvl1_2 = {
-  //Se ejecuta al principio
-  create: function () {
-    //Añadimos al mapa nuestro mapa ya cargado, y lo cargamos en la escena
-    //El mapa de juego
-    this.map1;
-    this.map2;
-    this.map3;
-    this.map4;
-    this.map5;
-    this.map6;
-    this.Sam;
-    //Capas
-   
-    this.map1 = new Map('Lvl1_2_1',48,48,'suelo',this,false,50,50);
-    this.map1.ini();
-   
-    this.map2 = new Map('Lvl1_2_2',48,48,'paredes',this,false,50,50);
-    this.map2.ini();
-
-    this.map3 = new Map('Lvl1_2_3',48,48,'paredes',this,false,50,50);
-    this.map3.ini();
-    this.map3.collisions(0,1000);
-
-    this.map4 = new Map('Lvl1_2_4',48,48,'objetos',this,false,50,50);
-    this.map4.ini();
-    this.map4.collisions(0,1000);
-    
-
-    this.map5 = new Map('Lvl1_2_5',48,48,'objetos',this,false,50,50);
-    this.map5.ini();
-
-    this.map6 = new Map('Lvl1_2_6',48,48,'paredes',this,true,50,50);
-    this.map6.ini();
-    this.map6.collisions(0,1000);
-
-    //Objetos
-    this.docums = new documents (this.game,1940, 1435, 'documents',.15,.15);
-    this.docums.ini();
-
-    //Inicializamos el personaje
-    //2040, 325
-    this.Sam = new Player(2040, 325, true, false, 5, 'player', this.game);
-    this.game.add.existing(this.Sam);
-    this.Sam.ini();
-
-    this.nextLvl = new tspr(this.game, 2050, 211, 'aux', 1.9,.2);
-    this.nextLvl.ini();
-
-     //UI
-     this.interfaz = new Interface(400,575,'UI',this.game);
-     this.game.add.existing(this.interfaz);
-     this.interfaz.ini();
-     this.interfaz.fixedToCamera = true;
-    //Cámara
-    this.camera.follow(this.Sam);
-    //inters
-    this.checkIntersects = function(){
-      if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
-        this.game.state.start('play')
-      }
-    }
-  },
-  //El update de toda la vida
-  update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
-    this.checkIntersects();
-    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
-  },
-};
-
-module.exports = Lvl1_2;
-
-
-},{"./Interface.js":1,"./documentos.js":7,"./map.js":12,"./player.js":13,"./triggerSprite.js":15}],4:[function(require,module,exports){
-'use strict';
-//El jugador
-var Player = require('./player.js');
-//Esto viene a ser el objeto que contiene el juego(algo así como el game manager pero que controla todo)
-var Map = require('./map.js');
-var tspr = require('./triggerSprite.js');
-var documents = require('./documentos.js');
+var tarjetaLlave = require('./tarjetaLlave.js');
 //UI
 var Interface = require('./Interface.js');
 
@@ -281,35 +312,37 @@ var Lvl2_1 = {
     this.Sam;
     //Capas
    
-    this.map1 = new Map('Lvl2_2_1',48,48,'suelo',this,false,50,30);
+    this.map1 = new Map('Lvl2_1_1',48,48,'suelo',this,false,150,50);
     this.map1.ini();
    
-    this.map2 = new Map('Lvl2_2_2',48,48,'paredes',this,false,50,30);
+    this.map2 = new Map('Lvl2_1_2',48,48,'paredes',this,false,150,50);
     this.map2.ini();
 
-    this.map3 = new Map('Lvl2_2_3',48,48,'paredes',this,false,50,30);
+    this.map3 = new Map('Lvl2_1_3',48,48,'paredes',this,false,150,50);
     this.map3.ini();
     this.map3.collisions(0,1000);
 
-    this.map4 = new Map('Lvl2_2_4',48,48,'objetos',this,false,50,30);
+    this.map4 = new Map('Lvl2_1_4',48,48,'objetos',this,false,150,50);
     this.map4.ini();
     this.map4.collisions(0,1000);
     
 
-    this.map5 = new Map('Lvl2_2_5',48,48,'objetos',this,false,50,30);
+    this.map5 = new Map('Lvl2_1_5',48,48,'objetos',this,false,150,50);
     this.map5.ini();
 
-    this.map6 = new Map('Lvl2_2_6',48,48,'paredes',this,true,50,30);
+    this.map6 = new Map('Lvl2_1_6',48,48,'paredes',this,true,150,50);
     this.map6.ini();
     this.map6.collisions(0,1000);
 
     //Items
-    this.docums = new documents (this.game,1025, 455, 'documents',.15,.15);
+    this.docums = new documents (this.game,1025, 929, 'documents',.15,.15);
     this.docums.ini();
-
+    //MagKey
+    this.magKey = new tarjetaLlave(this.game, 7075, 386, 'tarjet', .075, .075);
+    this.magKey.ini();
     //Inicializamos el personaje
-    //154, 636
-    this.Sam = new Player(154, 636, true, false, 5, 'player', this.game);
+    //148, 1101
+    this.Sam = new Player(148, 1101, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
 
@@ -322,15 +355,31 @@ var Lvl2_1 = {
     //Cámara
     this.camera.follow(this.Sam);
 
-    this.nextLvl = new tspr(this.game, 2292, 1243, 'aux', .3,.4);
+    this.nextLvl = new tspr(this.game, 2292, 1736, 'aux', .3,.7);
     this.nextLvl.ini();
 
-    this.endLvl = new tspr(this.game, 1444, 1437, 'aux', .8,.4);
+    this.endLvl = new tspr(this.game, 1485, 1910, 'aux', .8,.3);
     this.endLvl.ini();
+
+    this.lastFloor = new tspr(this.game, 7000, 1937, 'aux', .2, 1.4);
+    this.lastFloor.ini();
 
     this.checkIntersects = function(){
       if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
-        this.game.state.start('lvl2_2');
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.animations.stop('walk');
+        this.Sam.x = 6848;
+        this.Sam.y = 1938;
+        this.Sam.angle = 180;
+      }
+      else if(Phaser.Rectangle.intersects(this.Sam,this.lastFloor)){
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.body.velocity.setTo(0, 0);
+        this.Sam.animations.stop('walk');
+        this.Sam.x = 2130;
+        this.Sam.y = 1725;
+        this.Sam.angle = 180;
       }
       else if(Phaser.Rectangle.intersects(this.Sam,this.endLvl) && this.Sam.documents){
         this.game.state.start('menu');
@@ -340,16 +389,16 @@ var Lvl2_1 = {
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,undefined,this.docums);
+    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,this.magKey,this.docums);
     this.checkIntersects();
-    this.interfaz.update(this.Sam.retDoc(), this.Sam.retKey());
+    this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey());
   },
 };
 
 module.exports = Lvl2_1;
 
 
-},{"./Interface.js":1,"./documentos.js":7,"./map.js":12,"./player.js":13,"./triggerSprite.js":15}],5:[function(require,module,exports){
+},{"./Interface.js":2,"./documentos.js":8,"./map.js":13,"./player.js":14,"./tarjetaLlave.js":15,"./triggerSprite.js":16}],5:[function(require,module,exports){
 'use strict';
 //El jugador
 var Player = require('./player.js');
@@ -435,7 +484,25 @@ var Lvl2_2 = {
 module.exports = Lvl2_2;
 
 
-},{"./Interface.js":1,"./map.js":12,"./player.js":13,"./tarjetaLlave.js":14,"./triggerSprite.js":15}],6:[function(require,module,exports){
+},{"./Interface.js":2,"./map.js":13,"./player.js":14,"./tarjetaLlave.js":15,"./triggerSprite.js":16}],6:[function(require,module,exports){
+'use strict';
+var Character = require('./character.js');
+
+function coneOfVision(game, x, y, sprite) {
+    Character.call(this, game, x, y, sprite);
+}
+coneOfVision.prototype = Object.create(Character.prototype);
+coneOfVision.prototype.constructor = coneOfVision;
+
+coneOfVision.prototype.ini = function () {
+    this.game.add.existing(this);
+    this.game.physics.arcade.enable(this);
+    this.scale.setTo(1, 1);
+    this.alpha = .1;
+}
+
+module.exports = coneOfVision;
+},{"./character.js":7}],7:[function(require,module,exports){
 'use strict';
 
 function Character(game, x, y, sprite) {
@@ -447,7 +514,7 @@ Character.prototype = Object.create(Phaser.Sprite.prototype);
 Character.prototype.constructor = Character;
 module.exports = Character;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -470,7 +537,7 @@ documentos.prototype.ini = function () {
 }
 
 module.exports = documentos;
-},{"./character.js":6}],8:[function(require,module,exports){
+},{"./character.js":7}],9:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -486,11 +553,11 @@ Hand.prototype.ini = function () {
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
     this.scale.setTo(.2,.2);
-    this.alpha = .2;
+    this.alpha = 0;
 }
 
 module.exports = Hand;
-},{"./character.js":6}],9:[function(require,module,exports){
+},{"./character.js":7}],10:[function(require,module,exports){
 'use strict';
 var mainMenu = {
     create : function(){
@@ -517,15 +584,15 @@ var mainMenu = {
     }
 }
 module.exports = mainMenu;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 //Añadimos el script de escena 
 var PlayScene = require('./Lvl1_1.js');
-var lvl01_02 = require('./Lvl1_2.js');
 var lvl02_01 = require('./Lvl2_1.js');
 var lvl02_02 = require('./Lvl2_2.js');
 var menu = require ('./mainMenu.js');
 var lvlmenu = require('./lvlSelector.js');
+var tutorial = require('./tuto.js')
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -546,7 +613,7 @@ var PreloaderScene = {
     this.load.setPreloadSprite(this.loadingBar);
 
     // TODO: load here the assets for the game
-    this.game.stage.backgroundColor = '#ffffff';
+    this.game.stage.backgroundColor = '#000000';
     this.game.load.image('logo', 'GameArt/Gafas.jpg');
     this.game.load.tilemap('test', 'images/Test.csv');
     //Lvl1-1
@@ -557,13 +624,6 @@ var PreloaderScene = {
     this.game.load.tilemap('Lvl1_1_2', 'images/CSV/Lvl1_1_Sobresuelo.csv');
     this.game.load.tilemap('Lvl1_1_1', 'images/CSV/Lvl1_1_Suelo.csv');
 
-    //Lvl1-2
-    this.game.load.tilemap('Lvl1_2_6', 'images/CSV/Lvl1_2_Door.csv');
-    this.game.load.tilemap('Lvl1_2_5', 'images/CSV/Lvl1_2_Cositis2.csv');
-    this.game.load.tilemap('Lvl1_2_4', 'images/CSV/Lvl1_2_Cositis.csv');
-    this.game.load.tilemap('Lvl1_2_3', 'images/CSV/Lvl1_2_Muebles.csv');
-    this.game.load.tilemap('Lvl1_2_2', 'images/CSV/Lvl1_2_Sobresuelo.csv');
-    this.game.load.tilemap('Lvl1_2_1', 'images/CSV/Lvl1_2_Suelo.csv');
     //Lvl2-1
     this.game.load.tilemap('Lvl2_1_6', 'images/CSV/Lvl2_1_Door.csv');
     this.game.load.tilemap('Lvl2_1_5', 'images/CSV/Lvl2_1_Cositis2.csv');
@@ -571,13 +631,7 @@ var PreloaderScene = {
     this.game.load.tilemap('Lvl2_1_3', 'images/CSV/Lvl2_1_Muebles.csv');
     this.game.load.tilemap('Lvl2_1_2', 'images/CSV/Lvl2_1_Sobresuelo.csv');
     this.game.load.tilemap('Lvl2_1_1', 'images/CSV/Lvl2_1_Suelo.csv');
-    //Lvl2-2
-    this.game.load.tilemap('Lvl2_2_6', 'images/CSV/Lvl2_2_Door.csv');
-    this.game.load.tilemap('Lvl2_2_5', 'images/CSV/Lvl2_2_Cositis2.csv');
-    this.game.load.tilemap('Lvl2_2_4', 'images/CSV/Lvl2_2_Cositis.csv');
-    this.game.load.tilemap('Lvl2_2_3', 'images/CSV/Lvl2_2_Muebles.csv');
-    this.game.load.tilemap('Lvl2_2_2', 'images/CSV/Lvl2_2_Sobresuelo.csv');
-    this.game.load.tilemap('Lvl2_2_1', 'images/CSV/Lvl2_2_Suelo.csv');
+   
     //Imagenes de tiles
     this.load.image('deco1', 'images/decoraciones1.png');
     this.load.image('suelo', 'images/suelo_pixel_art.png');
@@ -586,16 +640,22 @@ var PreloaderScene = {
 
 
     //Personajes
-    this.load.spritesheet('player', 'images/Sprites Sam Fisher.png', 54, 62);
+    this.load.spritesheet('player', 'images/Sprites Sam Fisher prueba2.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
     this.load.image('aux', 'images/bloque1.jpg');
     //Items
     this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
     this.load.spritesheet('documents','images/documents.png',250,311);
+
+    //Enemigos
+    this.load.spritesheet('enemy', 'images/Enemigo sprite.png', 58, 65)
     
     //UI
     this.load.spritesheet('UI', 'images/UI SpriteSheet.png', 800, 50);
 
+    //Pantalla inicial
+    this.load.image ('inicial', 'images/pantalla inicial.png');
+    this.load.image ('press', 'images/PressHere.png');
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');
     this.load.image('lvlSelector', 'images/SelectorLevels.png');
@@ -613,21 +673,21 @@ window.onload = function () {
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
-  game.state.add('lvl1_2', lvl01_02);
   game.state.add('lvl2_1', lvl02_01);
   game.state.add('lvl2_2', lvl02_02);
   game.state.add('menu', menu);
   game.state.add('lvlSel', lvlmenu);
+  game.state.add('tuto', tutorial)
 
   game.state.start('boot');
 };
-},{"./Lvl1_1.js":2,"./Lvl1_2.js":3,"./Lvl2_1.js":4,"./Lvl2_2.js":5,"./lvlSelector.js":9,"./mainMenu.js":11}],11:[function(require,module,exports){
+},{"./Lvl1_1.js":3,"./Lvl2_1.js":4,"./Lvl2_2.js":5,"./lvlSelector.js":10,"./mainMenu.js":12,"./tuto.js":17}],12:[function(require,module,exports){
 'use strict';
 var mainMenu = {
     create : function(){
        var fondo = this.game.add.image(0,0, 'mainMenu');
        function start (){
-        this.game.state.start('play');
+        this.game.state.start('tuto');
        };
        function lvlmen (){
            this.game.state.start('lvlSel');
@@ -642,7 +702,7 @@ var mainMenu = {
     }
 }
 module.exports = mainMenu;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 var Character = require('./character.js');
@@ -727,7 +787,7 @@ Map.prototype.open = function (x, y) {
 
 module.exports = Map;
 
-},{"./character.js":6}],13:[function(require,module,exports){
+},{"./character.js":7}],14:[function(require,module,exports){
 'use strict';
 
 var Character = require('./character.js')
@@ -756,10 +816,10 @@ Player.prototype.ini = function () {
     this.game.physics.arcade.enable(this);
     this.body.setSize(25, 30, 15, 15);
     this.animations.add('idle', [0], 1, true);
-    this.animations.add('walk', [11, 12, 13, 14], 10, true);
+    this.animations.add('walk', [11, 12, 13, 14], 7, true);
     this.animations.add('taser', [0, 1, 2], 10, false);
     this.animations.add('gun', [22, 23, 24, 25], 10, false);
-    this.animations.add('hand', [3, 4, 5], 4, false);
+    this.animations.add('hand', [4, 5, 6], 4, false);
     this.animations.add('dead', [31, 32], 1, false);
 
     this.xDestine = this.x;
@@ -837,7 +897,7 @@ Player.prototype.bulletHitWall = function (layer3,layer4,layer6) {
     // console.log(this.weapon.bullets);
     var player = this;
     this.weapon.bullets.forEach(function (bullet) { 
-        bullet.body.setSize(0,0,-0,15);
+        bullet.body.setSize(0,0,  50,50);
         if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4) 
         || player.game.physics.arcade.collide(bullet, layer6)) 
         { bullet.kill() } 
@@ -867,7 +927,8 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents) {
                 if (tarjeta != undefined && !this.magneticKey) {
                     this.recogeLlave(tarjeta);
                 }
-                else if (documents != undefined && !this.documents) {
+                if (documents != undefined && !this.documents) {
+                    console.log("yas")
                     this.recogeDocumento(documents);
                 }
                 this.fireTime = this.game.time.now + 1500;
@@ -897,6 +958,10 @@ Player.prototype.recogeDocumento = function (documents) {
 Player.prototype.shoot = function () {
     this.weapon.fire(this.body.center);
     this.animations.play('gun');
+}
+Player.prototype.returnItem = function(){
+
+   return this.items;
 }
 Player.prototype.open = function (map6) {
     this.animations.play('hand');
@@ -931,12 +996,12 @@ Player.prototype.open = function (map6) {
     }
 }
 
-Player.prototype.retDoc = function(){
+Player.prototype.returnDocument = function(){
 
     return this.documents;
 }
 
-Player.prototype.retKey = function(){
+Player.prototype.returnKey = function(){
 
     return this.magneticKey;
 }
@@ -953,7 +1018,7 @@ Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, docum
 
 
 module.exports = Player;
-},{"./character.js":6,"./hand.js":8,"./map.js":12,"./tarjetaLlave.js":14}],14:[function(require,module,exports){
+},{"./character.js":7,"./hand.js":9,"./map.js":13,"./tarjetaLlave.js":15}],15:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -976,7 +1041,7 @@ tarjetaLlave.prototype.ini = function () {
 }
 
 module.exports = tarjetaLlave;
-},{"./character.js":6}],15:[function(require,module,exports){
+},{"./character.js":7}],16:[function(require,module,exports){
 'use strict';
 var Character = require('./character.js');
 
@@ -1007,4 +1072,21 @@ triggerSprite.prototype.ini = function () {
 }
 
 module.exports = triggerSprite;
-},{"./character.js":6}]},{},[10]);
+},{"./character.js":7}],17:[function(require,module,exports){
+'use strict';
+var tuto = {
+    create : function(){
+       var fondo = this.game.add.image(0,0, 'inicial');
+       function start (){
+        this.game.state.start('play');
+       };
+       
+       this.continue = this.game.add.button(475,510,'press',start);
+       this.continue.scale.setTo(.65,.65);
+    },
+    update : function(){
+
+    }
+}
+module.exports = tuto;
+},{}]},{},[11]);
