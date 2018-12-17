@@ -3,7 +3,7 @@ var mainMenu = {
     create : function(){
        var fondo = this.game.add.image(0,0, 'mainMenu');
        function start (){
-        this.game.state.start('play');
+        this.game.state.start('tuto');
        };
        function lvlmen (){
            this.game.state.start('lvlSel');
