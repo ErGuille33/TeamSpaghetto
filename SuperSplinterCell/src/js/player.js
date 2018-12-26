@@ -38,8 +38,10 @@ Player.prototype.ini = function () {
     this.speed = 300;
 
     this.actionButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-    this.eKey = this.game.input.keyboard.addKey(Phaser.KeyCode.E);
-    this.rKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
+    this.eKey = this.game.input.keyboard.addKey(Phaser.KeyCode.FIVE);
+    this.rKey = this.game.input.keyboard.addKey(Phaser.KeyCode.FOUR);
+    this.tKey = this.game.input.keyboard.addKey(Phaser.KeyCode.TWO);
+    this.lKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ONE);
     //weapon
 
     this.weapon = this.game.add.weapon(10, 'bullet');
@@ -47,10 +49,10 @@ Player.prototype.ini = function () {
     this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
     this.weapon.bulletSpeed = 600;
     this.weapon.fireRate = 1000;
-    
+
     this.weapon.trackSprite(this, (this.x / 2), (this.y / 2), true);
     this.weapon.bulletCollideWorldBounds = true;
-    
+
 
     //this.weapon.bullets.enableBody = true;
     //this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -103,18 +105,23 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     }
 
 }
-Player.prototype.bulletHitWall = function (layer3,layer4,layer6) {
+Player.prototype.bulletHitWall = function (layer3, layer4, layer6, enemys) {
     // console.log(this.weapon.bullets);
     var player = this;
-    this.weapon.bullets.forEach(function (bullet) { 
-        bullet.body.setSize(0,0,  50,50);
-        if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4) 
-        || player.game.physics.arcade.collide(bullet, layer6)) 
-        { bullet.kill() } 
+    this.weapon.bullets.forEach(function (bullet) {
+        bullet.body.setSize(0, 0, 50, 50);
+        if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4)
+            || player.game.physics.arcade.collide(bullet, layer6)) { bullet.kill() }
+        else {
+            for (var i in enemys) {
+                if (player.game.physics.arcade.collide(bullet, enemys[i])) { enemys[i].killed();bullet.kill(); }
+            }
+        }
     }
     );
 }
-Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents) {
+
+Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemys) {
 
     if (this.eKey.justDown) {
         this.items = 4
@@ -123,6 +130,14 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents) {
     else if (this.rKey.justDown) {
         this.items = 5;
         console.log("shut");
+    }
+    else if (this.tKey.justDown) {
+        this.items = 2;
+        console.log("taser");
+    }
+    else if (this.lKey.justDown){
+        this.items = 1;
+        console.log("ganzua");
     }
     else if (this.actionButton.justDown && this.fireTime <= this.game.time.now) {
         this.body.velocity.setTo(0, 0);
@@ -133,16 +148,25 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents) {
                 this.fireTime = this.game.time.now + this.weapon.fireRate;
                 break;
             case 4:
-                this.open(map6);
+                this.animations.play('hand');
                 if (tarjeta != undefined && !this.magneticKey) {
                     this.recogeLlave(tarjeta);
                 }
                 if (documents != undefined && !this.documents) {
-                    console.log("yas")
+
                     this.recogeDocumento(documents);
                 }
                 this.fireTime = this.game.time.now + 1500;
                 break;
+            case 2:
+                this.taseEnemy(enemys);
+                this.animations.play('taser');
+                this.fireTime = this.game.time.now + 1000;
+                break;
+            case 1:
+            this.open(map6);
+            this.animations.play('hand');
+            this.fireTime = this.game.time.now + 1500;
 
         }
     }
@@ -165,13 +189,22 @@ Player.prototype.recogeDocumento = function (documents) {
         documents.kill();
     }
 }
+Player.prototype.taseEnemy = function (enemys) {
+    console.log("fun");
+    for (var i in enemys) {
+        if (Phaser.Rectangle.intersects(this.hand.getBounds(), enemys[i].getBounds())) {
+
+            enemys[i].killed();
+        }
+    }
+}
 Player.prototype.shoot = function () {
     this.weapon.fire(this.body.center);
     this.animations.play('gun');
 }
-Player.prototype.returnItem = function(){
+Player.prototype.returnItem = function () {
 
-   return this.items;
+    return this.items;
 }
 Player.prototype.open = function (map6) {
     this.animations.play('hand');
@@ -206,22 +239,22 @@ Player.prototype.open = function (map6) {
     }
 }
 
-Player.prototype.returnDocument = function(){
+Player.prototype.returnDocument = function () {
 
     return this.documents;
 }
 
-Player.prototype.returnKey = function(){
+Player.prototype.returnKey = function () {
 
     return this.magneticKey;
 }
 
 
-Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents) {
+Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents, enemys) {
     this.moveCharacter();
-    this.recogeInput(map6, layer6, tarjeta, documents);
+    this.recogeInput(map6, layer6, tarjeta, documents, enemys);
     this.checkCollision(layer4, layer3, layer6);
-    this.bulletHitWall(layer3, layer4, layer6);
+    this.bulletHitWall(layer3, layer4, layer6, enemys);
 
 }
 

@@ -58,14 +58,18 @@ var PlayScene = {
     this.magKey.ini();
 
     this.docums = new documents(this.game, 6735, 1420, 'documents', .15, .15);
+    //Enemys
+    this.enemys = [];
+    this.pos1 = [{x: 400, y: 1155}, {x: 450, y: 1155}];
+    this.enemys[0] = new Enemy(400, 1155, false, false, this.pos1, 300, 'enemy', this.game);
+    this.enemys[0].ini();
     this.docums.ini();
+    //Sam
     //143, 1155
     this.Sam = new Player(143, 1155, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
-    //Enemys
-    this.pos1 = [{x: 150, y: 1155}, {x: 150, y: 1159}];
-    this.Enemy1 = new Enemy(150, 1155, false, false, this.pos1, 300, 'enemy', this.game);
+    
     //TriggerSpots
     this.nextFloor = new tspr(this.game, 2131, 121, 'aux', .9, .2);
     this.nextFloor.ini();
@@ -109,7 +113,7 @@ var PlayScene = {
 
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums);
+    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums, this.enemys);
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
   },

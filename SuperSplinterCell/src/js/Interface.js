@@ -49,6 +49,18 @@ Interface.prototype.update = function (doc, key, item) {
         this.animations.play('gun');
         
     }
+    else if (item == 2){
+        this.animations.stop();
+        this.animations.play('taser');
+    }
+    else if (item == 1){
+        this.animations.stop();
+        this.animations.play('lockpick');
+    }
+    else if (item == 3){
+        this.animations.stop();
+        this.animations.play('cable');
+    }
 
     if (this.hasDoc){
         this.document.alpha = 1;

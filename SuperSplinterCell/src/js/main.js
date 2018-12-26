@@ -56,6 +56,7 @@ var PreloaderScene = {
     this.load.spritesheet('player', 'images/Sprites Sam Fisher prueba2.png', 54, 62);
     this.load.image('bullet', 'images/bullet.png');
     this.load.image('aux', 'images/bloque1.jpg');
+    this.load.image('cono', 'images/Conito.png');
     //Items
     this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
     this.load.spritesheet('documents','images/documents.png',250,311);
