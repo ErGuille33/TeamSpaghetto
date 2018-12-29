@@ -53,6 +53,8 @@ Player.prototype.ini = function () {
     this.weapon.trackSprite(this, (this.x / 2), (this.y / 2), true);
     this.weapon.bulletCollideWorldBounds = true;
 
+    this.body.allowGravity = false;
+    this.body.immovable = true;
 
     //this.weapon.bullets.enableBody = true;
     //this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -70,6 +72,7 @@ Player.prototype.moveCharacter = function () {
     if (this.game.input.mousePointer.isDown && this.fireTime - 500 <= this.game.time.now) {
         this.xDestine = this.game.input.mousePointer.worldX;
         this.yDestine = this.game.input.mousePointer.worldY;
+        console.log(this.xDestine + " , " + this.yDestine)
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
         this.rotation = this.game.physics.arcade.moveToPointer(this, this.speed, this.game.input);
         //console.log(this.xDestine );
@@ -87,6 +90,7 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
     }
+
     if (Phaser.Rectangle.contains(this.body, this.game.input.x, this.game.input.y)) {
         this.body.velocity.setTo(0, 0);
         this.animations.stop('walk');
@@ -108,13 +112,14 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
 Player.prototype.bulletHitWall = function (layer3, layer4, layer6, enemys) {
     // console.log(this.weapon.bullets);
     var player = this;
+    for (var i in enemys) { player.game.physics.arcade.collide(this, enemys[i]); }
     this.weapon.bullets.forEach(function (bullet) {
         bullet.body.setSize(0, 0, 50, 50);
         if (player.game.physics.arcade.collide(bullet, layer3) || player.game.physics.arcade.collide(bullet, layer4)
             || player.game.physics.arcade.collide(bullet, layer6)) { bullet.kill() }
         else {
             for (var i in enemys) {
-                if (player.game.physics.arcade.collide(bullet, enemys[i])) { enemys[i].killed();bullet.kill(); }
+                if (player.game.physics.arcade.collide(bullet, enemys[i])) { enemys[i].killed(); bullet.kill(); }
             }
         }
     }
@@ -135,7 +140,7 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemy
         this.items = 2;
         console.log("taser");
     }
-    else if (this.lKey.justDown){
+    else if (this.lKey.justDown) {
         this.items = 1;
         console.log("ganzua");
     }
@@ -164,9 +169,9 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemy
                 this.fireTime = this.game.time.now + 1000;
                 break;
             case 1:
-            this.open(map6);
-            this.animations.play('hand');
-            this.fireTime = this.game.time.now + 1500;
+                this.open(map6);
+                this.animations.play('hand');
+                this.fireTime = this.game.time.now + 1500;
 
         }
     }
@@ -206,6 +211,13 @@ Player.prototype.returnItem = function () {
 
     return this.items;
 }
+Player.prototype.getKilled = function () {
+    console.log("visto")
+}
+Player.prototype.returnPlayer = function () {
+    return this;
+}
+
 Player.prototype.open = function (map6) {
     this.animations.play('hand');
 

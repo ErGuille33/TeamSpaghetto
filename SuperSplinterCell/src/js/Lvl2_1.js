@@ -6,6 +6,8 @@ var Map = require('./map.js');
 var tspr = require('./triggerSprite.js');
 var documents = require('./documentos.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
+
+var Enemy = require('./Enemy.js')
 //UI
 var Interface = require('./Interface.js');
 
@@ -51,9 +53,72 @@ var Lvl2_1 = {
     //MagKey
     this.magKey = new tarjetaLlave(this.game, 7075, 386, 'tarjet', .075, .075);
     this.magKey.ini();
+
+    //Enemigos 
+    this.enemys = [];
+    this.pos0 = [{ x: 1034 , y: 1709 }, { x: 214 , y: 1724 } ];
+    this.enemys[0] = new Enemy(1034 , 1709, false, false, this.pos0, 150, 180, 'enemy', this.game);
+    this.enemys[0].ini();
+
+    this.pos1 = [{ x: 210  , y: 1385 }];
+    this.enemys[1] = new Enemy(210  , 1385, false, false, this.pos1, 150, 0, 'enemy', this.game);
+    this.enemys[1].ini();
+
+    this.pos2 = [{ x: 2187   , y: 1096 }];
+    this.enemys[2] = new Enemy(2187  , 1096, false, false, this.pos2, 150, 0, 'enemy', this.game);
+    this.enemys[2].ini();
+
+    this.pos3 = [{ x: 1868 , y: 586 }, { x: 436 , y: 586 }, { x: 436, y: 1491 }, { x: 1868, y: 1491 }];
+    this.enemys[3] = new Enemy(1868, 586, false, false, this.pos3, 175, 180, 'enemy', this.game);
+    this.enemys[3].ini();
+
+    this.pos4 = [{ x: 597  , y: 1401 }, { x: 597 , y: 668 }, { x: 1783 , y: 668 }, { x: 1783, y: 1401 }];
+    this.enemys[4] = new Enemy(597 , 1401, false, false, this.pos4, 175, 180, 'enemy', this.game);
+    this.enemys[4].ini();
+
+    this.pos5 = [{ x: 1602  , y: 1253 }, { x: 791  , y: 1253 } ];
+    this.enemys[5] = new Enemy(1602  , 1253, false, false, this.pos5, 150, 180, 'enemy', this.game);
+    this.enemys[5].ini();
+
+    this.pos6 = [{ x: 725   , y: 1034 }];
+    this.enemys[6] = new Enemy(725   , 1034, false, false, this.pos6, 150, 0, 'enemy', this.game);
+    this.enemys[6].ini();
+
+    //Segundo piso
+
+    this.pos7 = [{ x: 6887  , y: 794 }, { x: 6887 , y: 1670 }, { x: 6566 , y: 1670 }, { x: 6566, y: 794 }];
+    this.enemys[7] = new Enemy(6887, 794, false, false, this.pos7, 175, 180, 'enemy', this.game);
+    this.enemys[7].ini();
+
+    this.pos8 = [{ x: 6389   , y: 438 }, { x: 4708  , y: 438 }, { x: 4708  , y: 1653 }, { x: 6389, y: 1653 }];
+    this.enemys[8] = new Enemy(6389, 458, false, false, this.pos8, 175, 180, 'enemy', this.game);
+    this.enemys[8].ini();
+
+    this.pos9 = [ { x: 4708  , y: 1653 }, { x: 6389, y: 1653 },{ x: 6389   , y: 438 }, { x: 4708  , y: 438 }];
+    this.enemys[9] = new Enemy(4708, 1653, false, false, this.pos9, 175, 180, 'enemy', this.game);
+    this.enemys[9].ini();
+
+    this.pos10 = [{ x: 5916   , y: 1604 }, { x: 5343  , y: 1604 }, { x: 5343 , y: 529 }, { x: 5916, y: 529 }];
+    this.enemys[10] = new Enemy(5916 , 1604, false, false, this.pos10, 175, 180, 'enemy', this.game);
+    this.enemys[10].ini();
+
+    this.pos11 = [{ x: 7027     , y: 456 }];
+    this.enemys[11] = new Enemy(7027     , 456, false, false, this.pos11, 150, 0, 'enemy', this.game);
+    this.enemys[11].ini();
+
+    this.pos12 = [{ x: 4944  , y: 1961 }];
+    this.enemys[12] = new Enemy(4944 , 1961, false, true, this.pos12, 150, -90, 'enemy', this.game,2000);
+    this.enemys[12].ini();
+
+    this.pos13 = [{ x: 5651    , y: 1736 },{ x: 5651   , y: 2000 }];
+    this.enemys[13] = new Enemy(5651    , 1736, false, false, this.pos13, 150, 0, 'enemy', this.game);
+    this.enemys[13].ini();
+
+
+
     //Inicializamos el personaje
     //148, 1101
-    this.Sam = new Player(148, 1101, false, false, 5, 'player', this.game);
+    this.Sam = new Player(148   , 1101, false, false, 5, 'player', this.game);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
 
@@ -100,9 +165,9 @@ var Lvl2_1 = {
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,this.magKey,this.docums);
+    this.Sam.update(this.map4.returnLayer(),this.map3.returnLayer(), this.map6.returnLayer(),this.map6,this.magKey,this.docums,this.enemys);
     this.checkIntersects();
-    this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey());
+    this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
   },
 };
 
