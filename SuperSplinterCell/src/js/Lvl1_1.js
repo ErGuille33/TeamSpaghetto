@@ -171,7 +171,7 @@ var PlayScene = {
         this.Sam.angle = 90;
       }
       else if (Phaser.Rectangle.intersects(this.Sam, this.endLvl) && this.Sam.documents) {
-        this.game.state.start('lvl2_1');
+        this.game.state.start('inter');
       }
     }
   },

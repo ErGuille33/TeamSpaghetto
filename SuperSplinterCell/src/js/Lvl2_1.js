@@ -158,7 +158,7 @@ var Lvl2_1 = {
         this.Sam.angle = 180;
       }
       else if(Phaser.Rectangle.intersects(this.Sam,this.endLvl) && this.Sam.documents){
-        this.game.state.start('menu');
+        this.game.state.start('finalLvl');
       }
     }
     

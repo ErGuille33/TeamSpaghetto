@@ -2,10 +2,11 @@
 //Añadimos el script de escena 
 var PlayScene = require('./Lvl1_1.js');
 var lvl02_01 = require('./Lvl2_1.js');
-var lvl02_02 = require('./Lvl2_2.js');
 var menu = require ('./mainMenu.js');
 var lvlmenu = require('./lvlSelector.js');
 var tutorial = require('./tuto.js')
+var interLvl = require('./interLevel.js');
+var finalLvl = require('./finalLevel.js')
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -73,6 +74,9 @@ var PreloaderScene = {
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');
     this.load.image('lvlSelector', 'images/SelectorLevels.png');
+    this.load.image('nextLvl', 'images/nextLevel.png');
+    this.load.image('interLvl', 'images/MediaPantalla.png');
+    this.load.image('return', 'images/returnToMenu.png');
   },
   //Llamamos a playscene
   create: function () {
@@ -88,10 +92,11 @@ window.onload = function () {
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
   game.state.add('lvl2_1', lvl02_01);
-  game.state.add('lvl2_2', lvl02_02);
   game.state.add('menu', menu);
   game.state.add('lvlSel', lvlmenu);
-  game.state.add('tuto', tutorial)
+  game.state.add('tuto', tutorial);
+  game.state.add('inter',interLvl);
+  game.state.add('finalLvl',finalLvl);
 
   game.state.start('boot');
 };
