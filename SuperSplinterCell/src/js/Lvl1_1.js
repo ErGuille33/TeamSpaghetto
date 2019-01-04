@@ -131,7 +131,7 @@ var PlayScene = {
 
     //Sam
     //143, 1155
-    this.Sam = new Player(143, 1155, false, false, 5, 'player', this.game);
+    this.Sam = new Player(143, 1155, false, false, 5, 'player', this.game, 1);
     this.game.add.existing(this.Sam);
     this.Sam.ini();
 
@@ -181,6 +181,9 @@ var PlayScene = {
     this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums, this.enemys);
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
+    for(var i =0;i < this.enemys.length ; i++){
+      this.enemys[i].update(this.Sam);
+    }
    
   },
   render: function () {
@@ -188,6 +191,14 @@ var PlayScene = {
     var lvl = this;
     if (showDebug) {
       this.game.debug.body(this.enemys[0].coneOfVision);
+      this.game.debug.body(this.enemys[1].coneOfVision);
+      this.game.debug.body(this.enemys[2].coneOfVision);
+      this.game.debug.body(this.enemys[3].coneOfVision);
+      this.game.debug.body(this.enemys[4].coneOfVision);
+      this.game.debug.body(this.enemys[5].coneOfVision);
+      this.game.debug.body(this.enemys[6].coneOfVision);
+      this.game.debug.body(this.enemys[7].coneOfVision);
+     
     }
   }
 

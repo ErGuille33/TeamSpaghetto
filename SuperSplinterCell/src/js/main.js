@@ -4,9 +4,11 @@ var PlayScene = require('./Lvl1_1.js');
 var lvl02_01 = require('./Lvl2_1.js');
 var menu = require ('./mainMenu.js');
 var lvlmenu = require('./lvlSelector.js');
-var tutorial = require('./tuto.js')
+var tutorial = require('./tuto.js');
 var interLvl = require('./interLevel.js');
-var finalLvl = require('./finalLevel.js')
+var finalLvl = require('./finalLevel.js');
+var GameOver = require('./GameOver.js');
+var GameOver1 = require('./GameOver1.js');
 //Se ejecuta primero
 var BootScene = {
   preload: function () {
@@ -75,8 +77,10 @@ var PreloaderScene = {
     this.load.image('mainMenu', 'images/MainMenu.png');
     this.load.image('lvlSelector', 'images/SelectorLevels.png');
     this.load.image('nextLvl', 'images/nextLevel.png');
+    this.load.image('try', 'images/tryAgain.png');
     this.load.image('interLvl', 'images/MediaPantalla.png');
     this.load.image('return', 'images/returnToMenu.png');
+    this.load.image('perder', 'images/perderPantalla.png');
   },
   //Llamamos a playscene
   create: function () {
@@ -97,6 +101,8 @@ window.onload = function () {
   game.state.add('tuto', tutorial);
   game.state.add('inter',interLvl);
   game.state.add('finalLvl',finalLvl);
+  game.state.add('gameover',GameOver);
+  game.state.add('gameover1',GameOver1);
 
   game.state.start('boot');
 };

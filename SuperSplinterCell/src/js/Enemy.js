@@ -40,6 +40,9 @@ Enemy.prototype.ini = function () {
     this.timeAux = this.game.time.now;
     this.addChild(this.coneOfVision);
 
+    this.visto = false;
+    
+
    
 
 }
@@ -51,6 +54,7 @@ Enemy.prototype.changeAngle = function () {
 Enemy.prototype.moveEnemy = function () {
 
     if (!this.ko) {
+        
         if (!this.look) {
             
             if ( !((Math.trunc(this.x) <= this.positions[this.auxi].x + 1 && Math.trunc(this.x) >= this.positions[this.auxi].x - 1 ))
@@ -89,9 +93,15 @@ Enemy.prototype.moveEnemy = function () {
 }
 
 Enemy.prototype.playerDetected = function (player) {
-    if (player != undefined) {
+    
+    if (player != undefined && !this.visto) {
+        
         if (this.game.physics.arcade.overlap(this.coneOfVision, player)) {
-
+            this.visto = true;
+            this.body.velocity.setTo(0, 0);
+            console.log(this.game.physics.arcade.angleBetween(this,player));
+            this.angle = (180/Math.PI) * this.game.physics.arcade.angleBetween(this,player);
+            this.animations.play('shoot');
             player.getKilled();
         }
     }
@@ -110,9 +120,11 @@ Enemy.prototype.killed = function () {
 }
 
 Enemy.prototype.update = function (player) {
-
+    
     this.playerDetected(player);
+    if(!this.visto){
     this.moveEnemy();
+    }
 }
 
 module.exports = Enemy;

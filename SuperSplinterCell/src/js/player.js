@@ -6,21 +6,22 @@ var Hand = require('./hand.js');
 var mg = require('./tarjetaLlave.js');
 
 //Items : 1 = lockpick | 2 = taser | 3 = cable | 4 = gun  | 5 = hand 
-function Player(x, y, key, doc, it, sprite, game) {
+function Player(x, y, key, doc, it, sprite, game, lvl) {
     Character.call(this, game, x, y, sprite);
     this.isMoving = false;
     this.magneticKey = key;
     this.documents = doc;
     this.items = it;
     this.game = game;
-    // this.eT = tarj;
+    this.lvl = lvl;
 
-    // this.papeles = papeles;
 }
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.ini = function () {
+
+    this.alive = true;
 
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
@@ -30,7 +31,7 @@ Player.prototype.ini = function () {
     this.animations.add('taser', [0, 1, 2], 10, false);
     this.animations.add('gun', [22, 23, 24, 25], 10, false);
     this.animations.add('hand', [4, 5, 6], 4, false);
-    this.animations.add('dead', [31, 32], 1, false);
+    this.animations.add('dead', [30], 1, false);
 
     this.xDestine = this.x;
     this.yDestine = this.y;
@@ -72,7 +73,7 @@ Player.prototype.moveCharacter = function () {
     if (this.game.input.mousePointer.isDown && this.fireTime - 500 <= this.game.time.now) {
         this.xDestine = this.game.input.mousePointer.worldX;
         this.yDestine = this.game.input.mousePointer.worldY;
-        console.log(this.xDestine + " , " + this.yDestine)
+       // console.log(this.xDestine + " , " + this.yDestine)
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
         this.rotation = this.game.physics.arcade.moveToPointer(this, this.speed, this.game.input);
         //console.log(this.xDestine );
@@ -212,7 +213,13 @@ Player.prototype.returnItem = function () {
     return this.items;
 }
 Player.prototype.getKilled = function () {
-    console.log("visto")
+
+    this.body.velocity.setTo(0, 0);
+    this.animations.play('idle');
+    this.game.time.events.add(300, function () { this.animations.play('dead');}, this);
+    this.alive = false;
+    this.game.time.events.add(2000, function () { if (this.lvl == 1) { this.game.state.start('gameover'); } else if(this.lvl==2){ this.game.state.start('gameover1'); } }, this);
+
 }
 Player.prototype.returnPlayer = function () {
     return this;
@@ -221,12 +228,12 @@ Player.prototype.returnPlayer = function () {
 Player.prototype.open = function (map6) {
     this.animations.play('hand');
 
-    console.log(this.hand.body.x + 24);
-    console.log(map6.doors[3].x);
-    console.log(map6.doors[3].x + 48);
-    console.log(this.hand.body.y + 24);
-    console.log(map6.doors[3].y);
-    console.log(map6.doors[3].y + 48);
+    // console.log(this.hand.body.x + 24);
+    // console.log(map6.doors[3].x);
+    // console.log(map6.doors[3].x + 48);
+    // console.log(this.hand.body.y + 24);
+    //  console.log(map6.doors[3].y);
+    //  console.log(map6.doors[3].y + 48);
 
     for (var i = 0; i < map6.doors.length; i++) {
 
@@ -263,10 +270,13 @@ Player.prototype.returnKey = function () {
 
 
 Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents, enemys) {
-    this.moveCharacter();
-    this.recogeInput(map6, layer6, tarjeta, documents, enemys);
-    this.checkCollision(layer4, layer3, layer6);
-    this.bulletHitWall(layer3, layer4, layer6, enemys);
+    if (this.alive) {
+        this.moveCharacter();
+        this.recogeInput(map6, layer6, tarjeta, documents, enemys);
+        this.checkCollision(layer4, layer3, layer6);
+        this.bulletHitWall(layer3, layer4, layer6, enemys);
+    }
+
 
 }
 
