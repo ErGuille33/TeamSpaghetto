@@ -9,6 +9,8 @@ var tspr = require('./triggerSprite.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
 var documents = require('./documentos.js');
 
+var escalera;
+var mission;
 //UI
 var Interface = require('./Interface.js');
 
@@ -153,10 +155,15 @@ var PlayScene = {
 
     //Cámara
     this.camera.follow(this.Sam);
+
+    escalera = this.game.add.audio('escalera');
+    mission = this.game.add.audio('mission');
+
     this.checkIntersects = function () {
       if (Phaser.Rectangle.intersects(this.Sam, this.nextFloor)) {
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
+        escalera.play();
         this.Sam.animations.stop('walk');
         this.Sam.x = 6839;
         this.Sam.y = 300;
@@ -165,13 +172,16 @@ var PlayScene = {
       else if (Phaser.Rectangle.intersects(this.Sam, this.lastFloor)) {
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
+        escalera.play();
         this.Sam.animations.stop('walk');
         this.Sam.x = 2131;
         this.Sam.y = 190;
         this.Sam.angle = 90;
       }
       else if (Phaser.Rectangle.intersects(this.Sam, this.endLvl) && this.Sam.documents) {
+        mission.play();
         this.game.state.start('inter');
+        
       }
     }
   },

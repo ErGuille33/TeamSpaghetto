@@ -81,6 +81,20 @@ var PreloaderScene = {
     this.load.image('interLvl', 'images/MediaPantalla.png');
     this.load.image('return', 'images/returnToMenu.png');
     this.load.image('perder', 'images/perderPantalla.png');
+
+    //Audios
+    this.game.load.audio('die', 'images/SoundEffects/die.wav');
+    this.game.load.audio('door', 'images/SoundEffects/openDoor.wav');
+    this.game.load.audio('silenced', 'images/SoundEffects/silenced.wav');
+    this.game.load.audio('taser', 'images/SoundEffects/taser.wav');
+    this.game.load.audio('shoot', 'images/SoundEffects/shoot.wav');
+    this.game.load.audio('paper', 'images/SoundEffects/papeles.wav');
+    this.game.load.audio('key', 'images/SoundEffects/key.wav');
+    this.game.load.audio('mission', 'images/SoundEffects/mission.wav');
+    this.game.load.audio('escalera', 'images/SoundEffects/escalera.wav');
+    this.game.load.audio('light','images/SoundEffects/lightsOff.wav');
+    this.game.load.audio('failed','images/SoundEffects/failed.wav');
+    
   },
   //Llamamos a playscene
   create: function () {

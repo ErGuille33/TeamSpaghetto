@@ -10,6 +10,8 @@ var tarjetaLlave = require('./tarjetaLlave.js');
 var Enemy = require('./Enemy.js')
 //UI
 var Interface = require('./Interface.js');
+var escalera;
+var mission;
 
 var Lvl2_1 = {
   //Se ejecuta al principio
@@ -140,10 +142,14 @@ var Lvl2_1 = {
     this.lastFloor = new tspr(this.game, 7000, 1937, 'aux', .2, 1.4);
     this.lastFloor.ini();
 
+    escalera = this.game.add.audio('escalera');
+    mission = this.game.add.audio('mission');
+
     this.checkIntersects = function(){
       if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
+        escalera.play();
         this.Sam.animations.stop('walk');
         this.Sam.x = 6848;
         this.Sam.y = 1938;
@@ -152,12 +158,14 @@ var Lvl2_1 = {
       else if(Phaser.Rectangle.intersects(this.Sam,this.lastFloor)){
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
+        escalera.play();
         this.Sam.animations.stop('walk');
         this.Sam.x = 2130;
         this.Sam.y = 1725;
         this.Sam.angle = 180;
       }
       else if(Phaser.Rectangle.intersects(this.Sam,this.endLvl) && this.Sam.documents){
+        mission.play();
         this.game.state.start('finalLvl');
       }
     }

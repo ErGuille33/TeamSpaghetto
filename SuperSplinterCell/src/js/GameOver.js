@@ -14,6 +14,8 @@ var gameOver1 = {
 
        this.nxt = this.game.add.button(475,350,'try',start);
        this.nxt.scale.setTo(1,1);
+       var failed = this.game.add.audio('failed');
+       failed.play();
     },
     update : function(){
         if(Phaser.Rectangle.containsPoint(this.continue, this.game.input.mousePointer)){
