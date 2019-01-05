@@ -57,6 +57,10 @@
 # Reference works:  
 ### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games.
 
+#Music:
+### Feuer Frie [8 bit version ](Rammstein) || Detective Theme Music - Background Music (no Copyright) || The ruined hope (Epic music empire)
+
+
 <p align= "center">
 <a href="url"><img src="https://github.com/ErGuille33/TeamSpaghetto/blob/master/SuperSplinterCell/src/images/Logo.jpg?raw=true"  height="500" width="399" ></a>
 </p> 
