@@ -11,6 +11,8 @@ var documents = require('./documentos.js');
 
 var escalera;
 var mission;
+var music;
+
 //UI
 var Interface = require('./Interface.js');
 
@@ -158,6 +160,10 @@ var PlayScene = {
 
     escalera = this.game.add.audio('escalera');
     mission = this.game.add.audio('mission');
+    music = this.game.add.audio('levelMusic');
+   
+   
+    music.loopFull(.3);
 
     this.checkIntersects = function () {
       if (Phaser.Rectangle.intersects(this.Sam, this.nextFloor)) {
@@ -179,6 +185,7 @@ var PlayScene = {
         this.Sam.angle = 90;
       }
       else if (Phaser.Rectangle.intersects(this.Sam, this.endLvl) && this.Sam.documents) {
+        music.stop();
         mission.play();
         this.game.state.start('inter');
         
@@ -192,7 +199,7 @@ var PlayScene = {
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
     for(var i =0;i < this.enemys.length ; i++){
-      this.enemys[i].update(this.Sam);
+      this.enemys[i].update(this.Sam,music);
     }
    
   },

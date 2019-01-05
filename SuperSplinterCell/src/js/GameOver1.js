@@ -1,11 +1,14 @@
 'use strict';
-var interLevel = {
+var beep;
+var gameover2 = {
     create : function(){
        var fondo = this.game.add.image(0,0, 'perder');
        function start (){
+        beep.play();
         this.game.state.start('lvl2_1');
        };
        function returntoMain (){
+        beep.play();
         this.game.state.start('menu');
        };
        
@@ -16,6 +19,8 @@ var interLevel = {
        this.nxt.scale.setTo(1,1);
        var failed = this.game.add.audio('failed');
        failed.play();
+
+       beep = this.game.add.audio('beep');
     },
     update : function(){
         if(Phaser.Rectangle.containsPoint(this.continue, this.game.input.mousePointer)){
@@ -29,4 +34,4 @@ var interLevel = {
         else   this.nxt.scale.setTo(1,1);
     }
 }
-module.exports = interLevel;
+module.exports = gameover2;

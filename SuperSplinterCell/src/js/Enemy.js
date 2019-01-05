@@ -93,13 +93,14 @@ Enemy.prototype.moveEnemy = function () {
     }
 }
 
-Enemy.prototype.playerDetected = function (player) {
+Enemy.prototype.playerDetected = function (player,music) {
     
     if (player != undefined && !this.visto) {
         
         if (this.game.physics.arcade.overlap(this.coneOfVision, player)) {
             this.visto = true;
             this.body.velocity.setTo(0, 0);
+            music.stop();
             console.log(this.game.physics.arcade.angleBetween(this,player));
             this.angle = (180/Math.PI) * this.game.physics.arcade.angleBetween(this,player);
             this.animations.play('shoot');
@@ -121,9 +122,9 @@ Enemy.prototype.killed = function () {
     this.ko = true;
 }
 
-Enemy.prototype.update = function (player) {
+Enemy.prototype.update = function (player,music) {
     
-    this.playerDetected(player);
+    this.playerDetected(player,music);
     if(!this.visto){
     this.moveEnemy();
     }

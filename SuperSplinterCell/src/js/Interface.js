@@ -2,6 +2,7 @@
 var Character = require('./character.js')
 var Player = require('./player.js')
 
+var tick;
 
 function Interface(x, y, sprite, game) {
     Character.call(this, game, x, y, sprite);
@@ -29,6 +30,7 @@ Interface.prototype.ini = function () {
     this.tarjet.fixedToCamera = true;
     this.tarjet.alpha = 0;
     this.game.add.existing(this.tarjet);
+
 
 }
 

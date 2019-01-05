@@ -13,6 +13,8 @@ var taser;
 var paper;
 var key;
 
+var tick;
+
 //Items : 1 = lockpick | 2 = taser | 3 = cable | 4 = gun  | 5 = hand 
 function Player(x, y, key, doc, it, sprite, game, lvl) {
     Character.call(this, game, x, y, sprite);
@@ -82,6 +84,9 @@ Player.prototype.ini = function () {
     paper = this.game.add.audio('paper');
     key = this.game.add.audio('key');
 
+    tick = this.game.add.audio('tick');
+   
+
 }
 Player.prototype.moveCharacter = function () {
     //COmprueba si se esta pulsando el boton del ratón, y si ha pasado suficiente tiempo desde que se ha disparado
@@ -146,18 +151,22 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemy
 
     if (this.eKey.justDown) {
         this.items = 4
+        tick.play();
         console.log("jand");
     }
     else if (this.rKey.justDown) {
         this.items = 5;
+        tick.play();
         console.log("shut");
     }
     else if (this.tKey.justDown) {
         this.items = 2;
+        tick.play();
         console.log("taser");
     }
     else if (this.lKey.justDown) {
         this.items = 1;
+        tick.play();
         console.log("ganzua");
     }
     else if (this.actionButton.justDown && this.fireTime <= this.game.time.now) {

@@ -94,11 +94,18 @@ var PreloaderScene = {
     this.game.load.audio('escalera', 'images/SoundEffects/escalera.wav');
     this.game.load.audio('light','images/SoundEffects/lightsOff.wav');
     this.game.load.audio('failed','images/SoundEffects/failed.wav');
-    
+    this.game.load.audio('beep','images/SoundEffects/beep.wav');
+    this.game.load.audio('buttonAudio','images/SoundEffects/buttonAudio.wav');
+    this.game.load.audio('tick','images/SoundEffects/tick.wav');
+    //Music
+    this.game.load.audio('levelMusic','images/music/level.mp3');
+    this.game.load.audio('mainTrack','images/music/mainTrack.mp3');
+    this.game.load.audio('win','images/music/win.mp3');
+
   },
   //Llamamos a playscene
   create: function () {
-    this.game.state.start('menu');
+    this.game.state.start('finalLvl');
   }
 };
 

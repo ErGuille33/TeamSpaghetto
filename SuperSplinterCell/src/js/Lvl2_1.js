@@ -12,6 +12,8 @@ var Enemy = require('./Enemy.js')
 var Interface = require('./Interface.js');
 var escalera;
 var mission;
+var music;
+
 
 var Lvl2_1 = {
   //Se ejecuta al principio
@@ -145,6 +147,10 @@ var Lvl2_1 = {
     escalera = this.game.add.audio('escalera');
     mission = this.game.add.audio('mission');
 
+    music = this.game.add.audio('levelMusic');
+   
+    music.loopFull(.3);
+
     this.checkIntersects = function(){
       if(Phaser.Rectangle.intersects(this.Sam,this.nextLvl)){
         this.Sam.body.velocity.setTo(0, 0);
@@ -177,7 +183,7 @@ var Lvl2_1 = {
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
     for(var i =0;i < this.enemys.length ; i++){
-      this.enemys[i].update(this.Sam);
+      this.enemys[i].update(this.Sam,music);
     }
   },
 };
