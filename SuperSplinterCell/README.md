@@ -57,8 +57,8 @@
 # Reference works:  
 ### Splinter Cell, Hotline Miami, Door kickers and tons of stealth flash games.
 
-#Music:
-### Feuer Frie [8 bit version ](Rammstein) || Detective Theme Music - Background Music (no Copyright) || The ruined hope (Epic music empire)
+# Music:
+### Feuer Frie (8 bit version) (Rammstein) || Detective Theme Music - Background Music (no Copyright) || The ruined hope (Epic music empire)
 
 
 <p align= "center">
