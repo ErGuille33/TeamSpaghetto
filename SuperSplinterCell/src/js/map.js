@@ -5,6 +5,7 @@ var Character = require('./character.js');
 //State : True = open, false = close
 //Metallic : True = metallic , false = not metallic
 
+//Constructora
 function Map(nombreTilemap, tamX, tamY, tilesetImage, game, doors, row, col) {
 
     this.tileMap = game.add.tilemap(nombreTilemap, tamX, tamY);
@@ -19,8 +20,10 @@ function Map(nombreTilemap, tamX, tamY, tilesetImage, game, doors, row, col) {
 }
 Map.prototype.constructor = Map;
 
+//Inicializamos
 Map.prototype.ini = function () {
     var aux = 0;
+    //Puertas
     if (this.hasDoors) {
 
         this.doors = [];
@@ -39,7 +42,7 @@ Map.prototype.ini = function () {
         for (var i = 0; i < this.row; i++) {
             for (var j = 0; j < this.col; j++) {
                 if (this.tileMap.getTile(i, j, this.layer, true).index == 568 || this.tileMap.getTile(i, j, this.layer, true).index == 565) {
-                    
+
                     this.magneticDoors.push({ x: this.tileMap.getTile(i, j, this.layer, true).worldX, y: this.tileMap.getTile(i, j, this.layer, true).worldY });
                     aux++;
 
@@ -51,13 +54,15 @@ Map.prototype.ini = function () {
     this.positions1 = [{ x: 24, y: 34 }, { x: 18, y: 23 }];
 
 }
+//Devuelve la capa que se está usando
 Map.prototype.returnLayer = function () {
     return this.layer;
 }
+//Ponemos colisiones
 Map.prototype.collisions = function (col1, col2) {
     this.tileMap.setCollisionBetween(col1, col2);
 }
-
+//Destruye las puertas
 Map.prototype.open = function (x, y) {
 
     if (this.tileMap.getTileAbove(this.tileMap.getLayer(), x, y).index != -1) {

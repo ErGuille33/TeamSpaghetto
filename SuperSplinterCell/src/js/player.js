@@ -15,6 +15,8 @@ var key;
 
 var tick;
 
+//El personaje del jugador
+
 //Items : 1 = lockpick | 2 = taser | 3 = cable | 4 = gun  | 5 = hand 
 function Player(x, y, key, doc, it, sprite, game, lvl) {
     Character.call(this, game, x, y, sprite);
@@ -29,10 +31,13 @@ function Player(x, y, key, doc, it, sprite, game, lvl) {
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.constructor = Player;
 
+//Inicialización
+
 Player.prototype.ini = function () {
 
     this.alive = true;
 
+    //Animaciones
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
     this.body.setSize(25, 30, 15, 15);
@@ -67,10 +72,9 @@ Player.prototype.ini = function () {
     this.body.allowGravity = false;
     this.body.immovable = true;
 
-    //this.weapon.bullets.enableBody = true;
-    //this.weapon.bullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.fireTime = this.game.time.physicsElapsed;
 
+    //Mano
     this.hand = new Hand(this.game, 20, 0, 'aux');
     this.hand.ini();
 
@@ -85,7 +89,7 @@ Player.prototype.ini = function () {
     key = this.game.add.audio('key');
 
     tick = this.game.add.audio('tick');
-   
+
 
 }
 Player.prototype.moveCharacter = function () {
@@ -93,19 +97,19 @@ Player.prototype.moveCharacter = function () {
     if (this.game.input.mousePointer.isDown && this.fireTime - 500 <= this.game.time.now) {
         this.xDestine = this.game.input.mousePointer.worldX;
         this.yDestine = this.game.input.mousePointer.worldY;
-       // console.log(this.xDestine + " , " + this.yDestine)
+        //console.log(this.xDestine + " , " + this.yDestine)
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
         this.rotation = this.game.physics.arcade.moveToPointer(this, this.speed, this.game.input);
         //console.log(this.xDestine );
         this.animations.play('walk');
     }
     this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
-    // this.distance = this.world.width - this.world.width + this.x;
 
 
 
 
 }
+//Colisiones
 Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     if (this.distance <= this.speed / this.game.time.physicsElapsedMS) { // una constante o variable (algo qe sea el incremento de movimiento)
         this.body.velocity.setTo(0, 0);
@@ -130,6 +134,7 @@ Player.prototype.checkCollision = function (layer4, layer3, layer6) {
     }
 
 }
+//Colisiones de las balas con las paredes
 Player.prototype.bulletHitWall = function (layer3, layer4, layer6, enemys) {
     // console.log(this.weapon.bullets);
     var player = this;
@@ -148,27 +153,27 @@ Player.prototype.bulletHitWall = function (layer3, layer4, layer6, enemys) {
 }
 
 Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemys) {
-
+    //Elegir arma
     if (this.eKey.justDown) {
         this.items = 4
         tick.play();
-        console.log("jand");
     }
+    //Elegir mano
     else if (this.rKey.justDown) {
         this.items = 5;
         tick.play();
-        console.log("shut");
     }
+    //Elegir taser
     else if (this.tKey.justDown) {
         this.items = 2;
         tick.play();
-        console.log("taser");
     }
+    //Elegir ganzua
     else if (this.lKey.justDown) {
         this.items = 1;
         tick.play();
-        console.log("ganzua");
     }
+    //Ejecuta una accion dependiendo del item seleccionado
     else if (this.actionButton.justDown && this.fireTime <= this.game.time.now) {
         this.body.velocity.setTo(0, 0);
         switch (this.items) {
@@ -185,7 +190,7 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemy
                 if (documents != undefined && !this.documents) {
 
                     this.recogeDocumento(documents);
-                   
+
                 }
                 this.fireTime = this.game.time.now + 1500;
                 break;
@@ -221,7 +226,7 @@ Player.prototype.recogeDocumento = function (documents) {
     }
 }
 Player.prototype.taseEnemy = function (enemys) {
-        taser.play();
+    taser.play();
     for (var i in enemys) {
         if (Phaser.Rectangle.intersects(this.hand.getBounds(), enemys[i].getBounds())) {
 
@@ -244,22 +249,16 @@ Player.prototype.getKilled = function () {
     this.animations.play('idle');
     this.game.time.events.add(300, function () { this.animations.play('dead'); dead.play(); }, this);
     this.alive = false;
-    this.game.time.events.add(2000, function () { if (this.lvl == 1) { this.game.state.start('gameover'); } else if(this.lvl==2){ this.game.state.start('gameover1'); } }, this);
+    this.game.time.events.add(2000, function () { if (this.lvl == 1) { this.game.state.start('gameover'); } else if (this.lvl == 2) { this.game.state.start('gameover1'); } }, this);
 
 }
+//Necesario para algunos calls
 Player.prototype.returnPlayer = function () {
     return this;
 }
-
+//Abrir puertas
 Player.prototype.open = function (map6) {
     this.animations.play('hand');
-
-    // console.log(this.hand.body.x + 24);
-    // console.log(map6.doors[3].x);
-    // console.log(map6.doors[3].x + 48);
-    // console.log(this.hand.body.y + 24);
-    //  console.log(map6.doors[3].y);
-    //  console.log(map6.doors[3].y + 48);
 
     for (var i = 0; i < map6.doors.length; i++) {
 
@@ -277,7 +276,7 @@ Player.prototype.open = function (map6) {
                 && (this.hand.body.y + this.hand.width / 2) > (map6.magneticDoors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.magneticDoors[i].y + 48)) {
 
                 this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.magneticDoors[i].x / 48, map6.magneticDoors[i].y / 48);
-                    key.play();
+                key.play();
 
             }
         }

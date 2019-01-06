@@ -2,7 +2,7 @@
 //Añadimos el script de escena 
 var PlayScene = require('./Lvl1_1.js');
 var lvl02_01 = require('./Lvl2_1.js');
-var menu = require ('./mainMenu.js');
+var menu = require('./mainMenu.js');
 var lvlmenu = require('./lvlSelector.js');
 var tutorial = require('./tuto.js');
 var interLvl = require('./interLevel.js');
@@ -32,6 +32,7 @@ var PreloaderScene = {
     this.game.stage.backgroundColor = '#000000';
     this.game.load.image('logo', 'GameArt/Gafas.jpg');
     this.game.load.tilemap('test', 'images/Test.csv');
+
     //Lvl1-1
     this.game.load.tilemap('Lvl1_1_6', 'images/CSV/Lvl1_1_Door.csv');
     this.game.load.tilemap('Lvl1_1_5', 'images/CSV/Lvl1_1_Cositis2.csv');
@@ -47,7 +48,7 @@ var PreloaderScene = {
     this.game.load.tilemap('Lvl2_1_3', 'images/CSV/Lvl2_1_Muebles.csv');
     this.game.load.tilemap('Lvl2_1_2', 'images/CSV/Lvl2_1_Sobresuelo.csv');
     this.game.load.tilemap('Lvl2_1_1', 'images/CSV/Lvl2_1_Suelo.csv');
-   
+
     //Imagenes de tiles
     this.load.image('deco1', 'images/decoraciones1.png');
     this.load.image('suelo', 'images/suelo_pixel_art.png');
@@ -61,18 +62,18 @@ var PreloaderScene = {
     this.load.image('aux', 'images/bloque1.jpg');
     this.load.image('cono', 'images/Conito.png');
     //Items
-    this.load.spritesheet('tarjet', 'images/tarjetaLlave.png',500,339);
-    this.load.spritesheet('documents','images/documents.png',250,311);
+    this.load.spritesheet('tarjet', 'images/tarjetaLlave.png', 500, 339);
+    this.load.spritesheet('documents', 'images/documents.png', 250, 311);
 
     //Enemigos
     this.load.spritesheet('enemy', 'images/Enemigo sprite.png', 58, 65)
-    
+
     //UI
     this.load.spritesheet('UI', 'images/UI SpriteSheet.png', 800, 50);
 
     //Pantalla inicial
-    this.load.image ('inicial', 'images/pantalla inicial.png');
-    this.load.image ('press', 'images/PressHere.png');
+    this.load.image('inicial', 'images/pantalla inicial.png');
+    this.load.image('press', 'images/PressHere.png');
     //Menu
     this.load.image('mainMenu', 'images/MainMenu.png');
     this.load.image('lvlSelector', 'images/SelectorLevels.png');
@@ -81,6 +82,11 @@ var PreloaderScene = {
     this.load.image('interLvl', 'images/MediaPantalla.png');
     this.load.image('return', 'images/returnToMenu.png');
     this.load.image('perder', 'images/perderPantalla.png');
+    this.load.image('complu', 'images/EscudoComplutense.png');
+    this.load.image('exit', 'images/Exit.png');
+    this.load.image('up', 'images/Up.png');
+    this.load.image('down', 'images/Down.png');
+
 
     //Audios
     this.game.load.audio('die', 'images/SoundEffects/die.wav');
@@ -92,20 +98,20 @@ var PreloaderScene = {
     this.game.load.audio('key', 'images/SoundEffects/key.wav');
     this.game.load.audio('mission', 'images/SoundEffects/mission.wav');
     this.game.load.audio('escalera', 'images/SoundEffects/escalera.wav');
-    this.game.load.audio('light','images/SoundEffects/lightsOff.wav');
-    this.game.load.audio('failed','images/SoundEffects/failed.wav');
-    this.game.load.audio('beep','images/SoundEffects/beep.wav');
-    this.game.load.audio('buttonAudio','images/SoundEffects/buttonAudio.wav');
-    this.game.load.audio('tick','images/SoundEffects/tick.wav');
+    this.game.load.audio('light', 'images/SoundEffects/lightsOff.wav');
+    this.game.load.audio('failed', 'images/SoundEffects/failed.wav');
+    this.game.load.audio('beep', 'images/SoundEffects/beep.wav');
+    this.game.load.audio('buttonAudio', 'images/SoundEffects/buttonAudio.wav');
+    this.game.load.audio('tick', 'images/SoundEffects/tick.wav');
     //Music
-    this.game.load.audio('levelMusic','images/music/level.mp3');
-    this.game.load.audio('mainTrack','images/music/mainTrack.mp3');
-    this.game.load.audio('win','images/music/win.mp3');
+    this.game.load.audio('levelMusic', 'images/music/level.mp3');
+    this.game.load.audio('mainTrack', 'images/music/mainTrack.mp3');
+    this.game.load.audio('win', 'images/music/win.mp3');
 
   },
   //Llamamos a playscene
   create: function () {
-    this.game.state.start('finalLvl');
+    this.game.state.start('menu');
   }
 };
 
@@ -120,10 +126,10 @@ window.onload = function () {
   game.state.add('menu', menu);
   game.state.add('lvlSel', lvlmenu);
   game.state.add('tuto', tutorial);
-  game.state.add('inter',interLvl);
-  game.state.add('finalLvl',finalLvl);
-  game.state.add('gameover',GameOver);
-  game.state.add('gameover1',GameOver1);
+  game.state.add('inter', interLvl);
+  game.state.add('finalLvl', finalLvl);
+  game.state.add('gameover', GameOver);
+  game.state.add('gameover1', GameOver1);
 
   game.state.start('boot');
 };

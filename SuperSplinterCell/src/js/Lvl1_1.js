@@ -82,7 +82,7 @@ var PlayScene = {
     this.enemys[3] = new Enemy(543, 1767, false, false, this.pos3, 150, 180, 'enemy', this.game);
     this.enemys[3].ini();
 
-    this.pos4 = [{ x: 1630, y: 277 }, { x: 675, y: 277 } ];
+    this.pos4 = [{ x: 1630, y: 277 }, { x: 675, y: 277 }];
     this.enemys[4] = new Enemy(1630, 277, false, false, this.pos4, 150, 180, 'enemy', this.game);
     this.enemys[4].ini();
 
@@ -91,47 +91,59 @@ var PlayScene = {
     this.enemys[5].ini();
 
     this.pos6 = [{ x: 1665, y: 1777 }];
-    this.enemys[6] = new Enemy(1725, 1777, false, true, this.pos6, 100, 180, 'enemy', this.game,1000);
+    this.enemys[6] = new Enemy(1725, 1777, false, true, this.pos6, 100, 180, 'enemy', this.game, 1000);
     this.enemys[6].ini();
 
-    this.pos7 = [{ x: 2246, y: 708 }, { x: 1540 , y: 708 }, { x: 1540, y: 900 }, { x: 2246, y: 900 }];
+    this.pos7 = [{ x: 2246, y: 708 }, { x: 1540, y: 708 }, { x: 1540, y: 900 }, { x: 2246, y: 900 }];
     this.enemys[7] = new Enemy(2246, 708, false, false, this.pos7, 125, 180, 'enemy', this.game);
     this.enemys[7].ini();
 
     //Segunda Habitacion
 
-    this.pos8 = [{ x: 5055 , y: 240 }, { x: 5055 , y: 644 }, { x: 6248 , y: 644 }, { x: 6248, y: 240 }];
+    this.pos8 = [{ x: 5055, y: 240 }, { x: 5055, y: 644 }, { x: 6248, y: 644 }, { x: 6248, y: 240 }];
     this.enemys[8] = new Enemy(5025, 220, false, false, this.pos8, 175, 180, 'enemy', this.game);
     this.enemys[8].ini();
 
-    this.pos9 = [{ x: 5005 , y: 190 }, { x: 6295, y: 190 },{ x: 6295 , y: 594 },{ x: 5005 , y: 594 }];
+    this.pos9 = [{ x: 5005, y: 190 }, { x: 6295, y: 190 }, { x: 6295, y: 594 }, { x: 5005, y: 594 }];
     this.enemys[9] = new Enemy(5025, 220, false, false, this.pos9, 125, 180, 'enemy', this.game);
     this.enemys[9].ini();
-    
-    this.pos10 = [{ x: 5644 , y: 920 }];
+
+    this.pos10 = [{ x: 5644, y: 920 }];
     this.enemys[10] = new Enemy(5644, 920, false, false, this.pos10, 150, 90, 'enemy', this.game);
     this.enemys[10].ini();
 
-    this.pos11 = [{ x: 6692 , y: 951 }];
-    this.enemys[11] = new Enemy(6692, 951, false, true, this.pos11, 150, -90, 'enemy', this.game,2000);
+    this.pos11 = [{ x: 6692, y: 951 }];
+    this.enemys[11] = new Enemy(6692, 951, false, true, this.pos11, 150, -90, 'enemy', this.game, 2000);
     this.enemys[11].ini();
 
-    this.pos12 = [{ x: 6225 , y: 2271 }, { x: 6225 , y: 891 } ];
+    this.pos12 = [{ x: 6225, y: 2271 }, { x: 6225, y: 891 }];
     this.enemys[12] = new Enemy(6193, 2271, false, false, this.pos12, 150, 180, 'enemy', this.game);
     this.enemys[12].ini();
 
-    this.pos13 = [{ x: 6175  , y: 1234 }, { x: 5043 , y: 1234 },{ x: 5043 , y: 2275 },{ x: 6175 , y: 2275 }];
-    this.enemys[13] = new Enemy(6175 , 1234, false, false, this.pos13, 170, 180, 'enemy', this.game);
+    this.pos13 = [{ x: 6175, y: 1234 }, { x: 5043, y: 1234 }, { x: 5043, y: 2275 }, { x: 6175, y: 2275 }];
+    this.enemys[13] = new Enemy(6175, 1234, false, false, this.pos13, 170, 180, 'enemy', this.game);
     this.enemys[13].ini();
 
-    this.pos14 = [{ x: 5782  , y: 1493 }];
-    this.enemys[14] = new Enemy(5782, 1493, false, false, this.pos14, 150, 180, 'enemy', this.game,2000);
+    this.pos14 = [{ x: 5782, y: 1493 }];
+    this.enemys[14] = new Enemy(5782, 1493, false, false, this.pos14, 150, 180, 'enemy', this.game, 2000);
     this.enemys[14].ini();
 
-    this.pos15 = [{ x: 5482  , y: 1485 }];
-    this.enemys[15] = new Enemy(5482, 1485, false, false, this.pos15, 150, 0, 'enemy', this.game,2000);
+    this.pos15 = [{ x: 5482, y: 1485 }];
+    this.enemys[15] = new Enemy(5482, 1485, false, false, this.pos15, 150, 0, 'enemy', this.game, 2000);
     this.enemys[15].ini();
 
+    //Carteles 
+
+    var exit = this.game.add.sprite(1257, 2255, 'exit');
+    exit.scale.setTo(.3, .3);
+
+    var up = this.game.add.sprite(2223, 150, 'up');
+    up.scale.setTo(.3, .3);
+    up.angle = 180;
+
+    var down = this.game.add.sprite(6935, 250, 'down');
+    down.scale.setTo(.3, .3);
+    down.angle = 180;
 
     //Sam
     //143, 1155
@@ -155,15 +167,20 @@ var PlayScene = {
     this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
 
+
+
     //Cámara
     this.camera.follow(this.Sam);
+
+    //Musica
 
     escalera = this.game.add.audio('escalera');
     mission = this.game.add.audio('mission');
     music = this.game.add.audio('levelMusic');
-   
-   
+
     music.loopFull(.3);
+
+    //Puntos de teletransporte
 
     this.checkIntersects = function () {
       if (Phaser.Rectangle.intersects(this.Sam, this.nextFloor)) {
@@ -188,7 +205,7 @@ var PlayScene = {
         music.stop();
         mission.play();
         this.game.state.start('inter');
-        
+
       }
     }
   },
@@ -198,10 +215,10 @@ var PlayScene = {
     this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums, this.enemys);
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
-    for(var i =0;i < this.enemys.length ; i++){
-      this.enemys[i].update(this.Sam,music);
+    for (var i = 0; i < this.enemys.length; i++) {
+      this.enemys[i].update(this.Sam, music);
     }
-   
+
   },
   render: function () {
     var showDebug = true;
@@ -215,7 +232,7 @@ var PlayScene = {
       this.game.debug.body(this.enemys[5].coneOfVision);
       this.game.debug.body(this.enemys[6].coneOfVision);
       this.game.debug.body(this.enemys[7].coneOfVision);
-     
+
     }
   }
 

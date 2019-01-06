@@ -1,9 +1,14 @@
 'use strict';
 var music;
 var beep;
+
+//Menú principa en el que crearemos ciertos botones
+
 var mainMenu = {
     create: function () {
         var fondo = this.game.add.image(0, 0, 'mainMenu');
+        var complu = this.game.add.image(695, 10, 'complu');
+        complu.scale.setTo(.15, .15);
         function start() {
             music.stop();
             beep.play();
@@ -20,13 +25,13 @@ var mainMenu = {
         this.lvlSelect.alpha = 0;
 
         music = this.game.add.audio('mainTrack');
-        
+
         beep = this.game.add.audio('beep');
 
         music.loopFull(.1);
     },
     update: function () {
-        
+
     }
 }
 module.exports = mainMenu;
