@@ -1,8 +1,8 @@
 'use strict';
-var beep;
 //Pantalla entre el nivel 1 y 2
 var interLevel = {
     create: function () {
+        var beep;
         var fondo = this.game.add.image(0, 0, 'interLvl');
         function start() {
             beep.play();

@@ -1,9 +1,10 @@
 'use strict';
-var beep;
-var win;
+
 //Pantalla al ganar el juego
 var finalLevel = {
     create: function () {
+        var beep;
+        var win;
         var fondo = this.game.add.image(0, 0, 'interLvl');
 
         function returntoMain() {

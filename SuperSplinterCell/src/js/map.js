@@ -2,9 +2,6 @@
 
 var Character = require('./character.js');
 
-//State : True = open, false = close
-//Metallic : True = metallic , false = not metallic
-
 //Constructora
 function Map(nombreTilemap, tamX, tamY, tilesetImage, game, doors, row, col) {
 

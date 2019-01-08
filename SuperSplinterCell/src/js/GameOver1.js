@@ -1,8 +1,9 @@
 'use strict';
-var beep;
+
 //Pantalla de derrota en el segundo nivel 
 var gameover2 = {
     create: function () {
+        var beep;
         var fondo = this.game.add.image(0, 0, 'perder');
         function start() {
             beep.play();

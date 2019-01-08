@@ -1,10 +1,10 @@
 'use strict';
-var beep;
-
 //Selector de niveles
 
 var lvlSelector = {
+    
     create: function () {
+        var beep;
         var fondo = this.game.add.image(0, 0, 'lvlSelector');
         function start() {
             beep.play();

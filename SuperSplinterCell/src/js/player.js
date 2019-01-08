@@ -5,16 +5,6 @@ var Map = require('./map.js');
 var Hand = require('./hand.js');
 var mg = require('./tarjetaLlave.js');
 
-
-var dead;
-var Opendoor;
-var silenced;
-var taser;
-var paper;
-var key;
-
-var tick;
-
 //El personaje del jugador
 
 //Items : 1 = lockpick | 2 = taser | 3 = cable | 4 = gun  | 5 = hand 
@@ -81,14 +71,14 @@ Player.prototype.ini = function () {
     this.addChild(this.hand);
 
     //Audio
-    dead = this.game.add.audio('die');
-    Opendoor = this.game.add.audio('door');
-    silenced = this.game.add.audio('silenced');
-    taser = this.game.add.audio('taser');
-    paper = this.game.add.audio('paper');
-    key = this.game.add.audio('key');
+    this.audiodead = this.game.add.audio('die');
+    this.Opendoor = this.game.add.audio('door');
+    this.silenced = this.game.add.audio('silenced');
+    this.audiotaser = this.game.add.audio('taser');
+    this.audiopaper = this.game.add.audio('paper');
+    this.audiokey = this.game.add.audio('key');
 
-    tick = this.game.add.audio('tick');
+    this.audiotick = this.game.add.audio('tick');
 
 
 }
@@ -156,22 +146,22 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemy
     //Elegir arma
     if (this.eKey.justDown) {
         this.items = 4
-        tick.play();
+        this.audiotick.play();
     }
     //Elegir mano
     else if (this.rKey.justDown) {
         this.items = 5;
-        tick.play();
+        this.audiotick.play();
     }
     //Elegir taser
     else if (this.tKey.justDown) {
         this.items = 2;
-        tick.play();
+        this.audiotick.play();
     }
     //Elegir ganzua
     else if (this.lKey.justDown) {
         this.items = 1;
-        tick.play();
+        this.audiotick.play();
     }
     //Ejecuta una accion dependiendo del item seleccionado
     else if (this.actionButton.justDown && this.fireTime <= this.game.time.now) {
@@ -212,7 +202,7 @@ Player.prototype.recogeLlave = function (tarjeta) {
     if (Phaser.Rectangle.intersects(this.hand.getBounds(), tarjeta.getBounds())) {
         this.magneticKey = true;
         console.log(this.magneticKey);
-        paper.play();
+        this.audiopaper.play();
         tarjeta.kill();
     }
 }
@@ -221,12 +211,12 @@ Player.prototype.recogeDocumento = function (documents) {
     if (Phaser.Rectangle.intersects(this.hand.getBounds(), documents.getBounds())) {
         this.documents = true;
         console.log(this.papeles);
-        paper.play();
+        this.audiopaper.play();
         documents.kill();
     }
 }
 Player.prototype.taseEnemy = function (enemys) {
-    taser.play();
+    this.audiotaser.play();
     for (var i in enemys) {
         if (Phaser.Rectangle.intersects(this.hand.getBounds(), enemys[i].getBounds())) {
 
@@ -237,7 +227,7 @@ Player.prototype.taseEnemy = function (enemys) {
 Player.prototype.shoot = function () {
     this.weapon.fire(this.body.center);
     this.animations.play('gun');
-    silenced.play();
+    this.silenced.play();
 }
 Player.prototype.returnItem = function () {
 
@@ -247,7 +237,7 @@ Player.prototype.getKilled = function () {
 
     this.body.velocity.setTo(0, 0);
     this.animations.play('idle');
-    this.game.time.events.add(300, function () { this.animations.play('dead'); dead.play(); }, this);
+    this.game.time.events.add(300, function () { this.animations.play('dead'); this.audiodead.play(); }, this);
     this.alive = false;
     this.game.time.events.add(2000, function () { if (this.lvl == 1) { this.game.state.start('gameover'); } else if (this.lvl == 2) { this.game.state.start('gameover1'); } }, this);
 
@@ -266,7 +256,7 @@ Player.prototype.open = function (map6) {
             && (this.hand.body.y + this.hand.width / 2) > (map6.doors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.doors[i].y + 48)) {
 
             this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.doors[i].x / 48, map6.doors[i].y / 48);
-            Opendoor.play();
+            this.Opendoor.play();
 
         }
     }
@@ -276,7 +266,7 @@ Player.prototype.open = function (map6) {
                 && (this.hand.body.y + this.hand.width / 2) > (map6.magneticDoors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.magneticDoors[i].y + 48)) {
 
                 this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.magneticDoors[i].x / 48, map6.magneticDoors[i].y / 48);
-                key.play();
+                this.audiokey.play();
 
             }
         }

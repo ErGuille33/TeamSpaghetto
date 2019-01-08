@@ -4,8 +4,6 @@ var Character = require('./character.js')
 var Player = require('./player.js')
 var coneOfVision = require('./VisionCone.js');
 
-var shoot;
-
 //Enemigos
 function Enemy(x, y, KO, Look, posiciones, speed, angle, sprite, game, timer) {
     Character.call(this, game, x, y, sprite);
@@ -45,7 +43,7 @@ Enemy.prototype.ini = function () {
 
     this.visto = false;
 
-    shoot = this.game.add.audio('shoot');
+    this.shoot = this.game.add.audio('shoot');
 
 
 }
@@ -107,7 +105,7 @@ Enemy.prototype.playerDetected = function (player, music) {
             console.log(this.game.physics.arcade.angleBetween(this, player));
             this.angle = (180 / Math.PI) * this.game.physics.arcade.angleBetween(this, player);
             this.animations.play('shoot');
-            shoot.play();
+            this.shoot.play();
             player.getKilled();
         }
     }

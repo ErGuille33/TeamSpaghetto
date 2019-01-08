@@ -1,8 +1,9 @@
 'use strict';
-var beep;
+
 //Tutorial
 var tuto = {
     create: function () {
+        var beep;
         var fondo = this.game.add.image(0, 0, 'inicial');
         function start() {
             beep.play();

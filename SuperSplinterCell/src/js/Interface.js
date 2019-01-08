@@ -2,7 +2,7 @@
 var Character = require('./character.js')
 var Player = require('./player.js')
 
-var tick;
+
 
 //El HUD
 

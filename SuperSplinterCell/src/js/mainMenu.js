@@ -1,11 +1,11 @@
 'use strict';
-var music;
-var beep;
 
 //Menú principa en el que crearemos ciertos botones
 
 var mainMenu = {
     create: function () {
+        var music;
+        var beep;
         var fondo = this.game.add.image(0, 0, 'mainMenu');
         var complu = this.game.add.image(695, 10, 'complu');
         complu.scale.setTo(.15, .15);

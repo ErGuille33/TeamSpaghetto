@@ -10,10 +10,6 @@ var tarjetaLlave = require('./tarjetaLlave.js');
 var Enemy = require('./Enemy.js')
 //UI
 var Interface = require('./Interface.js');
-var escalera;
-var mission;
-var music;
-
 
 var Lvl2_1 = {
   //Se ejecuta al principio
@@ -156,18 +152,18 @@ var Lvl2_1 = {
     this.lastFloor.ini();
 
     //Musica
-    escalera = this.game.add.audio('escalera');
-    mission = this.game.add.audio('mission');
+    this.escalera = this.game.add.audio('escalera');
+    this.mission = this.game.add.audio('mission');
 
-    music = this.game.add.audio('levelMusic');
+    this.music = this.game.add.audio('levelMusic');
 
-    music.loopFull(.3);
+    this.music.loopFull(.3);
     //Trigger Sprites
     this.checkIntersects = function () {
       if (Phaser.Rectangle.intersects(this.Sam, this.nextLvl)) {
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
-        escalera.play();
+        this.escalera.play();
         this.Sam.animations.stop('walk');
         this.Sam.x = 6848;
         this.Sam.y = 1938;
@@ -176,14 +172,14 @@ var Lvl2_1 = {
       else if (Phaser.Rectangle.intersects(this.Sam, this.lastFloor)) {
         this.Sam.body.velocity.setTo(0, 0);
         this.Sam.body.velocity.setTo(0, 0);
-        escalera.play();
+        this.escalera.play();
         this.Sam.animations.stop('walk');
         this.Sam.x = 2130;
         this.Sam.y = 1725;
         this.Sam.angle = 180;
       }
       else if (Phaser.Rectangle.intersects(this.Sam, this.endLvl) && this.Sam.documents) {
-        mission.play();
+        this.mission.play();
         this.game.state.start('finalLvl');
       }
     }
@@ -195,7 +191,7 @@ var Lvl2_1 = {
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
     for (var i = 0; i < this.enemys.length; i++) {
-      this.enemys[i].update(this.Sam, music);
+      this.enemys[i].update(this.Sam, this.music);
     }
   },
 };
