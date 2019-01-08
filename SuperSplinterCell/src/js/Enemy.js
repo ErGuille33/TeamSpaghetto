@@ -36,7 +36,7 @@ Enemy.prototype.ini = function () {
     this.body.allowGravity = false;
     this.body.immovable = true;
 
-    this.coneOfVision = new coneOfVision(this.game, 75, 0, 'cono');
+    this.coneOfVision = new coneOfVision(this.game, 140, 0, 'cono');
     this.coneOfVision.ini();
     this.timeAux = this.game.time.now;
     this.addChild(this.coneOfVision);

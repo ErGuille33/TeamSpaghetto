@@ -14,8 +14,9 @@ var Interface = require('./Interface.js');
 
 var PlayScene = {
   //Se ejecuta al principio
+  
   create: function () {
-
+    this.game.physics.startSystem(Phaser.Physics.P2JS)
     //Añadimos al mapa nuestro mapa ya cargado, y lo cargamos en la escena
     //El mapa de juego
     this.map1;
@@ -228,7 +229,7 @@ var PlayScene = {
   },
 
   
-  render: function () {
+  /*render: function () {
     var showDebug = true;
     var lvl = this;
     if (showDebug) {
@@ -242,7 +243,7 @@ var PlayScene = {
       this.game.debug.body(this.enemys[7].coneOfVision);
 
     }
-  }
+  }*/
 
 };
 

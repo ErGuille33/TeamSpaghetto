@@ -19,7 +19,6 @@ triggerSprite.prototype.enable = function () {
 triggerSprite.prototype.able = function () {
     return this.able;
 }
-
 triggerSprite.prototype.ini = function () {
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
