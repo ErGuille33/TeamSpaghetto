@@ -109,8 +109,8 @@ var PlayScene = {
     this.enemys[9] = new Enemy(5025, 220, false, false, this.pos9, 125, 180, 'enemy', this.game);
     this.enemys[9].ini();
 
-    this.pos10 = [{ x: 5644, y: 920 }];
-    this.enemys[10] = new Enemy(5644, 920, false, false, this.pos10, 150, 90, 'enemy', this.game);
+    this.pos10 = [{ x: 5644, y: 830 }];
+    this.enemys[10] = new Enemy(5644, 830, false, false, this.pos10, 150, 90, 'enemy', this.game);
     this.enemys[10].ini();
 
     this.pos11 = [{ x: 6692, y: 951 }];

@@ -15,7 +15,8 @@ coneOfVision.prototype.ini = function () {
 
     this.body.allowGravity = false;
     this.body.immovable = true;
-    this.body.setSize(this.width, this.height-100,0,50);
+    //this.scale.setTo(.75,.75);
+    this.body.setSize(this.width, this.height-130,0,50);
     this.angle = -90;
     this.alpha = .1;
 }
