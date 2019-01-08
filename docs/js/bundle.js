@@ -388,8 +388,8 @@ var PlayScene = {
     this.enemys[5] = new Enemy(980, 1480, false, false, this.pos5, 175, 180, 'enemy', this.game);
     this.enemys[5].ini();
 
-    this.pos6 = [{ x: 1665, y: 1777 }];
-    this.enemys[6] = new Enemy(1725, 1777, false, true, this.pos6, 100, 180, 'enemy', this.game, 1000);
+    this.pos6 = [{ x: 1835, y: 1777 }];
+    this.enemys[6] = new Enemy(1835, 1777, false, true, this.pos6, 100, 180, 'enemy', this.game, 1000);
     this.enemys[6].ini();
 
     this.pos7 = [{ x: 2246, y: 708 }, { x: 1540, y: 708 }, { x: 1540, y: 900 }, { x: 2246, y: 900 }];
