@@ -114,6 +114,10 @@ var Lvl2_1 = {
     this.enemys[13] = new Enemy(5651, 1736, false, false, this.pos13, 150, 0, 'enemy', this.game);
     this.enemys[13].ini();
 
+    //Dark
+    this.map7 = new Map('Lvl2_1_7', 48, 48, 'paredes', this, true, 150, 50);
+    this.map7.ini();
+
     //Carteles
 
     var exit = this.game.add.sprite(1401, 1824, 'exit');
@@ -187,7 +191,7 @@ var Lvl2_1 = {
   },
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums, this.enemys);
+    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums, this.enemys, this.map7.returnMap());
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
     for (var i = 0; i < this.enemys.length; i++) {

@@ -9,8 +9,6 @@ var tspr = require('./triggerSprite.js');
 var tarjetaLlave = require('./tarjetaLlave.js');
 var documents = require('./documentos.js');
 
-
-
 //UI
 var Interface = require('./Interface.js');
 
@@ -55,6 +53,9 @@ var PlayScene = {
     this.map6.ini();
     this.map6.collisions(0, 1000);
 
+    
+    
+
     //Inicializamos el personaje
     //Tarjeta llave
     this.magKey = new tarjetaLlave(this.game, 660, 1924, 'tarjet', .075, .075);
@@ -70,15 +71,15 @@ var PlayScene = {
     this.enemys[0].ini();
     //this.pos1= [{x: ,y: }];
     this.pos1 = [{ x: 920, y: 893 }];
-    this.enemys[1] = new Enemy(920, 893, false, false, this.pos1, 150, 90, 'enemy', this.game);
+    this.enemys[1] = new Enemy(920, 893, false, false, this.pos1, 150, -90, 'enemy', this.game);
     this.enemys[1].ini();
 
     this.pos2 = [{ x: 686, y: 2140 }];
     this.enemys[2] = new Enemy(686, 2140, false, false, this.pos2, 150, 180, 'enemy', this.game);
     this.enemys[2].ini();
 
-    this.pos3 = [{ x: 543, y: 1767 }];
-    this.enemys[3] = new Enemy(543, 1767, false, false, this.pos3, 150, 180, 'enemy', this.game);
+    this.pos3 = [{ x: 553, y: 1767 }];
+    this.enemys[3] = new Enemy(553, 1767, false, false, this.pos3, 150, 0, 'enemy', this.game);
     this.enemys[3].ini();
 
     this.pos4 = [{ x: 1630, y: 277 }, { x: 675, y: 277 }];
@@ -131,6 +132,10 @@ var PlayScene = {
     this.enemys[15] = new Enemy(5482, 1485, false, false, this.pos15, 150, 0, 'enemy', this.game, 2000);
     this.enemys[15].ini();
 
+    //Dark
+    this.map7 = new Map('Lvl1_1_7', 48, 48, 'paredes', this, true, 150, 50);
+    this.map7.ini();
+
     //Carteles 
 
     var exit = this.game.add.sprite(1257, 2255, 'exit');
@@ -165,8 +170,8 @@ var PlayScene = {
     this.game.add.existing(this.interfaz);
     this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
-    this.smoke = this.game.add.sprite(400, 300, 'humo');
-    this.smoke.fixedToCamera = true;
+   // this.smoke = this.game.add.sprite(400, 300, 'humo');
+   // this.smoke.fixedToCamera = true;
 
 
 
@@ -213,7 +218,7 @@ var PlayScene = {
 
   //El update de toda la vida
   update: function () {
-    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(), this.map6, this.magKey, this.docums, this.enemys);
+    this.Sam.update(this.map4.returnLayer(), this.map3.returnLayer(), this.map6.returnLayer(),this.map6, this.magKey, this.docums, this.enemys, this.map7.returnMap());
     this.checkIntersects();
     this.interfaz.update(this.Sam.returnDocument(), this.Sam.returnKey(), this.Sam.returnItem());
     for (var i = 0; i < this.enemys.length; i++) {

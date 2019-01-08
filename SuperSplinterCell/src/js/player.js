@@ -36,6 +36,7 @@ Player.prototype.ini = function () {
     this.animations.add('taser', [0, 1, 2], 10, false);
     this.animations.add('gun', [22, 23, 24, 25], 10, false);
     this.animations.add('hand', [4, 5, 6], 4, false);
+    this.animations.add('optical', [4, 7], 4, false);
     this.animations.add('dead', [30], 1, false);
 
     this.xDestine = this.x;
@@ -46,6 +47,7 @@ Player.prototype.ini = function () {
     this.actionButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     this.eKey = this.game.input.keyboard.addKey(Phaser.KeyCode.FIVE);
     this.rKey = this.game.input.keyboard.addKey(Phaser.KeyCode.FOUR);
+    this.ckey = this.game.input.keyboard.addKey(Phaser.KeyCode.THREE)
     this.tKey = this.game.input.keyboard.addKey(Phaser.KeyCode.TWO);
     this.lKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ONE);
     //weapon
@@ -87,7 +89,7 @@ Player.prototype.moveCharacter = function () {
     if (this.game.input.mousePointer.isDown && this.fireTime - 500 <= this.game.time.now) {
         this.xDestine = this.game.input.mousePointer.worldX;
         this.yDestine = this.game.input.mousePointer.worldY;
-        //console.log(this.xDestine + " , " + this.yDestine)
+        console.log(this.xDestine + " , " + this.yDestine)
         this.distance = Math.sqrt(Math.pow(this.xDestine - this.x, 2) + Math.pow(this.yDestine - this.y, 2));
         this.rotation = this.game.physics.arcade.moveToPointer(this, this.speed, this.game.input);
         //console.log(this.xDestine );
@@ -142,10 +144,15 @@ Player.prototype.bulletHitWall = function (layer3, layer4, layer6, enemys) {
     );
 }
 
-Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemys) {
+Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemys, map7) {
     //Elegir arma
     if (this.eKey.justDown) {
         this.items = 4
+        this.audiotick.play();
+    }
+    //Elegir cable optico
+    if (this.ckey.justDown) {
+        this.items = 3;
         this.audiotick.play();
     }
     //Elegir mano
@@ -184,16 +191,42 @@ Player.prototype.recogeInput = function (map6, layer6, tarjeta, documents, enemy
                 }
                 this.fireTime = this.game.time.now + 1500;
                 break;
+            case 3:
+                this.animations.play('optical');
+                this.optical(map6, map7);
+                this.fireTime = this.game.time.now + 1500;
+                break;
             case 2:
                 this.taseEnemy(enemys);
                 this.animations.play('taser');
                 this.fireTime = this.game.time.now + 1000;
                 break;
             case 1:
-                this.open(map6);
+                this.open(map6, map7);
                 this.animations.play('hand');
                 this.fireTime = this.game.time.now + 1500;
 
+        }
+    }
+}
+Player.prototype.optical = function (map6, map7) {
+    for (var i = 0; i < map6.doors.length; i++) {
+
+        if ((this.hand.body.x + this.hand.width / 2) > map6.doors[i].x && (this.hand.body.x + this.hand.width / 2) < (map6.doors[i].x + 48)
+            && (this.hand.body.y + this.hand.width / 2) > (map6.doors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.doors[i].y + 48)) {
+
+            map7.light((map6.doors[i].x) / 48, map6.doors[i].y / 48);
+
+        }
+    }
+    if (this.magneticKey == true) {
+        for (var i = 0; i < map6.magneticDoors.length; i++) {
+            if ((this.hand.body.x + this.hand.width / 2) > map6.magneticDoors[i].x && (this.hand.body.x + this.hand.width / 2) < (map6.magneticDoors[i].x + 48)
+                && (this.hand.body.y + this.hand.width / 2) > (map6.magneticDoors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.magneticDoors[i].y + 48)) {
+
+                map7.light((map6.magneticDoors[i].x) / 48, map6.magneticDoors[i].y / 48);
+
+            }
         }
     }
 }
@@ -247,7 +280,7 @@ Player.prototype.returnPlayer = function () {
     return this;
 }
 //Abrir puertas
-Player.prototype.open = function (map6) {
+Player.prototype.open = function (map6, map7) {
     this.animations.play('hand');
 
     for (var i = 0; i < map6.doors.length; i++) {
@@ -256,6 +289,7 @@ Player.prototype.open = function (map6) {
             && (this.hand.body.y + this.hand.width / 2) > (map6.doors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.doors[i].y + 48)) {
 
             this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.doors[i].x / 48, map6.doors[i].y / 48);
+            map7.light((map6.doors[i].x) / 48, map6.doors[i].y / 48);
             this.Opendoor.play();
 
         }
@@ -266,6 +300,7 @@ Player.prototype.open = function (map6) {
                 && (this.hand.body.y + this.hand.width / 2) > (map6.magneticDoors[i].y) && (this.hand.body.y + this.hand.width / 2) < (map6.magneticDoors[i].y + 48)) {
 
                 this.game.time.events.add(Phaser.Timer.SECOND / 2, map6.open, map6, map6.magneticDoors[i].x / 48, map6.magneticDoors[i].y / 48);
+                map7.light((map6.magneticDoors[i].x) / 48, map6.magneticDoors[i].y / 48);
                 this.audiokey.play();
 
             }
@@ -284,10 +319,10 @@ Player.prototype.returnKey = function () {
 }
 
 
-Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents, enemys) {
+Player.prototype.update = function (layer4, layer3, layer6, map6, tarjeta, documents, enemys, map7) {
     if (this.alive) {
         this.moveCharacter();
-        this.recogeInput(map6, layer6, tarjeta, documents, enemys);
+        this.recogeInput(map6, layer6, tarjeta, documents, enemys, map7);
         this.checkCollision(layer4, layer3, layer6);
         this.bulletHitWall(layer3, layer4, layer6, enemys);
     }

@@ -34,6 +34,7 @@ var PreloaderScene = {
     this.game.load.tilemap('test', 'images/Test.csv');
 
     //Lvl1-1
+    this.game.load.tilemap('Lvl1_1_7', 'images/CSV/Lvl1_1_Hab.csv')
     this.game.load.tilemap('Lvl1_1_6', 'images/CSV/Lvl1_1_Door.csv');
     this.game.load.tilemap('Lvl1_1_5', 'images/CSV/Lvl1_1_Cositis2.csv');
     this.game.load.tilemap('Lvl1_1_4', 'images/CSV/Lvl1_1_Cositis.csv');
@@ -42,6 +43,7 @@ var PreloaderScene = {
     this.game.load.tilemap('Lvl1_1_1', 'images/CSV/Lvl1_1_Suelo.csv');
 
     //Lvl2-1
+    this.game.load.tilemap('Lvl2_1_7', 'images/CSV/Lvl2_1_Hab.csv')
     this.game.load.tilemap('Lvl2_1_6', 'images/CSV/Lvl2_1_Door.csv');
     this.game.load.tilemap('Lvl2_1_5', 'images/CSV/Lvl2_1_Cositis2.csv');
     this.game.load.tilemap('Lvl2_1_4', 'images/CSV/Lvl2_1_Cositis.csv');
@@ -87,6 +89,7 @@ var PreloaderScene = {
     this.load.image('exit', 'images/Exit.png');
     this.load.image('up', 'images/Up.png');
     this.load.image('down', 'images/Down.png');
+    this.load.image('dark','images/prueba.jpg');
 
 
     //Audios

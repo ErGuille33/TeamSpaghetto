@@ -32,6 +32,7 @@ Map.prototype.ini = function () {
                     aux++;
 
                 }
+
             }
         }
         aux = 0;
@@ -55,12 +56,15 @@ Map.prototype.ini = function () {
 Map.prototype.returnLayer = function () {
     return this.layer;
 }
+Map.prototype.returnMap = function () {
+    return this;
+}
 //Ponemos colisiones
 Map.prototype.collisions = function (col1, col2) {
     this.tileMap.setCollisionBetween(col1, col2);
 }
 //Destruye las puertas
-Map.prototype.open = function (x, y) {
+Map.prototype.open = function (x, y, map7) {
 
     if (this.tileMap.getTileAbove(this.tileMap.getLayer(), x, y).index != -1) {
 
@@ -79,7 +83,30 @@ Map.prototype.open = function (x, y) {
         this.tileMap.removeTile(x + 1, y, this.tileMap.getLayer());
     }
     this.tileMap.removeTile(x, y, this.tileMap.getLayer());
+    this.light(x, y);
+}
+Map.prototype.light = function (x, y) {
+    if (this.tileMap.getTileAbove(this.tileMap.getLayer(), x, y).index != -1) {
 
+        this.tileMap.removeTile(x, y, this.tileMap.getLayer());
+        this.light(x , y - 1);
+    }
+    if (this.tileMap.getTileBelow(this.tileMap.getLayer(), x, y).index != -1) {
+
+        this.tileMap.removeTile(x, y, this.tileMap.getLayer());
+        this.light(x , y+ 1);
+    }
+    if (this.tileMap.getTileLeft(this.tileMap.getLayer(), x, y).index != -1) {
+
+        this.tileMap.removeTile(x, y, this.tileMap.getLayer());
+        this.light(x - 1, y);
+    }
+    if (this.tileMap.getTileRight(this.tileMap.getLayer(), x, y).index != -1) {
+
+        this.tileMap.removeTile(x, y, this.tileMap.getLayer());
+        this.light(x + 1, y);
+    }
+    else this.tileMap.removeTile(x, y, this.tileMap.getLayer());
 }
 
 module.exports = Map;
