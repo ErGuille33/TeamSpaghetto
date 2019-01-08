@@ -32,6 +32,7 @@ var PlayScene = {
     this.Enemy1
     this.interfaz;
     this.button;
+    this.smoke;
     //Capas
 
     this.map1 = new Map('Lvl1_1_1', 48, 48, 'suelo', this, false, 150, 50);
@@ -166,6 +167,8 @@ var PlayScene = {
     this.game.add.existing(this.interfaz);
     this.interfaz.ini();
     this.interfaz.fixedToCamera = true;
+    this.smoke = this.game.add.sprite(400, 300, 'humo');
+    this.smoke.fixedToCamera = true;
 
 
 
@@ -220,6 +223,8 @@ var PlayScene = {
     }
 
   },
+
+  
   render: function () {
     var showDebug = true;
     var lvl = this;
@@ -238,10 +243,9 @@ var PlayScene = {
 
 };
 
-
 module.exports = PlayScene;
 
-
+  
 
 
 /*

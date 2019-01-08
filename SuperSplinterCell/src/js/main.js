@@ -70,6 +70,7 @@ var PreloaderScene = {
 
     //UI
     this.load.spritesheet('UI', 'images/UI SpriteSheet.png', 800, 50);
+    this.load.image('smoke', 'images/humo.png')
 
     //Pantalla inicial
     this.load.image('inicial', 'images/pantalla inicial.png');
